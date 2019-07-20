@@ -14,11 +14,9 @@ import org.bukkit.craftbukkit.entity.CraftItem;
 import org.bukkit.craftbukkit.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityCombustByEntityEvent;
-import org.bukkit.event.player.PlayerBedEnterEvent;
-import org.bukkit.event.player.PlayerBedLeaveEvent;
-import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerItemConsumeEvent;
+import org.bukkit.event.player.*;
 // CraftBukkit end
+import org.bukkit.util.Vector;
 import org.spigotmc.ProtocolData; // Spigot - protocol patch
 
 public abstract class EntityHuman extends EntityLiving implements ICommandListener {
@@ -948,15 +946,48 @@ public abstract class EntityHuman extends EntityLiving implements ICommandListen
                         // CraftBukkit end
                     }
 
+                    // snHose start
+                    // Save the victim's velocity before they are potentially knocked back
+                    double victimMotX = entity.motX;
+                    double victimMotY = entity.motY;
+                    double victimMotZ = entity.motZ;
+                    // snHose end
+
                     boolean flag2 = entity.damageEntity(DamageSource.playerAttack(this), f);
 
                     if (flag2) {
                         if (i > 0) {
-                            entity.g((double) (-MathHelper.sin(this.yaw * 3.1415927F / 180.0F) * (float) i * 0.5F), 0.1D, (double) (MathHelper.cos(this.yaw * 3.1415927F / 180.0F) * (float) i * 0.5F));
+                            entity.g((-Math.sin(this.yaw * Math.PI / 180.0F) * (float) i * 0.5F), 0.1D, (Math.cos(this.yaw * Math.PI / 180.0F) * i * 0.5F));
                             this.motX *= 0.6D;
                             this.motZ *= 0.6D;
                             this.setSprinting(false);
                         }
+
+                        // snHose start
+                        // If the attack caused knockback, send the new velocity to the victim's client immediately,
+                        // and undo the change. Otherwise, if movement packets from the victim are processed before
+                        // the end of the tick, then friction may reduce the velocity considerably before it's sent
+                        // to the client, particularly if the victim was standing on the ground when those packets
+                        // were generated. And because this glitch is also likely to make server-side velocity very
+                        // inconsistent, we simply reverse the knockback after sending it so that KB, like most other
+                        // things, doesn't affect server velocity at all.
+                        if (entity instanceof EntityPlayer && entity.velocityChanged) {
+                            Player player = (Player) entity.getBukkitEntity();
+                            Vector vector = new Vector(victimMotX, victimMotY, victimMotZ);
+
+                            PlayerVelocityEvent event = new PlayerVelocityEvent(player, vector.clone());
+                            this.world.getServer().getPluginManager().callEvent(event);
+                            if (!event.isCancelled()) {
+                                if(!vector.equals(event.getVelocity())) player.setVelocity(event.getVelocity());
+                                if (entity.motY > 0) entity.fallDistance = 0.0f;
+                                ((EntityPlayer) entity).playerConnection.sendPacket(new PacketPlayOutEntityVelocity(entity));
+                                entity.velocityChanged = false;
+                                entity.motX = victimMotX;
+                                entity.motY = victimMotY;
+                                entity.motZ = victimMotZ;
+                            }
+                        }
+                        // snHose end
 
                         if (flag) {
                             this.b(entity);

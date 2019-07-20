@@ -825,21 +825,18 @@ public abstract class EntityLiving extends Entity {
 
     protected void dropEquipment(boolean flag, int i) {}
 
-    public void a(Entity entity, float f, double d0, double d1) {
+    public void a(Entity entity, float f, double xo, double zo) {
         if (this.random.nextDouble() >= this.getAttributeInstance(GenericAttributes.c).getValue()) {
             this.al = true;
-            float f1 = MathHelper.sqrt(d0 * d0 + d1 * d1);
-            float f2 = 0.4F;
+            double magnitude = MathHelper.sqrt(xo * xo + zo * zo);
+            double d2 = 0.4F;
 
             this.motX /= 2.0D;
             this.motY /= 2.0D;
             this.motZ /= 2.0D;
-            this.motX -= d0 / (double) f1 * (double) f2;
-            this.motY += (double) f2;
-            this.motZ -= d1 / (double) f1 * (double) f2;
-            if (this.motY > 0.4000000059604645D) {
-                this.motY = 0.4000000059604645D;
-            }
+            this.motX -= xo /  magnitude *  d2;
+            this.motY = MathHelper.a(this.motY + d2, 0.05, 0.4000000059604645);
+            this.motZ -= zo /  magnitude *  d2;
         }
     }
 
