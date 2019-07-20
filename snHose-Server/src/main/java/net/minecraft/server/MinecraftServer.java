@@ -517,7 +517,7 @@ public abstract class MinecraftServer implements ICommandListener, Runnable, IMo
                             wait = 0;
                         } else {
                             wait -= catchupTime;
-                            catchupTime -= catchupTime;
+                            catchupTime = 0;
                         }
                     }
                     if (wait > 0) {
