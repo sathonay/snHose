@@ -22,7 +22,7 @@ class ServerConnectionChannel extends ChannelInitializer {
         }
 
         try {
-            channel.config().setOption(ChannelOption.TCP_NODELAY, Boolean.valueOf(false));
+            channel.config().setOption(ChannelOption.TCP_NODELAY, Boolean.valueOf(true));
         } catch (ChannelException channelexception1) {
             ;
         }
