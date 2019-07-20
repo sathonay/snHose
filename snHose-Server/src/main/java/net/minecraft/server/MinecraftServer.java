@@ -512,17 +512,17 @@ public abstract class MinecraftServer implements ICommandListener, Runnable, IMo
                     if (wait > 0) {
                         if (catchupTime < 2E6) {
                             wait += Math.abs(catchupTime);
-                        }
-                        if (wait < catchupTime) {
+                        }else if (wait < catchupTime) {
                             catchupTime -= wait;
                             wait = 0;
-                        } else if (catchupTime > 2E6) {
+                        } else {
                             wait -= catchupTime;
                             catchupTime -= catchupTime;
                         }
                     }
                     if (wait > 0) {
                         Thread.sleep(wait / 1000000);
+                        curTime = System.nanoTime();
                         wait = TICK_TIME - (curTime - lastTick);
                     }
 
