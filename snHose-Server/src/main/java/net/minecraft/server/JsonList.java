@@ -98,6 +98,7 @@ public class JsonList {
     }
 
     private void h() {
+        /*
         ArrayList arraylist = Lists.newArrayList();
         Iterator iterator = this.d.values().iterator();
 
@@ -115,6 +116,15 @@ public class JsonList {
             Object object = iterator.next();
 
             this.d.remove(object);
+        }
+
+         */
+
+        Iterator<JsonListEntry> iterator = this.d.values().iterator();
+
+        while (iterator.hasNext()) {
+            JsonListEntry jsonListEntry = iterator.next();
+            if (jsonListEntry.hasExpired()) this.d.remove(jsonListEntry);
         }
     }
 
