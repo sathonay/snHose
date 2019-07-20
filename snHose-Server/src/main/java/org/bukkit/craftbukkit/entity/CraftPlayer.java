@@ -519,6 +519,14 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
             getHandle().closeInventory();
         }
 
+        // snHose start
+        // Check if player teleport location chunk is load , if it's not load it.
+        org.bukkit.Chunk chunk = to.getChunk();
+        if (!chunk.isLoaded()) {
+            chunk.load();
+        }
+        // snHose end
+
         // Check if the fromWorld and toWorld are the same.
         if (fromWorld == toWorld) {
             entity.playerConnection.teleport(to);
