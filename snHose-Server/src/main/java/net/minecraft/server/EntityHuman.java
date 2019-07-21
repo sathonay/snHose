@@ -955,6 +955,7 @@ public abstract class EntityHuman extends EntityLiving implements ICommandListen
                         if (i > 0) {
                             entity.g((-Math.sin(this.yaw * Math.PI / 180.0F) * (float) i * 0.5F), 0.1D, (Math.cos(this.yaw * Math.PI / 180.0F) * i * 0.5F));
                             this.motX *= 0.6D;
+                            // NEVER PUT "this.motY *= 0.6D" only skid do that
                             this.motZ *= 0.6D;
                             this.setSprinting(false);
                         }
