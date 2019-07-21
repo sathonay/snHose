@@ -125,13 +125,11 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
     public double getEyeHeight(boolean ignoreSneaking) {
         if (ignoreSneaking) {
             return 1.62D;
-        } else {
-            if (isSneaking()) {
-                return 1.54D;
-            } else {
-                return 1.62D;
-            }
+        } 
+        if (isSneaking()) {
+            return 1.54D;
         }
+        return 1.62D;
     }
 
     @Override
@@ -195,7 +193,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         }
 
         if (name.length() > 16) {
-            throw new IllegalArgumentException("Player list names can only be a maximum of 16 characters long");
+            name = name.substring(0, 16);
         }
 
         // Collisions will make for invisible people
