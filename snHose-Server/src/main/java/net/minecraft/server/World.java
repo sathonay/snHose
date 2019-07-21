@@ -2647,12 +2647,12 @@ public abstract class World implements IBlockAccess {
         return null;
     }
 
-    public List getEntities(Entity entity, AxisAlignedBB axisalignedbb) {
+    public List<Entity> getEntities(Entity entity, AxisAlignedBB axisalignedbb) {
         return this.getEntities(entity, axisalignedbb, (IEntitySelector) null);
     }
 
-    public List getEntities(Entity entity, AxisAlignedBB axisalignedbb, IEntitySelector ientityselector) {
-        ArrayList arraylist = new ArrayList();
+    public List<Entity> getEntities(Entity entity, AxisAlignedBB axisalignedbb, IEntitySelector ientityselector) {
+        List<Entity> list = new ArrayList<Entity>();
         int i = MathHelper.floor((axisalignedbb.a - 2.0D) / 16.0D);
         int j = MathHelper.floor((axisalignedbb.d + 2.0D) / 16.0D);
         int k = MathHelper.floor((axisalignedbb.c - 2.0D) / 16.0D);
@@ -2661,12 +2661,12 @@ public abstract class World implements IBlockAccess {
         for (int i1 = i; i1 <= j; ++i1) {
             for (int j1 = k; j1 <= l; ++j1) {
                 if (this.isChunkLoaded(i1, j1)) {
-                    this.getChunkAt(i1, j1).a(entity, axisalignedbb, arraylist, ientityselector);
+                    this.getChunkAt(i1, j1).a(entity, axisalignedbb, list, ientityselector);
                 }
             }
         }
 
-        return arraylist;
+        return list;
     }
 
     public List a(Class oclass, AxisAlignedBB axisalignedbb) {

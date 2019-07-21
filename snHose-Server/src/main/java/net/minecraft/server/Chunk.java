@@ -917,7 +917,7 @@ public class Chunk {
         this.n = true;
     }
 
-    public void a(Entity entity, AxisAlignedBB axisalignedbb, List list, IEntitySelector ientityselector) {
+    public void a(Entity entity, AxisAlignedBB axisalignedbb, List<Entity> list, IEntitySelector ientityselector) {
         int i = MathHelper.floor((axisalignedbb.b - 2.0D) / 16.0D);
         int j = MathHelper.floor((axisalignedbb.e + 2.0D) / 16.0D);
 
@@ -927,16 +927,16 @@ public class Chunk {
         for (int k = i; k <= j; ++k) {
             List list1 = this.entitySlices[k];
 
-            for (int l = 0; l < list1.size(); ++l) {
-                Entity entity1 = (Entity) list1.get(l);
+            for (Object value : list1) {
+                Entity entity1 = (Entity) value;
 
                 if (entity1 != entity && entity1.boundingBox.b(axisalignedbb) && (ientityselector == null || ientityselector.a(entity1))) {
                     list.add(entity1);
                     Entity[] aentity = entity1.at();
 
                     if (aentity != null) {
-                        for (int i1 = 0; i1 < aentity.length; ++i1) {
-                            entity1 = aentity[i1];
+                        for (Entity item : aentity) {
+                            entity1 = item;
                             if (entity1 != entity && entity1.boundingBox.b(axisalignedbb) && (ientityselector == null || ientityselector.a(entity1))) {
                                 list.add(entity1);
                             }
