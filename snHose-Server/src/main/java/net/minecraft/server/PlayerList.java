@@ -155,10 +155,8 @@ public abstract class PlayerList {
         PlayerConnection playerconnection = new PlayerConnection(this.server, networkmanager, entityplayer);
 
         // CraftBukkit start - Don't send a higher than 60 MaxPlayer size, otherwise the PlayerInfo window won't render correctly.
-        int maxPlayers = this.getMaxPlayers();
-        if (maxPlayers > 60) {
-            maxPlayers = 60;
-        }
+        int maxPlayers = Math.min(this.getMaxPlayers(), 60);
+
         playerconnection.sendPacket(new PacketPlayOutLogin(entityplayer.getId(), entityplayer.playerInteractManager.getGameMode(), worldserver.getWorldData().isHardcore(), worldserver.worldProvider.dimension, worldserver.difficulty, maxPlayers, worldserver.getWorldData().getType()));
         entityplayer.getBukkitEntity().sendSupportedChannels();
         // CraftBukkit end
