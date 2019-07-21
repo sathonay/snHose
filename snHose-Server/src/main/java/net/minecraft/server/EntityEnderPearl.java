@@ -61,14 +61,14 @@ public class EntityEnderPearl extends EntityProjectile {
                     Bukkit.getPluginManager().callEvent(teleEvent);
 
                     if (!teleEvent.isCancelled() && !entityplayer.playerConnection.isDisconnected()) {
-                        if (this.getShooter().am()) {
-                            this.getShooter().mount((Entity) null);
+                        if (entityplayer.am()) {
+                            entityplayer.mount((Entity) null);
                         }
 
                         entityplayer.playerConnection.teleport(teleEvent.getTo());
-                        this.getShooter().fallDistance = 0.0F;
+                        entityplayer.fallDistance = 0.0F;
                         CraftEventFactory.entityDamage = this;
-                        this.getShooter().damageEntity(DamageSource.FALL, 5.0F);
+                        entityplayer.damageEntity(DamageSource.FALL, 5.0F);
                         CraftEventFactory.entityDamage = null;
                     }
                     // CraftBukkit end
