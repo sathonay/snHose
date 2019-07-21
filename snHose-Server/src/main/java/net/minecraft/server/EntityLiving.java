@@ -825,7 +825,7 @@ public abstract class EntityLiving extends Entity {
 
     protected void dropEquipment(boolean flag, int i) {}
 
-    public void a(Entity entity, float f, double xo, double zo) {
+    public void a(Entity entity, double xo, double zo) {
         if (this.random.nextDouble() >= this.getAttributeInstance(GenericAttributes.c).getValue()) {
             this.al = true;
             double magnitude = MathHelper.sqrt(xo * xo + zo * zo);
