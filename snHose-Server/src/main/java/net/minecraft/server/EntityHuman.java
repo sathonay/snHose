@@ -911,16 +911,12 @@ public abstract class EntityHuman extends EntityLiving implements ICommandListen
         if (entity.av()) {
             if (!entity.j(this)) {
                 float f = (float) this.getAttributeInstance(GenericAttributes.e).getValue();
-                int i = 0;
+                int i = (this.isSprinting() ? 1 : 0);
                 float f1 = 0.0F;
 
                 if (entity instanceof EntityLiving) {
                     f1 = EnchantmentManager.a((EntityLiving) this, (EntityLiving) entity);
                     i += EnchantmentManager.getKnockbackEnchantmentLevel(this, (EntityLiving) entity);
-                }
-
-                if (this.isSprinting()) {
-                    ++i;
                 }
 
                 if (f > 0.0F || f1 > 0.0F) {
