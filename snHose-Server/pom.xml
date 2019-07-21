@@ -121,7 +121,7 @@
           <execution>
             <id>ex-paperspigot</id>
             <configuration>
-              <format>git-PaperSpigot-%s</format>
+              <format>git-snHose-%s</format>
               <scmDirectory>../</scmDirectory>
               <descriptionProperty>paperspigot.desc</descriptionProperty>
             </configuration>
