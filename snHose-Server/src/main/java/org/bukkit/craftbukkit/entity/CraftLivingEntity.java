@@ -116,6 +116,16 @@ public class CraftLivingEntity extends CraftEntity implements LivingEntity {
         return launchProjectile(Snowball.class);
     }
 
+    @Override
+    public int getArrowsStuck() {
+        return getHandle().aZ();
+    }
+
+    @Override
+    public void setArrowsStuck(int paramInt) {
+        getHandle().p(paramInt);
+    }
+
     public double getEyeHeight() {
         return getHandle().getHeadHeight();
     }

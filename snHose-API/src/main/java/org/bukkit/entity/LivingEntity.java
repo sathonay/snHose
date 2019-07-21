@@ -17,6 +17,19 @@ import org.bukkit.projectiles.ProjectileSource;
 public interface LivingEntity extends Entity, Damageable, ProjectileSource {
 
     /**
+     *
+     * @return number of arrows on the entity
+     */
+    public int getArrowsStuck();
+
+
+    /**
+     * set number of arrow on the entity
+     * @param paramInt
+     */
+    public void setArrowsStuck(int paramInt);
+
+    /**
      * Gets the height of the living entity's eyes above its Location.
      *
      * @return height of the living entity's eyes above its location
