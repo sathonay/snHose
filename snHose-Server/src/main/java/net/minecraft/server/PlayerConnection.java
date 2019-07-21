@@ -194,7 +194,7 @@ public class PlayerConnection implements PacketPlayInListener {
         WorldServer worldserver = this.minecraftServer.getWorldServer(this.player.dimension);
 
         this.g = true;
-        if (!this.player.viewingCredits) {
+        if (!this.player.viewingCredits && !this.player.dead) {
             double d0;
 
             if (!this.checkMovement) {
@@ -207,7 +207,7 @@ public class PlayerConnection implements PacketPlayInListener {
             // CraftBukkit start - fire PlayerMoveEvent
             Player player = this.getPlayer();
             // Spigot Start
-            if ( !hasMoved )
+            if (!hasMoved)
             {
                 Location curPos = player.getLocation();
                 lastPosX = curPos.getX();
@@ -234,60 +234,60 @@ public class PlayerConnection implements PacketPlayInListener {
                 to.setPitch(packetplayinflying.pitch);
             }
 
-            // Prevent 40 event-calls for less than a single pixel of movement >.>
-            double delta = Math.pow(this.lastPosX - to.getX(), 2) + Math.pow(this.lastPosY - to.getY(), 2) + Math.pow(this.lastPosZ - to.getZ(), 2);
-            float deltaAngle = Math.abs(this.lastYaw - to.getYaw()) + Math.abs(this.lastPitch - to.getPitch());
+            if (this.checkMovement && !this.player.dead) {
 
-            if ((delta > 1f / 256 || deltaAngle > 10f) && (this.checkMovement && !this.player.dead)) {
-                this.lastPosX = to.getX();
-                this.lastPosY = to.getY();
-                this.lastPosZ = to.getZ();
-                this.lastYaw = to.getYaw();
-                this.lastPitch = to.getPitch();
+                // Prevent 40 event-calls for less than a single pixel of movement >.>
+                double delta = Math.pow(this.lastPosX - to.getX(), 2.0D) + Math.pow(this.lastPosY - to.getY(), 2.0D) + Math.pow(this.lastPosZ - to.getZ(), 2.0D);
+                float deltaAngle = Math.abs(this.lastYaw - to.getYaw()) + Math.abs(this.lastPitch - to.getPitch());
+                if (deltaAngle > 10.0F) {
+                    this.lastYaw = to.getYaw();
+                    this.lastPitch = to.getPitch();
+                    // TODO: PlayerHeadRotationEvent
+                }
 
-                // Skip the first time we do this
-                if (true) { // Spigot - don't skip any move events
-                    Location oldTo = to.clone(); // PaperSpigot
-                    PlayerMoveEvent event = new PlayerMoveEvent(player, from, to);
-                    this.server.getPluginManager().callEvent(event);
+                if (delta > 0.00390625D) {
+                    this.lastPosX = to.getX();
+                    this.lastPosY = to.getY();
+                    this.lastPosZ = to.getZ();
 
-                    // If the event is cancelled we move the player back to their old location.
-                    if (event.isCancelled()) {
-                        this.player.playerConnection.sendPacket(new PacketPlayOutPosition(from.getX(), from.getY() + 1.6200000047683716D, from.getZ(), from.getYaw(), from.getPitch(), false));
-                        return;
-                    }
+                    // Skip the first time we do this
+                    if (true) { // Spigot - don't skip any move events
+                        Location oldTo = to.clone(); // PaperSpigot
+                        PlayerMoveEvent event = new PlayerMoveEvent(player, from, to);
+                        this.server.getPluginManager().callEvent(event);
 
-                    /* If a Plugin has changed the To destination then we teleport the Player
-                    there to avoid any 'Moved wrongly' or 'Moved too quickly' errors.
-                    We only do this if the Event was not cancelled. */
-                    if (!oldTo.equals(event.getTo()) && !event.isCancelled()) { // PaperSpigot
-                        this.player.getBukkitEntity().teleport(event.getTo(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
-                        return;
-                    }
+                        // If the event is cancelled we move the player back to their old location.
+                        if (event.isCancelled()) {
+                            //this.player.playerConnection.sendPacket(new PacketPlayOutPosition(from.getX(), from.getY() + 1.6200000047683716D, from.getZ(), from.getYaw(), from.getPitch(), false));
+                            teleport(from);
+                            return;
+                        }
 
-                    /* Check to see if the Players Location has some how changed during the call of the event.
-                    This can happen due to a plugin teleporting the player instead of using .setTo() */
-                    if (!from.equals(this.getPlayer().getLocation()) && this.justTeleported) {
-                        this.justTeleported = false;
-                        return;
+                        /* If a Plugin has changed the To destination then we teleport the Player
+                        there to avoid any 'Moved wrongly' or 'Moved too quickly' errors.
+                        We only do this if the Event was not cancelled. */
+                        if ((!oldTo.equals(event.getTo())) && (!event.isCancelled())) {
+                            this.player.getBukkitEntity().teleport(event.getTo(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
+                            return;
+                        }
+
+                        /* Check to see if the Players Location has some how changed during the call of the event.
+                        This can happen due to a plugin teleporting the player instead of using .setTo() */
+                        if ((!from.equals(getPlayer().getLocation())) && (this.justTeleported)) {
+                            this.justTeleported = false;
+                            return;
+                        }
                     }
                 }
-            }
-
-            if (this.checkMovement && !this.player.dead) {
-                // CraftBukkit end
-                double d1;
-                double d2;
-                double d3;
 
                 if (this.player.vehicle != null) {
                     float f = this.player.yaw;
                     float f1 = this.player.pitch;
 
                     this.player.vehicle.ac();
-                    d1 = this.player.locX;
-                    d2 = this.player.locY;
-                    d3 = this.player.locZ;
+                    double d1 = this.player.locX;
+                    double d2 = this.player.locY;
+                    double d3 = this.player.locZ;
                     if (packetplayinflying.k()) {
                         f = packetplayinflying.g();
                         f1 = packetplayinflying.h();
@@ -323,9 +323,9 @@ public class PlayerConnection implements PacketPlayInListener {
                 this.y = this.player.locX;
                 this.z = this.player.locY;
                 this.q = this.player.locZ;
-                d1 = this.player.locX;
-                d2 = this.player.locY;
-                d3 = this.player.locZ;
+                double d1 = this.player.locX;
+                double d2 = this.player.locY;
+                double d3 = this.player.locZ;
                 float f2 = this.player.yaw;
                 float f3 = this.player.pitch;
 
