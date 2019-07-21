@@ -1748,7 +1748,8 @@ public class PlayerConnection implements PacketPlayInListener {
         if (packetplayinkeepalive.c() == this.h) {
             int i = (int) (this.d() - this.i);
 
-            this.player.ping = (this.player.ping * 3 + i) / 4;
+            this.player.ping = i;
+            this.player.pingAvg = (this.player.ping * 3 + i) / 4;
         }
     }
 
