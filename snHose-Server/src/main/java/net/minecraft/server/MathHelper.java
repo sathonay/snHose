@@ -58,33 +58,29 @@ public class MathHelper {
     public static int a(int var0, int var1, int var2) {
         if (var0 < var1) {
             return var1;
-        } else {
-            return var0 > var2 ? var2 : var0;
-        }
+        } 
+        return var0 > var2 ? var2 : var0;
     }
 
     public static float a(float var0, float var1, float var2) {
         if (var0 < var1) {
             return var1;
-        } else {
-            return var0 > var2 ? var2 : var0;
         }
+        return var0 > var2 ? var2 : var0;
     }
 
     public static double a(double var0, double var2, double var4) {
         if (var0 < var2) {
             return var2;
-        } else {
-            return var0 > var4 ? var4 : var0;
         }
+        return var0 > var4 ? var4 : var0;
     }
 
     public static double b(double var0, double var2, double var4) {
         if (var4 < 0.0D) {
             return var0;
-        } else {
-            return var4 > 1.0D ? var2 : var0 + (var2 - var0) * var4;
         }
+        return var4 > 1.0D ? var2 : var0 + (var2 - var0) * var4;
     }
 
     public static double a(double var0, double var2) {
@@ -155,8 +151,7 @@ public class MathHelper {
 
         try {
             var2 = Integer.parseInt(var0);
-        } catch (Throwable var4) {
-        }
+        } catch (Throwable var4) {}
 
         return var2;
     }
@@ -166,8 +161,7 @@ public class MathHelper {
 
         try {
             var3 = Integer.parseInt(var0);
-        } catch (Throwable var5) {
-        }
+        } catch (Throwable var5) {}
 
         if (var3 < var2) {
             var3 = var2;
@@ -181,8 +175,7 @@ public class MathHelper {
 
         try {
             var3 = Double.parseDouble(var0);
-        } catch (Throwable var6) {
-        }
+        } catch (Throwable var6) {}
 
         return var3;
     }
@@ -192,14 +185,17 @@ public class MathHelper {
 
         try {
             var5 = Double.parseDouble(var0);
-        } catch (Throwable var8) {
-        }
+        } catch (Throwable var8) {}
 
         if (var5 < var3) {
             var5 = var3;
         }
 
         return var5;
+    }
+
+    public static double limit(double actual, double minimum, double maximum) {
+        return Math.min(Math.max(actual, minimum), maximum);
     }
 
     static {
