@@ -831,9 +831,17 @@ public abstract class EntityLiving extends Entity {
             double magnitude = MathHelper.sqrt(xo * xo + zo * zo);
             double d2 = 0.4F;
 
-            this.motX /= 2.0D;
-            this.motY /= 2.0D;
-            this.motZ /= 2.0D;
+            double friction = 2.0D;
+            double knockbackReduction = getBukkitEntity().getKnockbackReduction();
+            if (knockbackReduction != 0.0D)
+            {
+                friction -= knockbackReduction;
+                d2 *= (1.0D - knockbackReduction);
+            }
+
+            this.motX /= friction;
+            this.motY /= friction;
+            this.motZ /= friction;
             this.motX -= xo /  magnitude *  d2;
             this.motY = MathHelper.a(this.motY + d2, 0.05, 0.4000000059604645);
             this.motZ -= zo /  magnitude *  d2;

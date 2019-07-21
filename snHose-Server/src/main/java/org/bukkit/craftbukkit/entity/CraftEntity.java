@@ -21,6 +21,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
     protected final CraftServer server;
     protected Entity entity;
     private EntityDamageEvent lastDamageEvent;
+    private float knockbackReduction;
 
     public CraftEntity(final CraftServer server, final Entity entity) {
         this.server = server;
@@ -408,6 +409,16 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
         }
 
         return getHandle().vehicle.getBukkitEntity();
+    }
+
+    public void setKnockbackReduction(float knockbackReduction)
+    {
+        this.knockbackReduction = knockbackReduction;
+    }
+
+    public float getKnockbackReduction()
+    {
+        return this.knockbackReduction;
     }
 
     // Spigot start

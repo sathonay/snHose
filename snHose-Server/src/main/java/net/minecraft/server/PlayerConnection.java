@@ -519,15 +519,9 @@ public class PlayerConnection implements PacketPlayInListener {
         } else {
             boolean flag = false;
 
-            if (packetplayinblockdig.g() == 0) {
-                flag = true;
-            }
-
-            if (packetplayinblockdig.g() == 1) {
-                flag = true;
-            }
-
-            if (packetplayinblockdig.g() == 2) {
+            if (packetplayinblockdig.g() == 0
+                    || packetplayinblockdig.g() == 1
+                    || packetplayinblockdig.g() == 2) {
                 flag = true;
             }
 

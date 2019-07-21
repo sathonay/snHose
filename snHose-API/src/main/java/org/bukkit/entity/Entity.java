@@ -296,6 +296,19 @@ public interface Entity extends Metadatable {
      */
     public Entity getVehicle();
 
+
+    /**
+     * Sets the knockback reduction
+     * @param knockbackReduction
+     */
+    public void setKnockbackReduction(float knockbackReduction);
+
+    /**
+     * Gets the knockback reduction of the entity
+     * @return knockback reduction
+     */
+    public float getKnockbackReduction();
+
     // Spigot Start
     public class Spigot
     {
