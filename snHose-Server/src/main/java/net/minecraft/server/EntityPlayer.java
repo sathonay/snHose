@@ -122,6 +122,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
 
     public void a(NBTTagCompound nbttagcompound) {
         super.a(nbttagcompound);
+        if (this.locY > 300) this.locY = 255;
         if (nbttagcompound.hasKeyOfType("playerGameType", 99)) {
             if (MinecraftServer.getServer().getForceGamemode()) {
                 this.playerInteractManager.setGameMode(MinecraftServer.getServer().getGamemode());
