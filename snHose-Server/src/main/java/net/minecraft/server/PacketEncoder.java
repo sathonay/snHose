@@ -6,6 +6,7 @@ import net.minecraft.util.com.google.common.collect.BiMap;
 import net.minecraft.util.io.netty.buffer.ByteBuf;
 import net.minecraft.util.io.netty.channel.ChannelHandlerContext;
 import net.minecraft.util.io.netty.handler.codec.MessageToByteEncoder;
+import net.minecraft.util.io.netty.handler.codec.EncoderException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
@@ -21,7 +22,7 @@ public class PacketEncoder extends MessageToByteEncoder {
         this.c = networkstatistics;
     }
 
-    protected void a(ChannelHandlerContext channelhandlercontext, Packet packet, ByteBuf bytebuf) throws IOException {
+    protected void a(ChannelHandlerContext channelhandlercontext, Packet packet, ByteBuf bytebuf) throws IOException, EncoderException {
         Integer integer = (Integer) ((BiMap) channelhandlercontext.channel().attr(NetworkManager.f).get()).inverse().get(packet.getClass());
 
         if (a.isDebugEnabled()) {
