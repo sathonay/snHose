@@ -478,7 +478,7 @@ public abstract class World implements IBlockAccess {
     public void notifyAndUpdatePhysics(int i, int j, int k, Chunk chunk, Block oldBlock, Block newBlock, int flag)
     {
         // should be isReady()
-        if ((flag & 2) != 0 && (chunk == null || chunk.isReady())) { // allow chunk to be null here as chunk.isReady() is false when we send our notification during block placement
+        if ((flag & 2) != 0 && (!this.isStatic || (flag & 4) == 0) && (chunk == null || chunk.isReady())) { // allow chunk to be null here as chunk.isReady() is false when we send our notification during block placement
             this.notify(i, j, k);
         }
 
