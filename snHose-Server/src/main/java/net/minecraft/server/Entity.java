@@ -920,8 +920,16 @@ public abstract class Entity {
         return 0.0F;
     }
 
+    private boolean isInLava;
+    private int lastLavaCheck = Integer.MIN_VALUE;
+
     public boolean P() {
-        return this.world.a(this.boundingBox.grow(-0.10000000149011612D, -0.4000000059604645D, -0.10000000149011612D), Material.LAVA);
+        int currentTick = MinecraftServer.currentTick;
+        if (this.lastLavaCheck != currentTick) {
+            this.lastLavaCheck = currentTick;
+            this.isInLava = this.world.a(iblockaccess, this.getBoundingBox().grow(-0.10000000149011612D, -0.4000000059604645D, -0.10000000149011612D), Material.LAVA);
+        }
+        return this.isInLava;
     }
 
     public void a(float f, float f1, float f2) {
@@ -1099,9 +1107,8 @@ public abstract class Entity {
             nbttagcompound.setString("id", s);
             this.e(nbttagcompound);
             return true;
-        } else {
-            return false;
-        }
+        } 
+        return false;
     }
 
     public boolean d(NBTTagCompound nbttagcompound) {
@@ -1111,9 +1118,8 @@ public abstract class Entity {
             nbttagcompound.setString("id", s);
             this.e(nbttagcompound);
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     public void e(NBTTagCompound nbttagcompound) {
