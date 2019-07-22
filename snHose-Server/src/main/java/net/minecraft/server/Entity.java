@@ -1077,10 +1077,9 @@ public abstract class Entity {
     public boolean damageEntity(DamageSource damagesource, float f) {
         if (this.isInvulnerable()) {
             return false;
-        } else {
-            this.Q();
-            return false;
         }
+        this.Q();
+        return false;
     }
 
     public boolean R() {
@@ -1486,7 +1485,7 @@ public abstract class Entity {
             this.vehicle = null;
         } else {
             // CraftBukkit start
-            if ((this.bukkitEntity instanceof LivingEntity) && (entity.getBukkitEntity() instanceof Vehicle) && entity.world.isChunkLoaded((int) entity.locX >> 4, (int) entity.locZ >> 4)) {
+            if ((this.bukkitEntity instanceof LivingEntity) && (entity.getBukkitEntity() instanceof Vehicle) && entity.world.isChunkLoaded(MathHelper.floor(entity.locX) >> 4, MathHelper.floor(entity.locZ) >> 4)) {
                 // It's possible to move from one vehicle to another.  We need to check if they're already in a vehicle, and fire an exit event if they are.
                 VehicleExitEvent exitEvent = null;
                 if (this.vehicle != null && this.vehicle.getBukkitEntity() instanceof Vehicle) {
