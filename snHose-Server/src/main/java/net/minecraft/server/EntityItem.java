@@ -160,6 +160,8 @@ public class EntityItem extends Entity {
     // PaperSpigot end
 
     private void k() {
+        ItemStack stack = getItemStack();
+        if (stack.count >= stack.getMaxStackSize()) return;
         // Spigot start
         double radius = world.spigotConfig.itemMerge;
         Iterator iterator = this.world.a(EntityItem.class, this.boundingBox.grow(radius, radius, radius)).iterator();
