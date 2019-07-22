@@ -504,7 +504,7 @@ public class PlayerConnection implements PacketPlayInListener {
             } else {
                 // Else we increment the drop count and check the amount.
                 this.dropCount++;
-                if (this.dropCount >= 20) {
+                if (this.dropCount >= 12) {
                     this.c.warn(this.player.getName() + " dropped their items too quickly!");
                     this.disconnect("You dropped your items too quickly (Hacking?)");
                     return;
@@ -1302,7 +1302,7 @@ public class PlayerConnection implements PacketPlayInListener {
                 }
                 if (packetplayinwindowclick.e() == 0 || packetplayinwindowclick.e() == 1) {
                     action = InventoryAction.NOTHING; // Don't want to repeat ourselves
-                    if (packetplayinwindowclick.d() == -999) {
+                    if (packetplayinwindowclick.d() < 0) {
                         if (player.inventory.getCarried() != null) {
                             action = packetplayinwindowclick.e() == 0 ? InventoryAction.DROP_ALL_CURSOR : InventoryAction.DROP_ONE_CURSOR;
                         }
