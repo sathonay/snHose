@@ -5,6 +5,7 @@ import java.util.List;
 
 // CraftBukkit start
 import java.util.HashMap;
+import java.util.Map;
 
 import org.bukkit.craftbukkit.entity.CraftLivingEntity;
 import org.bukkit.entity.LivingEntity;
