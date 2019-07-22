@@ -40,7 +40,7 @@ public abstract class EntityLiving extends Entity {
     public float aE;
     public float aF;
     public float aG;
-    public int maxNoDamageTicks = 10;
+    public int maxNoDamageTicks = 20;
     public float aI;
     public float aJ;
     public float aK;
@@ -666,7 +666,7 @@ public abstract class EntityLiving extends Entity {
                 this.aF = 1.5F;
                 boolean flag = true;
 
-                if (this.noDamageTicks > 0) {
+                if ((float) this.noDamageTicks > (float) this.maxNoDamageTicks / 2.0F) {
                     if (f <= this.lastDamage) {
                         return false;
                     }
@@ -731,7 +731,7 @@ public abstract class EntityLiving extends Entity {
                         }
 
                         this.az = (float) (Math.atan2(d1, d0) * 180.0D / 3.1415927410125732D) - this.yaw;
-                        this.a(entity, d0, d1);
+                        this.a(entity, f, d0, d1);
                     } else {
                         this.az = (float) ((int) (Math.random() * 2.0D) * 180);
                     }
@@ -825,26 +825,24 @@ public abstract class EntityLiving extends Entity {
 
     protected void dropEquipment(boolean flag, int i) {}
 
-    public void a(Entity entity, double xo, double zo) {
+    public void a(Entity entity, float f, double xo, double zo) {
         if (this.random.nextDouble() >= this.getAttributeInstance(GenericAttributes.c).getValue()) {
             this.al = true;
             double magnitude = MathHelper.sqrt(xo * xo + zo * zo);
             double d2 = 0.4F;
-
             double friction = 2.0D;
             double knockbackReduction = getBukkitEntity().getKnockbackReduction();
-            if (knockbackReduction != 0.0D)
-            {
+
+            if (knockbackReduction != 0.0D) {
                 friction -= knockbackReduction;
                 d2 *= (1.0D - knockbackReduction);
             }
-
             this.motX /= friction;
             this.motY /= friction;
             this.motZ /= friction;
-            
+
             this.motX -= xo /  magnitude *  d2;
-            this.motY = MathHelper.limit(this.motY + d2, 0.05, 0.4000000059604645);
+            this.motY = MathHelper.a(this.motY + d2, 0.05, 0.4000000059604645);
             this.motZ -= zo /  magnitude *  d2;
         }
     }
