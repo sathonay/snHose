@@ -129,7 +129,7 @@ public class EntityTrackerEntry {
                     }
 
                     if (flag1) {
-                        this.yRot = 1;
+                        this.yRot = l;
                         this.xRot = i1;
                     }
                     // CraftBukkit end
@@ -240,7 +240,7 @@ public class EntityTrackerEntry {
                 Player player = (Player) this.tracker.getBukkitEntity();
                 org.bukkit.util.Vector velocity = player.getVelocity();
 
-                PlayerVelocityEvent event = new PlayerVelocityEvent(player, velocity);
+                PlayerVelocityEvent event = new PlayerVelocityEvent(player, velocity.clone());
                 this.tracker.world.getServer().getPluginManager().callEvent(event);
 
                 if (event.isCancelled()) {
