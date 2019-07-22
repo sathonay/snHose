@@ -27,6 +27,7 @@ public abstract class MobSpawnerAbstract {
     private int requiredPlayerRange = 16;
     private int spawnRange = 4;
     private int tickDelay = 0;
+    private int spawningPenalty = 0;
 
     public MobSpawnerAbstract() {}
 
@@ -115,6 +116,11 @@ public abstract class MobSpawnerAbstract {
 
                 if (flag) {
                     this.j();
+                } else {
+                    this.spawnDelay += this.spawningPenalty;
+                    if(this.spawningPenalty < 40) {
+                        this.spawningPenalty++;
+                    }
                 }
             }
         }
@@ -212,6 +218,8 @@ public abstract class MobSpawnerAbstract {
 
             this.spawnDelay = this.minSpawnDelay + this.a().random.nextInt(i);
         }
+
+        this.spawningPenalty = 0;
 
         if (this.mobs != null && this.mobs.size() > 0) {
             this.a((TileEntityMobSpawnerData) WeightedRandom.a(this.a().random, (Collection) this.mobs));
