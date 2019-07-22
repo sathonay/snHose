@@ -37,7 +37,7 @@ public class ChunkProviderServer implements IChunkProvider {
     // CraftBukkit end
 
     public ChunkProviderServer(WorldServer worldserver, IChunkLoader ichunkloader, IChunkProvider ichunkprovider) {
-        this.emptyChunk = new EmptyChunk(worldserver, 0, 0);
+        this.emptyChunk = new EmptyChunk(worldserver, Integer.MIN_VALUE, Integer.MIN_VALUE);
         this.world = worldserver;
         this.f = ichunkloader;
         this.chunkProvider = ichunkprovider;
