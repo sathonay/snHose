@@ -58,33 +58,42 @@ public class EntityExperienceOrb extends Entity {
 
         this.j(this.locX, (this.boundingBox.b + this.boundingBox.e) / 2.0D, this.locZ);
         double d0 = 8.0D;
-
+ 
+        EntityHuman foundTarget = null;
         if (this.targetTime < this.a - 20 + this.getId() % 100) {
             if (this.targetPlayer == null || this.targetPlayer.f(this) > d0 * d0) {
-                this.targetPlayer = this.world.findNearbyPlayer(this, d0);
+                foundTarget = this.world.findNearbyPlayer(this, d0);
+                if(foundTarget == null) {
+                    this.targetPlayer = foundTarget;
+                } else if(foundTarget != null && !foundTarget.equals(this.targetPlayer)) {
+                    // CraftBukkit start
+                    EntityTargetEvent event = CraftEventFactory.callEntityTargetEvent(this, foundTarget, EntityTargetEvent.TargetReason.CLOSEST_PLAYER);
+                    Entity target = event.getTarget() == null ? null : ((org.bukkit.craftbukkit.entity.CraftEntity) event.getTarget()).getHandle();
+                    if(!event.isCancelled()) {
+                        if(target == null) {
+                            this.targetPlayer = null;
+                        } else if(target instanceof EntityHuman) {
+                            this.targetPlayer = (EntityHuman) target;
+                        }
+                    }
+                    // CraftBukkit end
+                }
             }
 
             this.targetTime = this.a;
         }
 
         if (this.targetPlayer != null) {
-            // CraftBukkit start
-            EntityTargetEvent event = CraftEventFactory.callEntityTargetEvent(this, targetPlayer, EntityTargetEvent.TargetReason.CLOSEST_PLAYER);
-            Entity target = event.getTarget() == null ? null : ((org.bukkit.craftbukkit.entity.CraftEntity) event.getTarget()).getHandle();
-
-            if (!event.isCancelled() && target != null) {
-                double d1 = (target.locX - this.locX) / d0;
-                double d2 = (target.locY + (double) target.getHeadHeight() - this.locY) / d0;
-                double d3 = (target.locZ - this.locZ) / d0;
-                double d4 = Math.sqrt(d1 * d1 + d2 * d2 + d3 * d3);
-                double d5 = 1.0D - d4;
-                if (d5 > 0.0D) {
-                    d5 *= d5;
-                    this.motX += d1 / d4 * d5 * 0.1D;
-                    this.motY += d2 / d4 * d5 * 0.1D;
-                    this.motZ += d3 / d4 * d5 * 0.1D;
-                }
-                // CraftBukkit end
+            double d1 = (target.locX - this.locX) / d0;
+            double d2 = (target.locY + (double) target.getHeadHeight() - this.locY) / d0;
+            double d3 = (target.locZ - this.locZ) / d0;
+            double d4 = Math.sqrt(d1 * d1 + d2 * d2 + d3 * d3);
+            double d5 = 1.0D - d4;
+            if (d5 > 0.0D) {
+                d5 *= d5;
+                this.motX += d1 / d4 * d5 * 0.1D;
+                this.motY += d2 / d4 * d5 * 0.1D;
+                this.motZ += d3 / d4 * d5 * 0.1D;
             }
         }
 
