@@ -35,6 +35,7 @@ public abstract class Entity {
 
     // CraftBukkit start
     private static final int CURRENT_LEVEL = 2;
+    public static Random SHARED_RANDOM = new Random();
     static boolean isLevelAtLeast(NBTTagCompound tag, int level) {
         return tag.hasKey("Bukkit.updateLevel") && tag.getInt("Bukkit.updateLevel") >= level;
     }
@@ -148,7 +149,7 @@ public abstract class Entity {
         this.width = 0.6F;
         this.length = 1.8F;
         this.d = 1;
-        this.random = new Random();
+        this.random = SHARED_RANDOM;
         this.maxFireTicks = 1;
         this.justCreated = true;
         this.uniqueID = new UUID(random.nextLong(), random.nextLong()); // Spigot
