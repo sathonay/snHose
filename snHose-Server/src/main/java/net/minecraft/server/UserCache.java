@@ -54,7 +54,7 @@ public class UserCache {
         GameProfileLookup gameprofilelookup = new GameProfileLookup(agameprofile);
 
         minecraftserver.getGameProfileRepository().findProfilesByNames(new String[] { s}, Agent.MINECRAFT, gameprofilelookup);
-        if (!minecraftserver.getOnlineMode() && agameprofile[0] == null) {
+        if (!minecraftserver.getOnlineMode() && agameprofile[0] == null && !org.apache.commons.lang3.StringUtils.isBlank(s)) {
             UUID uuid = EntityHuman.a(new GameProfile((UUID) null, s));
             GameProfile gameprofile = new GameProfile(uuid, s);
 
