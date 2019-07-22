@@ -40,6 +40,10 @@ public class LoginListener implements PacketLoginInListener {
     }
 
     public void a() {
+        if (!MinecraftServer.getServer().isRunning()) {
+            this.disconnect(org.spigotmc.SpigotConfig.restartMessage);
+            return;
+        }
         if (this.g == EnumProtocolState.READY_TO_ACCEPT) {
             this.c();
         }
