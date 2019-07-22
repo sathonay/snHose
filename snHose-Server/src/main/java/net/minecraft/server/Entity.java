@@ -961,9 +961,8 @@ public abstract class Entity {
             int k = MathHelper.floor(this.locY - (double) this.height + d0);
 
             return this.world.n(i, k, j);
-        } else {
-            return 0.0F;
         }
+        return 0.0F;
     }
 
     public void spawnIn(World world) {
@@ -995,6 +994,7 @@ public abstract class Entity {
             this.lastYaw -= 360.0F;
         }
 
+        world.getChunkAt((int) Math.floor(this.locX) >> 4, (int) Math.floor(this.locZ) >> 4);
         this.setPosition(this.locX, this.locY, this.locZ);
         this.b(f, f1);
     }
