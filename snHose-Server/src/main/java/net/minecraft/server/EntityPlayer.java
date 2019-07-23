@@ -1170,6 +1170,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
         this.lastDamager = null;
         this.combatTracker = new CombatTracker(this);
         this.lastSentExp = -1;
+        this.p(0);
         if (this.keepLevel || keepInventory) {
             this.exp = exp;
         } else {
