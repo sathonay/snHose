@@ -91,7 +91,7 @@ public final class CommandPermissions {
         registerTime(commands);
 
         DefaultPermissions.registerPermission(PREFIX + "kill", "Allows the user to commit suicide", PermissionDefault.TRUE, commands);
-        DefaultPermissions.registerPermission(PREFIX + "me", "Allows the user to perform a chat action", PermissionDefault.TRUE, commands);
+        DefaultPermissions.registerPermission(PREFIX + "me", "Allows the user to perform a chat action", PermissionDefault.OP, commands);
         DefaultPermissions.registerPermission(PREFIX + "tell", "Allows the user to privately message another player", PermissionDefault.TRUE, commands);
         DefaultPermissions.registerPermission(PREFIX + "say", "Allows the user to talk as the console", PermissionDefault.OP, commands);
         DefaultPermissions.registerPermission(PREFIX + "give", "Allows the user to give items to players", PermissionDefault.OP, commands);
@@ -99,7 +99,7 @@ public final class CommandPermissions {
         DefaultPermissions.registerPermission(PREFIX + "kick", "Allows the user to kick players", PermissionDefault.OP, commands);
         DefaultPermissions.registerPermission(PREFIX + "stop", "Allows the user to stop the server", PermissionDefault.OP, commands);
         DefaultPermissions.registerPermission(PREFIX + "list", "Allows the user to list all online players", PermissionDefault.OP, commands);
-        DefaultPermissions.registerPermission(PREFIX + "help", "Allows the user to view the vanilla help menu", PermissionDefault.TRUE, commands);
+        DefaultPermissions.registerPermission(PREFIX + "help", "Allows the user to view the vanilla help menu", PermissionDefault.OP, commands);
         DefaultPermissions.registerPermission(PREFIX + "plugins", "Allows the user to view the list of plugins running on this server", PermissionDefault.TRUE, commands);
         DefaultPermissions.registerPermission(PREFIX + "reload", "Allows the user to reload the server settings", PermissionDefault.OP, commands);
         DefaultPermissions.registerPermission(PREFIX + "version", "Allows the user to view the version of the server", PermissionDefault.TRUE, commands);
