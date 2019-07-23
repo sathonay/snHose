@@ -1856,7 +1856,7 @@ public abstract class Entity {
 
     public void teleportTo(Location exit, boolean portal) {
         if (!this.isAlive()) {
-            return
+            return;
         }
         WorldServer worldserver = ((CraftWorld) this.getBukkitEntity().getLocation().getWorld()).getHandle();
         WorldServer worldserver1 = ((CraftWorld) exit.getWorld()).getHandle();
