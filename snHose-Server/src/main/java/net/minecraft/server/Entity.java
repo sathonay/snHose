@@ -1855,60 +1855,61 @@ public abstract class Entity {
     }
 
     public void teleportTo(Location exit, boolean portal) {
-        if (!this.dead) {
-            WorldServer worldserver = ((CraftWorld) this.getBukkitEntity().getLocation().getWorld()).getHandle();
-            WorldServer worldserver1 = ((CraftWorld) exit.getWorld()).getHandle();
-            int i = worldserver1.dimension;
-            // CraftBukkit end
+        if (!this.isAlive()) {
+            return
+        }
+        WorldServer worldserver = ((CraftWorld) this.getBukkitEntity().getLocation().getWorld()).getHandle();
+        WorldServer worldserver1 = ((CraftWorld) exit.getWorld()).getHandle();
+        int i = worldserver1.dimension;
+        // CraftBukkit end
 
-            this.dimension = i;
-            /* CraftBukkit start - TODO: Check if we need this
+        this.dimension = i;
+        /* CraftBukkit start - TODO: Check if we need this
+        if (j == 1 && i == 1) {
+            worldserver1 = minecraftserver.getWorldServer(0);
+            this.dimension = 0;
+        }
+        // CraftBukkit end */
+
+        this.world.kill(this);
+        this.dead = false;
+        this.world.methodProfiler.a("reposition");
+        // CraftBukkit start - Ensure chunks are loaded in case TravelAgent is not used which would initially cause chunks to load during find/create
+        // minecraftserver.getPlayerList().a(this, j, worldserver, worldserver1);
+        boolean before = worldserver1.chunkProviderServer.forceChunkLoad;
+        worldserver1.chunkProviderServer.forceChunkLoad = true;
+        //worldserver1.getMinecraftServer().getPlayerList().repositionEntity(this, exit, portal); // PaperSpigot - no... this entity is dead
+        worldserver1.chunkProviderServer.forceChunkLoad = before;
+        // CraftBukkit end
+        this.world.methodProfiler.c("reloading");
+        Entity entity = EntityTypes.createEntityByName(EntityTypes.b(this), worldserver1);
+
+        if (entity != null) {
+            entity.a(this, true);
+            // PaperSpigot start - move entity to new location
+            exit.getBlock(); // force load
+            entity.setLocation(exit.getX(), exit.getY(), exit.getZ(), exit.getYaw(), exit.getPitch());
+            // PaperSpigot end
+            /* CraftBukkit start - We need to do this...
             if (j == 1 && i == 1) {
-                worldserver1 = minecraftserver.getWorldServer(0);
-                this.dimension = 0;
+                ChunkCoordinates chunkcoordinates = worldserver1.getSpawn();
+
+                chunkcoordinates.y = this.world.i(chunkcoordinates.x, chunkcoordinates.z);
+                entity.setPositionRotation((double) chunkcoordinates.x, (double) chunkcoordinates.y, (double) chunkcoordinates.z, entity.yaw, entity.pitch);
             }
             // CraftBukkit end */
-
-            this.world.kill(this);
-            this.dead = false;
-            this.world.methodProfiler.a("reposition");
-            // CraftBukkit start - Ensure chunks are loaded in case TravelAgent is not used which would initially cause chunks to load during find/create
-            // minecraftserver.getPlayerList().a(this, j, worldserver, worldserver1);
-            boolean before = worldserver1.chunkProviderServer.forceChunkLoad;
-            worldserver1.chunkProviderServer.forceChunkLoad = true;
-            //worldserver1.getMinecraftServer().getPlayerList().repositionEntity(this, exit, portal); // PaperSpigot - no... this entity is dead
-            worldserver1.chunkProviderServer.forceChunkLoad = before;
+            worldserver1.addEntity(entity);
+            // CraftBukkit start - Forward the CraftEntity to the new entity
+            this.getBukkitEntity().setHandle(entity);
+            entity.bukkitEntity = this.getBukkitEntity();
             // CraftBukkit end
-            this.world.methodProfiler.c("reloading");
-            Entity entity = EntityTypes.createEntityByName(EntityTypes.b(this), worldserver1);
-
-            if (entity != null) {
-                entity.a(this, true);
-                // PaperSpigot start - move entity to new location
-                exit.getBlock(); // force load
-                entity.setLocation(exit.getX(), exit.getY(), exit.getZ(), exit.getYaw(), exit.getPitch());
-                // PaperSpigot end
-                /* CraftBukkit start - We need to do this...
-                if (j == 1 && i == 1) {
-                    ChunkCoordinates chunkcoordinates = worldserver1.getSpawn();
-
-                    chunkcoordinates.y = this.world.i(chunkcoordinates.x, chunkcoordinates.z);
-                    entity.setPositionRotation((double) chunkcoordinates.x, (double) chunkcoordinates.y, (double) chunkcoordinates.z, entity.yaw, entity.pitch);
-                }
-                // CraftBukkit end */
-                worldserver1.addEntity(entity);
-                // CraftBukkit start - Forward the CraftEntity to the new entity
-                this.getBukkitEntity().setHandle(entity);
-                entity.bukkitEntity = this.getBukkitEntity();
-                // CraftBukkit end
-            }
-
-            this.dead = true;
-            this.world.methodProfiler.b();
-            worldserver.i();
-            worldserver1.i();
-            this.world.methodProfiler.b();
         }
+
+        this.dead = true;
+        this.world.methodProfiler.b();
+        worldserver.i();
+        worldserver1.i();
+        this.world.methodProfiler.b();
     }
 
     public float a(Explosion explosion, World world, int i, int j, int k, Block block) {
