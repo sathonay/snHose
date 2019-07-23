@@ -4,13 +4,14 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
+import com.google.common.collect.Sets;
 
 import org.bukkit.event.block.BlockRedstoneEvent; // CraftBukkit
 
 public class BlockRedstoneWire extends Block {
 
     private boolean a = true;
-    private Set b = new HashSet();
+    private Set b = Sets.newConcurrentHashSet();
 
     public BlockRedstoneWire() {
         super(Material.ORIENTABLE);
