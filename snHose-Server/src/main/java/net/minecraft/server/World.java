@@ -2893,12 +2893,9 @@ public abstract class World implements IBlockAccess {
         double d4 = -1.0D;
         EntityHuman entityhuman = null;
 
-        for (int i = 0; i < this.players.size(); ++i) {
-            EntityHuman entityhuman1 = (EntityHuman) this.players.get(i);
+        for (EntityHuman entityhuman1 : (EntityHuman) this.players) {
             // CraftBukkit start - Fixed an NPE
-            if (entityhuman1 == null || entityhuman1.dead) {
-                continue;
-            }
+            if (entityhuman1 == null || !entityhuman1.isAlive()) continue;
             // CraftBukkit end
             double d5 = entityhuman1.e(d0, d1, d2);
 
@@ -2919,12 +2916,9 @@ public abstract class World implements IBlockAccess {
         double d4 = -1.0D;
         EntityHuman entityhuman = null;
 
-        for (int i = 0; i < this.players.size(); ++i) {
         for (EntityHuman entityhuman1 : (EntityHuman) this.players) {
             // CraftBukkit start - Fixed an NPE
-            if (entityhuman1 == null || !entityhuman1.isAlive()) {
-                continue;
-            }
+            if (entityhuman1 == null || !entityhuman1.isAlive()) continue;
             // CraftBukkit end
 
             if (!entityhuman1.abilities.isInvulnerable && entityhuman1.isAlive()) {
