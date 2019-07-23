@@ -2920,15 +2920,15 @@ public abstract class World implements IBlockAccess {
         EntityHuman entityhuman = null;
 
         for (int i = 0; i < this.players.size(); ++i) {
-            EntityHuman entityhuman1 = (EntityHuman) this.players.get(i);
+        for (EntityHuman entityhuman1 : (EntityHuman) this.players) {
             // CraftBukkit start - Fixed an NPE
-            if (entityhuman1 == null || entityhuman1.dead) {
+            if (entityhuman1 == null || !entityhuman1.isAlive()) {
                 continue;
             }
             // CraftBukkit end
 
             if (!entityhuman1.abilities.isInvulnerable && entityhuman1.isAlive()) {
-                double d5 = entityhuman1.e(d0, d1, d2);
+                double d5 = entityhuman1.e(d0, entityhuman1.locY, d2);
                 double d6 = d3;
 
                 if (entityhuman1.isSneaking()) {
@@ -2936,12 +2936,7 @@ public abstract class World implements IBlockAccess {
                 }
 
                 if (entityhuman1.isInvisible()) {
-                    float f = entityhuman1.bE();
-
-                    if (f < 0.1F) {
-                        f = 0.1F;
-                    }
-
+                    float f = Math.max(entityhuman1.bE(), 0.1f);
                     d6 *= (double) (0.7F * f);
                 }
 
@@ -2984,26 +2979,20 @@ public abstract class World implements IBlockAccess {
     // PaperSpigot end
 
     public EntityHuman a(String s) {
-        for (int i = 0; i < this.players.size(); ++i) {
-            EntityHuman entityhuman = (EntityHuman) this.players.get(i);
-
+        for (EntityHuman entityhuman : (EntityHuman) this.players) {
             if (s.equals(entityhuman.getName())) {
                 return entityhuman;
             }
         }
-
         return null;
     }
 
     public EntityHuman a(UUID uuid) {
-        for (int i = 0; i < this.players.size(); ++i) {
-            EntityHuman entityhuman = (EntityHuman) this.players.get(i);
-
+        for (EntityHuman entityhuman : (EntityHuman) this.players) {
             if (uuid.equals(entityhuman.getUniqueID())) {
                 return entityhuman;
             }
         }
-
         return null;
     }
 
