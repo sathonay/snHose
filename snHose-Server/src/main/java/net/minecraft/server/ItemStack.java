@@ -363,6 +363,9 @@ public final class ItemStack {
                     org.bukkit.craftbukkit.inventory.CraftItemStack item = org.bukkit.craftbukkit.inventory.CraftItemStack.asCraftMirror(this);
                     org.bukkit.event.player.PlayerItemDamageEvent event = new org.bukkit.event.player.PlayerItemDamageEvent((org.bukkit.entity.Player) entityliving.getBukkitEntity(), item, i);
                     org.bukkit.Bukkit.getServer().getPluginManager().callEvent(event);
+                    if (i != event.getDamage() || event.isCancelled()) {
+                        event.getPlayer().updateInventory();
+                    }
                     if (event.isCancelled()) return false;
                     i = event.getDamage();
                 }
