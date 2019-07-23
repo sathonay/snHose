@@ -27,7 +27,7 @@ public class PluginsCommand extends BukkitCommand {
     }
 
     private String getPluginList() {
-        TreeMap<String, ChatColor> plugins = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+        TreeMap<String, ChatColor> plugins = new TreeMap<String, ChatColor>(String.CASE_INSENSITIVE_ORDER);
         for (Plugin plugin : Bukkit.getPluginManager().getPlugins()) {
             plugins.put(plugin.getDescription().getName(), plugin.isEnabled() ? ChatColor.GREEN : ChatColor.RED);
         }
