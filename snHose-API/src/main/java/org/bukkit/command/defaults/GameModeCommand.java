@@ -21,6 +21,7 @@ public class GameModeCommand extends VanillaCommand {
         super("gamemode");
         this.description = "Changes the player to a specific game mode";
         this.usageMessage = "/gamemode <mode> [player]";
+        this.setAliases(Arrays.asList(new String[] { "gm" }));
         this.setPermission("bukkit.command.gamemode");
     }
 
