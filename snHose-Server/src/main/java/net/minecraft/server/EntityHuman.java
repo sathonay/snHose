@@ -587,7 +587,7 @@ public abstract class EntityHuman extends EntityLiving implements ICommandListen
                 return null;
             }
             // CraftBukkit end
-
+            entityitem.owner = this;
             this.a(entityitem);
             this.a(StatisticList.s, 1);
             return entityitem;
