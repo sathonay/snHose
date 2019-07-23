@@ -133,6 +133,7 @@ public class EntityItem extends Entity {
                     return;
                 }
                 // CraftBukkit end
+                this.owner = null;
                 this.die();
             }
         }
@@ -155,6 +156,7 @@ public class EntityItem extends Entity {
                 return;
             }
             // CraftBukkit end
+            this.owner = null;
             this.die();
         }
     }
