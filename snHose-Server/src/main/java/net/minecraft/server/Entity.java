@@ -927,7 +927,7 @@ public abstract class Entity {
         int currentTick = MinecraftServer.currentTick;
         if (this.lastLavaCheck != currentTick) {
             this.lastLavaCheck = currentTick;
-            this.isInLava = this.world.a(iblockaccess, this.getBoundingBox().grow(-0.10000000149011612D, -0.4000000059604645D, -0.10000000149011612D), Material.LAVA);
+            this.isInLava = this.world.a(this.boundingBox.grow(-0.10000000149011612D, -0.4000000059604645D, -0.10000000149011612D), Material.LAVA);
         }
         return this.isInLava;
     }

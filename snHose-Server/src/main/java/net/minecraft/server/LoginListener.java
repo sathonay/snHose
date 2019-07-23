@@ -45,7 +45,7 @@ public class LoginListener implements PacketLoginInListener {
             return;
         }
         if (this.g == EnumProtocolState.READY_TO_ACCEPT) {
-            if (networkManager.channel != null && networkManager.channel.isOpen()) {
+            if (networkManager.isConnected()) {
                 this.c();
             }
         }

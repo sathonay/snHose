@@ -84,9 +84,9 @@ public class EntityExperienceOrb extends Entity {
         }
 
         if (this.targetPlayer != null) {
-            double d1 = (target.locX - this.locX) / d0;
-            double d2 = (target.locY + (double) target.getHeadHeight() - this.locY) / d0;
-            double d3 = (target.locZ - this.locZ) / d0;
+            double d1 = (this.targetPlayer.locX - this.locX) / d0;
+            double d2 = (this.targetPlayer.locY + (double) this.targetPlayer.getHeadHeight() - this.locY) / d0;
+            double d3 = (this.targetPlayer.locZ - this.locZ) / d0;
             double d4 = Math.sqrt(d1 * d1 + d2 * d2 + d3 * d3);
             double d5 = 1.0D - d4;
             if (d5 > 0.0D) {

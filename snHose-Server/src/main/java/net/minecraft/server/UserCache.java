@@ -27,6 +27,7 @@ import net.minecraft.util.com.google.gson.GsonBuilder;
 import net.minecraft.util.com.mojang.authlib.Agent;
 import net.minecraft.util.com.mojang.authlib.GameProfile;
 import net.minecraft.util.org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
 
 public class UserCache {
 
@@ -54,7 +55,7 @@ public class UserCache {
         GameProfileLookup gameprofilelookup = new GameProfileLookup(agameprofile);
 
         minecraftserver.getGameProfileRepository().findProfilesByNames(new String[] { s}, Agent.MINECRAFT, gameprofilelookup);
-        if (!minecraftserver.getOnlineMode() && agameprofile[0] == null && !org.apache.commons.lang3.StringUtils.isBlank(s)) {
+        if (!minecraftserver.getOnlineMode() && agameprofile[0] == null && !StringUtils.isBlank(s)) {
             UUID uuid = EntityHuman.a(new GameProfile((UUID) null, s));
             GameProfile gameprofile = new GameProfile(uuid, s);
 

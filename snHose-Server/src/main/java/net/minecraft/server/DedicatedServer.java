@@ -26,7 +26,7 @@ import org.bukkit.event.server.ServerCommandEvent;
 public class DedicatedServer extends MinecraftServer implements IMinecraftServer {
 
     private static final Logger i = LogManager.getLogger();
-    private final java.util.Queue<ServerCommand> j = new java.util.concurrent.ConcurrentLinkedQueue<>();
+    private final java.util.Queue<ServerCommand> j = new java.util.concurrent.ConcurrentLinkedQueue<ServerCommand>();
     private RemoteStatusListener k;
     private RemoteControlListener l;
     public PropertyManager propertyManager; // CraftBukkit - private -> public
