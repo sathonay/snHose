@@ -1,14 +1,9 @@
 package net.minecraft.server;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 // CraftBukkit start
-import java.util.ArrayList;
 import com.google.common.base.Function;
 import org.bukkit.craftbukkit.event.CraftEventFactory;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -24,7 +19,7 @@ public abstract class EntityLiving extends Entity {
     private static final AttributeModifier c = (new AttributeModifier(b, "Sprinting speed boost", 0.30000001192092896D, 2)).a(false);
     private AttributeMapBase d;
     public CombatTracker combatTracker = new CombatTracker(this); // CraftBukkit - private -> public, remove final
-    public final HashMap effects = new HashMap(); // CraftBukkit - protected -> public
+    public final Map effects = new ConcurrentHashMap(); // CraftBukkit - protected -> public
     private final ItemStack[] g = new ItemStack[5];
     public boolean at;
     public int au;
