@@ -546,7 +546,7 @@ public class EntityEnderDragon extends EntityInsentient implements IComplex, IMo
             if (this.bB == 1) {
                 // CraftBukkit start - Use relative location for far away sounds
                 //this.world.b(1018, (int) this.locX, (int) this.locY, (int) this.locZ, 0);
-                for (EntityPlayer player : (List<EntityPlayer>) this.world.players) {
+                for (EntityPlayer player : this.world.players) {
                     int viewDistance = player.viewDistance * 16; // PaperSpigot - Player view distance API
                     double deltaX = this.locX - player.locX;
                     double deltaZ = this.locZ - player.locZ;

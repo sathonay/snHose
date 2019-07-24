@@ -100,7 +100,7 @@ public class ActivationRange
         maxRange = Math.max( maxRange, miscActivationRange );
         maxRange = Math.min( ( world.spigotConfig.viewDistance << 4 ) - 8, maxRange );
 
-        for ( Entity player : (List<Entity>) world.players )
+        for ( Entity player : world.players )
         {
 
             // PaperSpigot start - Player view distance API

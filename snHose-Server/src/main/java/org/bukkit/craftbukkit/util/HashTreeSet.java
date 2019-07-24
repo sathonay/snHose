@@ -1,6 +1,6 @@
 package org.bukkit.craftbukkit.util;
+import net.minecraft.util.io.netty.util.internal.ConcurrentSet;
 
-import com.google.common.collect.Sets;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
@@ -8,7 +8,7 @@ import java.util.concurrent.ConcurrentSkipListSet;
 
 public class HashTreeSet<V> implements Set<V> {
 
-    private Set<V> hash = Sets.newConcurrentHashSet();
+    private Set<V> hash = new ConcurrentSet<>();
     private ConcurrentSkipListSet<V> tree = new ConcurrentSkipListSet();
     
     public HashTreeSet() {

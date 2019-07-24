@@ -76,7 +76,7 @@ public class EntityLightning extends EntityWeather {
             // CraftBukkit start - Use relative location for far away sounds
             //this.world.makeSound(this.locX, this.locY, this.locZ, "ambient.weather.thunder", 10000.0F, 0.8F + this.random.nextFloat() * 0.2F);
             float pitch = 0.8F + this.random.nextFloat() * 0.2F;
-            for (EntityPlayer player : (List<EntityPlayer>) this.world.players) {
+            for (EntityPlayer player : this.world.players) {
                 int viewDistance = player.viewDistance * 16; // PaperSpigot - Player view distance API
                 double deltaX = this.locX - player.locX;
                 double deltaZ = this.locZ - player.locZ;
