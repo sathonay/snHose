@@ -124,7 +124,7 @@ public class JsonList {
 
         while (iterator.hasNext()) {
             JsonListEntry jsonListEntry = iterator.next();
-            if (jsonListEntry.hasExpired()) this.d.remove(jsonListEntry);
+            if (jsonListEntry.hasExpired()) this.d.remove(jsonListEntry.getKey());
         }
     }
 
