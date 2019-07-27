@@ -134,7 +134,7 @@ public abstract class Container {
                     this.d();
                 }
             } else if (this.g == 1) {
-                Slot slot = (Slot) this.c.get(i);
+                Slot slot = i < this.slots.size() ? this.slots.get(i) : null;
 
                 if (slot != null && a(slot, playerinventory.getCarried(), true) && slot.isAllowed(playerinventory.getCarried()) && playerinventory.getCarried().count > this.h.size() && this.b(slot)) {
                     this.h.add(slot);
