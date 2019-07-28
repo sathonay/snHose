@@ -536,6 +536,7 @@ public abstract class PlayerList {
         ChunkCoordinates chunkcoordinates1;
 
         // CraftBukkit start - fire PlayerRespawnEvent
+        this.players.add(entityplayer1);
         if (location == null) {
             boolean isBedSpawn = false;
             CraftWorld cworld = (CraftWorld) this.server.server.getWorld(entityplayer.spawnWorld);
@@ -597,10 +598,11 @@ public abstract class PlayerList {
         this.b(entityplayer1, worldserver);
         // CraftBukkit start
         // Don't re-add player to player list if disconnected
-        if (!entityplayer.playerConnection.isDisconnected()) {
+        if (entityplayer.playerConnection.isDisconnected()) {
+            this.players.remove(entityplayer1);
+        } else {
             worldserver.getPlayerChunkMap().addPlayer(entityplayer1);
             worldserver.addEntity(entityplayer1);
-            this.players.add(entityplayer1);
         }
         // Added from changeDimension
         this.updateClient(entityplayer1); // Update health, etc...
