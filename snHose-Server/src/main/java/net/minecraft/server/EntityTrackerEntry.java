@@ -40,8 +40,8 @@ public class EntityTrackerEntry {
     private Entity w;
     private boolean x;
     public boolean n;
-    public Set trackedPlayers = new HashSet();
-    public Set<EntityPlayer> freshViewers = Sets.newHashSet(); // PaperSpigot
+    public final java.util.Map<EntityPlayer, Boolean> trackedPlayerMap = new java.util.HashMap<EntityPlayer, Boolean>();
+    public final Set<EntityPlayer> trackedPlayers = trackedPlayerMap.keySet();
 
     public EntityTrackerEntry(Entity entity, int i, int j, boolean flag) {
         this.tracker = entity;
@@ -169,24 +169,23 @@ public class EntityTrackerEntry {
                 }
 
                 if (object != null) {
-                    // PaperSpigot start - ensure fresh viewers get an absolute position on their first update,
-                    // since we can't be certain what position they received in the spawn packet.
-                    if (object instanceof PacketPlayOutEntityTeleport) {
-                        this.broadcast((Packet) object);
-                    } else {
-                        PacketPlayOutEntityTeleport teleportPacket = new PacketPlayOutEntityTeleport(this.tracker.getId(), i, j, k, (byte) l, (byte) i1, this.tracker.onGround, tracker instanceof EntityFallingBlock || tracker instanceof EntityTNTPrimed);
-
-                        for (EntityPlayer viewer : (Set<EntityPlayer>) this.trackedPlayers) {
-                            if (this.freshViewers.contains(viewer)) {
-                                viewer.playerConnection.sendPacket(teleportPacket);
-                            } else {
-                                viewer.playerConnection.sendPacket((Packet) object);
-                            }
-                        }
-                    }
-
-                    this.freshViewers.clear();
-                    // PaperSpigot end
+                    if(object instanceof PacketPlayOutEntityTeleport) {
++                        this.broadcast((Packet) object);
++                    } else {
++                        PacketPlayOutEntityTeleport teleportPacket = null;
++
++                        for(java.util.Map.Entry<EntityPlayer, Boolean> viewer : trackedPlayerMap.entrySet()) {
++                            if(viewer.getValue()) {
++                                viewer.setValue(false);
++                                if(teleportPacket == null) {
++                                    teleportPacket = new PacketPlayOutEntityTeleport(this.tracker);
++                                }
++                                viewer.getKey().playerConnection.sendPacket(teleportPacket);
++                            } else {
++                                viewer.getKey().playerConnection.sendPacket((Packet) object);
++                            }
++                        }
++                    }
                 }
 
                 this.b();
@@ -336,8 +335,7 @@ public class EntityTrackerEntry {
                     entityplayer.removeQueue.remove(Integer.valueOf(this.tracker.getId()));
                     // CraftBukkit end
 
-                    this.freshViewers.add(entityplayer); // PaperSpigot
-                    this.trackedPlayers.add(entityplayer);
+                    this.trackedPlayerMap.put(entityplayer, true);
                     Packet packet = this.c();
 
                     // Spigot start - protocol patch
