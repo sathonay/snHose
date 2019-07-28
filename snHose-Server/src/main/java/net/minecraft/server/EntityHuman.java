@@ -949,8 +949,7 @@ public abstract class EntityHuman extends EntityLiving implements ICommandListen
                     double victimMotZ = entity.motZ;
                     // snHose end
 
-                    boolean flag2 = entity.damageEntity(DamageSource.playerAttack(this), f);
-
+                    final boolean flag2 = entity.damageEntity(DamageSource.playerAttack(this), f);
                     if (flag2) {
                         if (i > 0) {
                             entity.g((-Math.sin(this.yaw * Math.PI / 180.0F) * (float) i * 0.5F), 0.1D, (Math.cos(this.yaw * Math.PI / 180.0F) * i * 0.5F));
@@ -969,15 +968,15 @@ public abstract class EntityHuman extends EntityLiving implements ICommandListen
                         // inconsistent, we simply reverse the knockback after sending it so that KB, like most other
                         // things, doesn't affect server velocity at all.
                         if (entity instanceof EntityPlayer && entity.velocityChanged) {
-                            Player player = (Player) entity.getBukkitEntity();
-                            Vector vector = new Vector(victimMotX, victimMotY, victimMotZ);
+                            final EntityPlayer victim = (EntityPlayer) entity;
+                            final Vector vector = new Vector(victimMotX, victimMotY, victimMotZ);
 
-                            PlayerVelocityEvent event = new PlayerVelocityEvent(player, vector.clone());
+                            final PlayerVelocityEvent event = new PlayerVelocityEvent(victim.getBukkitEntity(), vector.clone());
                             this.world.getServer().getPluginManager().callEvent(event);
                             if (!event.isCancelled()) {
-                                if(!vector.equals(event.getVelocity())) player.setVelocity(event.getVelocity());
+                                if(!vector.equals(event.getVelocity())) victim.getBukkitEntity().setVelocity(event.getVelocity());
                                 if (entity.motY > 0) entity.fallDistance = 0.0f;
-                                ((EntityPlayer) entity).playerConnection.sendPacket(new PacketPlayOutEntityVelocity(entity));
+                                victim.playerConnection.sendPacket(new PacketPlayOutEntityVelocity(entity));
                                 entity.velocityChanged = false;
                                 entity.motX = victimMotX;
                                 entity.motY = victimMotY;
