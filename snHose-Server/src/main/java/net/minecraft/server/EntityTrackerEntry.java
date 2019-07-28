@@ -170,22 +170,22 @@ public class EntityTrackerEntry {
 
                 if (object != null) {
                     if(object instanceof PacketPlayOutEntityTeleport) {
-+                        this.broadcast((Packet) object);
-+                    } else {
-+                        PacketPlayOutEntityTeleport teleportPacket = null;
-+
-+                        for(java.util.Map.Entry<EntityPlayer, Boolean> viewer : trackedPlayerMap.entrySet()) {
-+                            if(viewer.getValue()) {
-+                                viewer.setValue(false);
-+                                if(teleportPacket == null) {
-+                                    teleportPacket = new PacketPlayOutEntityTeleport(this.tracker);
-+                                }
-+                                viewer.getKey().playerConnection.sendPacket(teleportPacket);
-+                            } else {
-+                                viewer.getKey().playerConnection.sendPacket((Packet) object);
-+                            }
-+                        }
-+                    }
+                        this.broadcast((Packet) object);
+                    } else {
+                        PacketPlayOutEntityTeleport teleportPacket = null;
+
+                        for(java.util.Map.Entry<EntityPlayer, Boolean> viewer : trackedPlayerMap.entrySet()) {
+                            if(viewer.getValue()) {
+                                viewer.setValue(false);
+                                if(teleportPacket == null) {
+                                    teleportPacket = new PacketPlayOutEntityTeleport(this.tracker);
+                                }
+                                viewer.getKey().playerConnection.sendPacket(teleportPacket);
+                            } else {
+                                viewer.getKey().playerConnection.sendPacket((Packet) object);
+                            }
+                        }
+                    }
                 }
 
                 this.b();
@@ -233,7 +233,7 @@ public class EntityTrackerEntry {
         ++this.m;
         if (this.tracker.velocityChanged) {
             // CraftBukkit start - Create PlayerVelocity event
-            boolean cancelled = false;
+            //boolean cancelled = false;
 
             if (this.tracker instanceof EntityPlayer) {
                 Player player = (Player) this.tracker.getBukkitEntity();
@@ -242,16 +242,23 @@ public class EntityTrackerEntry {
                 PlayerVelocityEvent event = new PlayerVelocityEvent(player, velocity.clone());
                 this.tracker.world.getServer().getPluginManager().callEvent(event);
 
-                if (event.isCancelled()) {
+                /*if (event.isCancelled()) {
                     cancelled = true;
                 } else if (!velocity.equals(event.getVelocity())) {
                     player.setVelocity(velocity);
+                }*/
+                
+                if (!event.isCancelled()) {
+                    if (!velocity.equals(event.getVelocity())) {
+                        player.setVelocity(velocity);
+                    }
+                    this.broadcastIncludingSelf((Packet) (new PacketPlayOutEntityVelocity(this.tracker)));
                 }
             }
-
-            if (!cancelled) {
+            // MOVED UP
+            /*if (!cancelled) {
                 this.broadcastIncludingSelf((Packet) (new PacketPlayOutEntityVelocity(this.tracker)));
-            }
+            }*/
             // CraftBukkit end
 
             this.tracker.velocityChanged = false;
