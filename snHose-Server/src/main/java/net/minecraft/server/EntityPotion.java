@@ -9,6 +9,7 @@ import java.util.Map;
 
 import org.bukkit.craftbukkit.entity.CraftLivingEntity;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 // CraftBukkit end
 
 public class EntityPotion extends EntityProjectile {
@@ -94,11 +95,14 @@ public class EntityPotion extends EntityProjectile {
                     org.bukkit.event.entity.PotionSplashEvent event = org.bukkit.craftbukkit.event.CraftEventFactory.callPotionSplashEvent(this, affected);
                     if (!event.isCancelled() && list != null && !list.isEmpty()) { // do not process effects if there are no effects to process
                         for (LivingEntity victim : event.getAffectedEntities()) {
-                            if (!(victim instanceof CraftLivingEntity)) {
-                                continue;
-                            }
+                            if (!(victim instanceof CraftLivingEntity)) continue;
 
                             EntityLiving entityliving = ((CraftLivingEntity) victim).getHandle();
+
+                            if ((this.getShooter() instanceof EntityPlayer
+                                    && entityliving instanceof EntityPlayer)
+                                    && !((EntityPlayer)this.getShooter()).getBukkitEntity().canSee((Player) entityliving.getBukkitEntity())) continue;
+
                             double d1 = event.getIntensity(victim);
                             // CraftBukkit end
 
