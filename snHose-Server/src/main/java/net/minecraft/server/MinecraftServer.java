@@ -450,6 +450,7 @@ public abstract class MinecraftServer implements ICommandListener, Runnable, IMo
     public final RollingAverage tps5 = new RollingAverage(60*5);
     public final RollingAverage tps15 = new RollingAverage(60*15);
     public double[] recentTps = new double[ 3 ]; // PaperSpigot - Fine have your darn compat with bad plugins
+    public static long LAST_TICK_TIME;
 
     public static class RollingAverage {
         private final int size;
@@ -545,6 +546,7 @@ public abstract class MinecraftServer implements ICommandListener, Runnable, IMo
                         // PaperSpigot end
                     }
                     lastTick = curTime;
+                    LAST_TICK_TIME = System.currentTimeMillis();
 
                     this.u();
                     this.O = true;
