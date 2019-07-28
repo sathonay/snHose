@@ -7,6 +7,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
+import java.util.concurrent.TimeUnit;
+
 public class TicksPerSecondCommand extends Command {
 
     long startTime = System.currentTimeMillis();
@@ -37,6 +39,7 @@ public class TicksPerSecondCommand extends Command {
             tpsAvg[i] = format( tps[i] );
         }
 
+        sender.sendMessage(ChatColor.GOLD + "Uptime: " + ChatColor.YELLOW + formatFullMilis(System.currentTimeMillis() - this.startTime));
         sender.sendMessage(ChatColor.GOLD + "TPS from last 1m, 5m, 15m: " + StringUtils.join(tpsAvg, ", "));
         sender.sendMessage(ChatColor.GOLD + "Last Tick Time: " + ChatColor.YELLOW + (System.currentTimeMillis() - MinecraftServer.LAST_TICK_TIME) + "ms");
         // PaperSpigot end
@@ -50,5 +53,37 @@ public class TicksPerSecondCommand extends Command {
 
     private static String formatMemmory(double mem) {
         return ChatColor.YELLOW.toString() + Math.round(mem / 1024.0D / 1024.0D) + "MB";
+    }
+
+    public static String formatFullMilis(Long millisTime) {
+
+        long seconds = (millisTime / 1000) % 60;
+        long minutes = (millisTime / (1000 * 60)) % 60;
+        long hours = (millisTime / (1000 * 60 * 60)) % 24;
+        long days = (millisTime / (1000 * 60 * 60 * 24)) % 24;
+        long weeks = (millisTime / (1000 * 60 * 60 * 24 * 7)) % 7;
+        long months = (millisTime / (1000 * 60 * 60 * 24 * 7 * 31)) % 31;
+        long years = (millisTime / (1000 * 60 * 60 * 24 * 7 * 31 * 12)) % 12;
+
+        String format = "";
+        if (years >= 1.0D) {
+            format += years + "y ";
+        }
+        if (months >= 1.0D) {
+            format += months + "mon ";
+        }
+        if (weeks >= 1.0D) {
+            format += weeks + "w ";
+        }
+        if (days >= 1.0D) {
+            format += days + "d ";
+        }
+        if (hours >= 1.0D) {
+            format += hours + "h ";
+        }
+        if (minutes >= 1.0D) {
+            format += minutes + "min ";
+        }
+        return format + seconds + "s";
     }
 }
