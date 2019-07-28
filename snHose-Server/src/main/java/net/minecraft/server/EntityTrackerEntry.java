@@ -57,14 +57,14 @@ public class EntityTrackerEntry {
     }
 
     public boolean equals(Object object) {
-        return object instanceof EntityTrackerEntry ? ((EntityTrackerEntry) object).tracker.getId() == this.tracker.getId() : false;
+        return object instanceof EntityTrackerEntry && ((EntityTrackerEntry) object).tracker.getId() == this.tracker.getId();
     }
 
     public int hashCode() {
         return this.tracker.getId();
     }
 
-    public void track(List list) {
+    public void track(List<EntityPlayer> list) {
         this.n = false;
         if (!this.isMoving || this.tracker.e(this.q, this.r, this.s) > 16.0D) {
             this.q = this.tracker.locX;
@@ -116,7 +116,7 @@ public class EntityTrackerEntry {
                 int j1 = i - this.xLoc;
                 int k1 = j - this.yLoc;
                 int l1 = k - this.zLoc;
-                Object object = null;
+                Packet packet = null;
                 boolean flag = Math.abs(j1) >= 4 || Math.abs(k1) >= 4 || Math.abs(l1) >= 4 || this.m % 60 == 0;
                 boolean flag1 = Math.abs(l - this.yRot) >= 4 || Math.abs(i1 - this.xRot) >= 4;
 
@@ -136,11 +136,11 @@ public class EntityTrackerEntry {
 
                     if (j1 >= -128 && j1 < 128 && k1 >= -128 && k1 < 128 && l1 >= -128 && l1 < 128 && this.v <= 400 && !this.x) {
                         if (flag && flag1) {
-                            object = new PacketPlayOutRelEntityMoveLook(this.tracker.getId(), (byte) j1, (byte) k1, (byte) l1, (byte) l, (byte) i1, tracker.onGround); // Spigot - protocol patch
+                            packet = new PacketPlayOutRelEntityMoveLook(this.tracker.getId(), (byte) j1, (byte) k1, (byte) l1, (byte) l, (byte) i1, tracker.onGround); // Spigot - protocol patch
                         } else if (flag) {
-                            object = new PacketPlayOutRelEntityMove(this.tracker.getId(), (byte) j1, (byte) k1, (byte) l1, tracker.onGround); // Spigot - protocol patch
+                            packet = new PacketPlayOutRelEntityMove(this.tracker.getId(), (byte) j1, (byte) k1, (byte) l1, tracker.onGround); // Spigot - protocol patch
                         } else if (flag1) {
-                            object = new PacketPlayOutEntityLook(this.tracker.getId(), (byte) l, (byte) i1, tracker.onGround); // Spigot - protocol patch
+                            packet = new PacketPlayOutEntityLook(this.tracker.getId(), (byte) l, (byte) i1, tracker.onGround); // Spigot - protocol patch
                         }
                     } else {
                         this.v = 0;
@@ -149,7 +149,7 @@ public class EntityTrackerEntry {
                             this.scanPlayers(new java.util.ArrayList(this.trackedPlayers));
                         }
                         // CraftBukkit end
-                        object = new PacketPlayOutEntityTeleport(this.tracker.getId(), i, j, k, (byte) l, (byte) i1, tracker.onGround, tracker instanceof EntityFallingBlock || tracker instanceof EntityTNTPrimed); // Spigot - protocol patch
+                        packet = new PacketPlayOutEntityTeleport(this.tracker.getId(), i, j, k, (byte) l, (byte) i1, tracker.onGround, tracker instanceof EntityFallingBlock || tracker instanceof EntityTNTPrimed); // Spigot - protocol patch
                     }
                 }
 
@@ -168,9 +168,9 @@ public class EntityTrackerEntry {
                     }
                 }
 
-                if (object != null) {
-                    if(object instanceof PacketPlayOutEntityTeleport) {
-                        this.broadcast((Packet) object);
+                if (packet != null) {
+                    if(packet instanceof PacketPlayOutEntityTeleport) {
+                        this.broadcast(packet);
                     } else {
                         PacketPlayOutEntityTeleport teleportPacket = null;
 
@@ -182,7 +182,7 @@ public class EntityTrackerEntry {
                                 }
                                 viewer.getKey().playerConnection.sendPacket(teleportPacket);
                             } else {
-                                viewer.getKey().playerConnection.sendPacket((Packet) object);
+                                viewer.getKey().playerConnection.sendPacket(packet);
                             }
                         }
                     }
@@ -252,7 +252,7 @@ public class EntityTrackerEntry {
                     if (!velocity.equals(event.getVelocity())) {
                         player.setVelocity(velocity);
                     }
-                    this.broadcastIncludingSelf((Packet) (new PacketPlayOutEntityVelocity(this.tracker)));
+                    this.broadcastIncludingSelf(new PacketPlayOutEntityVelocity(this.tracker));
                 }
             }
             // MOVED UP
@@ -445,9 +445,9 @@ public class EntityTrackerEntry {
         return entityplayer.r().getPlayerChunkMap().a(entityplayer, this.tracker.ah, this.tracker.aj);
     }
 
-    public void scanPlayers(List list) {
-        for (int i = 0; i < list.size(); ++i) {
-            this.updatePlayer((EntityPlayer) list.get(i));
+    public void scanPlayers(List<EntityPlayer> list) {
+        for (EntityPlayer entityPlayer : list) {
+            this.updatePlayer(entityPlayer);
         }
     }
 
@@ -469,7 +469,7 @@ public class EntityTrackerEntry {
             return new PacketPlayOutSpawnEntity(this.tracker, 10, entityminecartabstract.m());
         } else if (this.tracker instanceof EntityBoat) {
             return new PacketPlayOutSpawnEntity(this.tracker, 1);
-        } else if (!(this.tracker instanceof IAnimal) && !(this.tracker instanceof EntityEnderDragon)) {
+        } else if (!(this.tracker instanceof IAnimal)) {
             if (this.tracker instanceof EntityFishingHook) {
                 EntityHuman entityhuman = ((EntityFishingHook) this.tracker).owner;
 
@@ -491,12 +491,10 @@ public class EntityTrackerEntry {
             } else if (this.tracker instanceof EntityFireworks) {
                 return new PacketPlayOutSpawnEntity(this.tracker, 76);
             } else {
-                PacketPlayOutSpawnEntity packetplayoutspawnentity;
 
                 if (this.tracker instanceof EntityFireball) {
                     EntityFireball entityfireball = (EntityFireball) this.tracker;
 
-                    packetplayoutspawnentity = null;
                     byte b0 = 63;
 
                     if (this.tracker instanceof EntitySmallFireball) {
@@ -505,12 +503,7 @@ public class EntityTrackerEntry {
                         b0 = 66;
                     }
 
-                    if (entityfireball.shooter != null) {
-                        packetplayoutspawnentity = new PacketPlayOutSpawnEntity(this.tracker, b0, ((EntityFireball) this.tracker).shooter.getId());
-                    } else {
-                        packetplayoutspawnentity = new PacketPlayOutSpawnEntity(this.tracker, b0, 0);
-                    }
-
+                    PacketPlayOutSpawnEntity packetplayoutspawnentity = (entityfireball.shooter != null ? new PacketPlayOutSpawnEntity(this.tracker, b0, ((EntityFireball) this.tracker).shooter.getId()) : new PacketPlayOutSpawnEntity(this.tracker, b0, 0));
                     packetplayoutspawnentity.d((int) (entityfireball.dirX * 8000.0D));
                     packetplayoutspawnentity.e((int) (entityfireball.dirY * 8000.0D));
                     packetplayoutspawnentity.f((int) (entityfireball.dirZ * 8000.0D));
@@ -530,7 +523,7 @@ public class EntityTrackerEntry {
                 } else if (this.tracker instanceof EntityItemFrame) {
                     EntityItemFrame entityitemframe = (EntityItemFrame) this.tracker;
 
-                    packetplayoutspawnentity = new PacketPlayOutSpawnEntity(this.tracker, 71, entityitemframe.direction);
+                    PacketPlayOutSpawnEntity packetplayoutspawnentity = new PacketPlayOutSpawnEntity(this.tracker, 71, entityitemframe.direction);
                     packetplayoutspawnentity.a(MathHelper.d((float) (entityitemframe.x * 32)));
                     packetplayoutspawnentity.b(MathHelper.d((float) (entityitemframe.y * 32)));
                     packetplayoutspawnentity.c(MathHelper.d((float) (entityitemframe.z * 32)));
@@ -538,7 +531,7 @@ public class EntityTrackerEntry {
                 } else if (this.tracker instanceof EntityLeash) {
                     EntityLeash entityleash = (EntityLeash) this.tracker;
 
-                    packetplayoutspawnentity = new PacketPlayOutSpawnEntity(this.tracker, 77);
+                    PacketPlayOutSpawnEntity packetplayoutspawnentity = new PacketPlayOutSpawnEntity(this.tracker, 77);
                     packetplayoutspawnentity.a(MathHelper.d((float) (entityleash.x * 32)));
                     packetplayoutspawnentity.b(MathHelper.d((float) (entityleash.y * 32)));
                     packetplayoutspawnentity.c(MathHelper.d((float) (entityleash.z * 32)));

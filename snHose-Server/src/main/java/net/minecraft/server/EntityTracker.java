@@ -1,9 +1,6 @@
 package net.minecraft.server;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.Callable;
 
 import org.apache.logging.log4j.LogManager;
@@ -148,7 +145,7 @@ public class EntityTracker {
     }
 
     public void updatePlayers() {
-        ArrayList arraylist = new ArrayList();
+        List<EntityPlayer> list = new ArrayList<>();
         Iterator iterator = this.c.iterator();
 
         while (iterator.hasNext()) {
@@ -156,12 +153,12 @@ public class EntityTracker {
 
             entitytrackerentry.track(this.world.players);
             if (entitytrackerentry.n && entitytrackerentry.tracker instanceof EntityPlayer) {
-                arraylist.add((EntityPlayer) entitytrackerentry.tracker);
+                list.add((EntityPlayer) entitytrackerentry.tracker);
             }
         }
 
-        for (int i = 0; i < arraylist.size(); ++i) {
-            EntityPlayer entityplayer = (EntityPlayer) arraylist.get(i);
+        for (int i = 0; i < list.size(); ++i) {
+            EntityPlayer entityplayer = list.get(i);
             Iterator iterator1 = this.c.iterator();
 
             while (iterator1.hasNext()) {
