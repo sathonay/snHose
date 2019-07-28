@@ -25,7 +25,7 @@ public class RandomPositionGenerator {
     }
 
     private static Vec3D c(EntityCreature entitycreature, int i, int j, Vec3D vec3d) {
-        Random random = entitycreature.aI();
+        final Random random = entitycreature.aI();
         boolean flag = false;
         // PaperSpigot start - int -> double
         double k = 0;
@@ -74,8 +74,7 @@ public class RandomPositionGenerator {
 
         if (flag) {
             return Vec3D.a(k, l, i1); // PaperSpigot remove unnecessary cast
-        } else {
-            return null;
         }
+        return null;
     }
 }
