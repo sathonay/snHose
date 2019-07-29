@@ -716,7 +716,7 @@ public abstract class MinecraftServer implements ICommandListener, Runnable, IMo
 
         SpigotTimings.timeUpdateTimer.startTiming(); // Spigot
         // Send time updates to everyone, it will get the right time from the world the player is in.
-        for (final WorldServer world : this.getWorlds()) {
+        for (final WorldServer world : this.worlds) {
             final boolean doDaylight = world.getGameRules().getBoolean("doDaylightCycle");
             final long dayTime = world.getDayTime();
             long worldTime = world.getTime();
