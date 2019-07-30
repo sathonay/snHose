@@ -824,10 +824,10 @@ public abstract class EntityLiving extends Entity {
     public void a(Entity entity, double xo, double zo) {
         if (this.random.nextDouble() >= this.getAttributeInstance(GenericAttributes.c).getValue()) {
             this.al = true;
-            double magnitude = MathHelper.sqrt(xo * xo + zo * zo);
+            final double magnitude = MathHelper.sqrt(xo * xo + zo * zo);
             double d2 = 0.4F;
             double friction = 2.0D;
-            double knockbackReduction = getBukkitEntity().getKnockbackReduction();
+            final double knockbackReduction = getBukkitEntity().getKnockbackReduction();
 
             if (knockbackReduction != 0.0D) {
                 friction -= knockbackReduction;
