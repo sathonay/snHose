@@ -1071,7 +1071,7 @@ public abstract class Entity {
         }
     }
 
-    public void g(double d0, double d1, double d2) {
+    public void g(final double d0, final double d1, final double d2) {
         this.motX += d0;
         this.motY += d1;
         this.motZ += d2;
@@ -1343,9 +1343,8 @@ public abstract class Entity {
             entityitem.pickupDelay = 10;
             this.world.addEntity(entityitem);
             return entityitem;
-        } else {
-            return null;
         }
+        return null;
     }
 
     public boolean isAlive() {
@@ -1569,7 +1568,8 @@ public abstract class Entity {
             this.an = true;
         }
     }
-
+    
+    public int getMaxAirTicks() { return ai(); }
     public int ai() {
         return 300;
     }
