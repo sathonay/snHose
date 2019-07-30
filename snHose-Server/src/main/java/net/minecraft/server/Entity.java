@@ -1107,7 +1107,7 @@ public abstract class Entity {
             nbttagcompound.setString("id", s);
             this.e(nbttagcompound);
             return true;
-        } 
+        }
         return false;
     }
 
@@ -1568,7 +1568,7 @@ public abstract class Entity {
             this.an = true;
         }
     }
-    
+
     public int getMaxAirTicks() { return ai(); }
     public int ai() {
         return 300;
