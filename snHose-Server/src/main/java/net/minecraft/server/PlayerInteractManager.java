@@ -379,8 +379,8 @@ public class PlayerInteractManager {
         Block block = world.getType(i, j, k);
         boolean result = false;
         if (block != Blocks.AIR) {
-            if (block == Blocks.FENCE && itemstack != null && itemstack.getName().toLowerCase().contains("sword")) {
-                return false;
+            if (itemstack != null && itemstack.getName().toLowerCase().contains("sword")) {
+                return result;
             }
             PlayerInteractEvent event = CraftEventFactory.callPlayerInteractEvent(entityhuman, Action.RIGHT_CLICK_BLOCK, i, j, k, l, itemstack);
             if (event.useInteractedBlock() == Event.Result.DENY) {
