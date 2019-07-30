@@ -379,6 +379,9 @@ public class PlayerInteractManager {
         Block block = world.getType(i, j, k);
         boolean result = false;
         if (block != Blocks.AIR) {
+            if (block == Blocks.FENCE && itemstack != null && itemstack.getName().toLowerCase().contains("sword")) {
+                return false;
+            }
             PlayerInteractEvent event = CraftEventFactory.callPlayerInteractEvent(entityhuman, Action.RIGHT_CLICK_BLOCK, i, j, k, l, itemstack);
             if (event.useInteractedBlock() == Event.Result.DENY) {
                 // If we denied a door from opening, we need to send a correcting update to the client, as it already opened the door.
