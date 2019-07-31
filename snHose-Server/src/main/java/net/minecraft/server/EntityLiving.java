@@ -77,7 +77,7 @@ public abstract class EntityLiving extends Entity {
     // CraftBukkit start
     public int expToDrop;
     public int maxAirTicks = 300;
-    ArrayList<org.bukkit.inventory.ItemStack> drops = null;
+    List<ItemStack> drops = new ArrayList<>();
     // CraftBukkit end
     // Spigot start
     public void inactiveTick()
@@ -794,7 +794,6 @@ public abstract class EntityLiving extends Entity {
             }
 
             if (this.aG() && this.world.getGameRules().getBoolean("doMobLoot")) {
-                this.drops = new ArrayList<org.bukkit.inventory.ItemStack>(); // CraftBukkit - Setup drop capture
 
                 this.dropDeathLoot(this.lastDamageByPlayerTime > 0, i);
                 this.dropEquipment(this.lastDamageByPlayerTime > 0, i);
