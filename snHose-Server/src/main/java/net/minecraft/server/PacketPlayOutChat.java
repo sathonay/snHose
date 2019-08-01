@@ -42,7 +42,12 @@ public class PacketPlayOutChat extends Packet {
         // Spigot start
         if ( components != null )
         {
-            packetdataserializer.a( net.md_5.bungee.chat.ComponentSerializer.toString( components ) );
+            //packetdataserializer.a( net.md_5.bungee.chat.ComponentSerializer.toString( components ) );
+            if (this.components.length == 1) {
+                packetdataserializer.a(net.md_5.bungee.chat.ComponentSerializer.toString(this.components[0]));
+            } else {
+                packetdataserializer.a(net.md_5.bungee.chat.ComponentSerializer.toString(this.components));
+            }
         } else
         {
             packetdataserializer.a( ChatSerializer.a( this.a ) );
