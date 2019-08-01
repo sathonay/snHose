@@ -931,11 +931,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         }
     }
     
-    public void hide(Player player) {
-        hidePlayer(player, false);
-    }
-
-    public void hidePlayer(Player player, boolean hideFromList) {
+    public void hidePlayer(Player player) {
         Validate.notNull(player, "hidden player cannot be null");
         if (getHandle().playerConnection == null) return;
         if (equals(player)) return;
@@ -951,14 +947,10 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         }
 
         //remove the hidden player from this player user list
-        if (hideFromList) getHandle().playerConnection.sendPacket(PacketPlayOutPlayerInfo.removePlayer( ( (CraftPlayer) player ).getHandle ())); // Spigot - protocol patch
-    }
-    
-    public void show(Player player) {
-        showPlayer(player, false);
+        getHandle().playerConnection.sendPacket(PacketPlayOutPlayerInfo.removePlayer( ( (CraftPlayer) player ).getHandle ())); // Spigot - protocol patch
     }
 
-    public void showPlayer(Player player, boolean fromList) {
+    public void showPlayer(Player player) {
         Validate.notNull(player, "shown player cannot be null");
         if (getHandle().playerConnection == null) return;
         if (equals(player)) return;
@@ -972,7 +964,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
             entry.updatePlayer(getHandle());
         }
 
-        if (fromList) getHandle().playerConnection.sendPacket(PacketPlayOutPlayerInfo.addPlayer( ( (CraftPlayer) player ).getHandle ())); // Spigot - protocol patch
+        getHandle().playerConnection.sendPacket(PacketPlayOutPlayerInfo.addPlayer( ( (CraftPlayer) player ).getHandle ())); // Spigot - protocol patch
     }
 
     public void removeDisconnectingPlayer(Player player) {
