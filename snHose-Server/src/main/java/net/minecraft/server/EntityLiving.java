@@ -77,7 +77,7 @@ public abstract class EntityLiving extends Entity {
     // CraftBukkit start
     public int expToDrop;
     public int maxAirTicks = 300;
-    List<ItemStack> drops = new ArrayList<>();
+    List<org.bukkit.inventory.ItemStack> drops = new ArrayList<>();
     // CraftBukkit end
     // Spigot start
     public void inactiveTick()
