@@ -66,7 +66,7 @@ public class WorldManager implements IWorldAccess {
                 double d1 = (double) k - entityplayer.locY;
                 double d2 = (double) l - entityplayer.locZ;
                 
-                if ((entityhuman != null && entityhuman instanceof EntityPlayer && !entityplayer.getBukkitEntity().canSee(((EntityPlayer)entityhuman).getBukkitEntity())) || d0 * d0 + d2 * d2 + d3 * d3 >= 1024.0) {
+                if ((entityhuman != null && entityhuman instanceof EntityPlayer && !entityplayer.getBukkitEntity().canSee(((EntityPlayer)entityhuman).getBukkitEntity())) || d0 * d0 + d1 * d1 + d2 * d2 >= 1024.0) {
                     continue;
                 }
                 entityplayer.playerConnection.sendPacket(new PacketPlayOutBlockBreakAnimation(i, j, k, l, i1));
