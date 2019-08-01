@@ -349,9 +349,8 @@ public abstract class World implements IBlockAccess {
                 crashreportsystemdetails.a("Location", CrashReportSystemDetails.a(i, j, k));
                 throw new ReportedException(crashreport);
             }
-        } else {
-            return Blocks.AIR;
         }
+        return Blocks.AIR;
     }
 
     public boolean isEmpty(int i, int j, int k) {
@@ -382,9 +381,8 @@ public abstract class World implements IBlockAccess {
             }
 
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     protected boolean isChunkLoaded(int i, int j) {
@@ -792,10 +790,9 @@ public abstract class World implements IBlockAccess {
 
                 return chunk.b(i & 15, j & 15);
             }
-        } else {
-            return 64;
         }
-    }
+        return 64;
+    }         
 
     public int g(int i, int j) {
         if (i >= -30000000 && j >= -30000000 && i < 30000000 && j < 30000000) {
