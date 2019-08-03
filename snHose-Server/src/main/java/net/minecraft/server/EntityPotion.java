@@ -35,15 +35,15 @@ public class EntityPotion extends EntityProjectile {
     }
 
     protected float i() {
-        return 0.05F;
+        return 0.05F; // DO NOT TOUCH SKID
     }
 
     protected float e() {
-        return 0.5F;
+        return 0.5F; // DO NOT TOUCH SKID
     }
 
     protected float f() {
-        return -20.0F;
+        return -20.0F; // DO NOT TOUCH SKID
     }
 
     public void setPotionValue(int i) {
@@ -135,7 +135,11 @@ public class EntityPotion extends EntityProjectile {
                 }
             }
 
-            this.world.triggerEffect(2002, (int) Math.round(this.locX), (int) Math.round(this.locY), (int) Math.round(this.locZ), this.getPotionValue());
+            if (this.getShooter() instanceof EntityHuman) {
+                this.world.a((EntityHuman)this.getShooter(), 2002, (int)Math.round(this.locX), (int)Math.round(this.locY), (int)Math.round(this.locZ), this.getPotionValue());
+            } else {
+                this.world.triggerEffect(2002, (int)Math.round(this.locX), (int)Math.round(this.locY), (int)Math.round(this.locZ), this.getPotionValue());
+            }
             this.die();
         }
     }
