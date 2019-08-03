@@ -974,6 +974,30 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
     public boolean canSee(Player player) {
         return !hiddenPlayers.contains(player.getUniqueId());
     }
+    
+    // DO NOT OVERRIDE!
+    public boolean canSeeEntity(final Entity entity) {
+        final net.minecraft.server.v1_7_R4.Entity nmsEntity = ((CraftEntity) entity).getHandle();
+        if (nmsEntity instanceof EntityProjectile) {
+            final EntityProjectile entityProjectile = (EntityProjectile) nmsEntity;
+            if (entityProjectile.getShooter() instanceof EntityPlayer) {
+                return this.canSee(((EntityPlayer) entityProjectile.getShooter()).getBukkitEntity());
+            }
+        }
+        if (nmsEntity instanceof EntityItem) {
+            final EntityItem entityItem = (EntityItem) nmsEntity;
+            if (entityItem.owner instanceof EntityPlayer) {
+                return this.canSee(((EntityPlayer) entityItem.owner).getBukkitEntity());
+            }
+        }
+        if (nmsEntity instanceof EntityArrow) {
+            final EntityArrow entityProjectile = (EntityArrow) nmsEntity;
+            if (entityProjectile.shooter instanceof EntityPlayer) {
+                return this.canSee(((EntityPlayer) entityProjectile.shooter).getBukkitEntity());
+            }
+        }
+        return !(entity instanceof Player) || this.canSee((Player) entity);
+    }
 
     public Map<String, Object> serialize() {
         Map<String, Object> result = new LinkedHashMap<String, Object>();
