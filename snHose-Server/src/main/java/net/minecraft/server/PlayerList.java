@@ -1122,10 +1122,10 @@ public abstract class PlayerList {
     }
 
     public void sendPacketNearby(double d0, double d1, double d2, double d3, int i, Packet packet) {
-        this.sendPacketNearby((EntityHuman) null, d0, d1, d2, d3, i, packet);
+        this.sendPacketNearby((EntityHuman) null, d0, d1, d2, d3, i, packet, false);
     }
 
-    public void sendPacketNearby(EntityHuman entityhuman, double d0, double d1, double d2, double d3, int i, Packet packet) {
+    public void sendPacketNearby(EntityHuman entityhuman, double d0, double d1, double d2, double d3, int i, Packet packet, boolean self) {
         for (int j = 0; j < this.players.size(); ++j) {
             EntityPlayer entityplayer = (EntityPlayer) this.players.get(j);
 
@@ -1135,7 +1135,7 @@ public abstract class PlayerList {
             }
             // CraftBukkit end
 
-            if (entityplayer != entityhuman && entityplayer.dimension == i) {
+            if ((!self && entityplayer != entityhuman || self) && entityplayer.dimension == i) {
                 double d4 = d0 - entityplayer.locX;
                 double d5 = d1 - entityplayer.locY;
                 double d6 = d2 - entityplayer.locZ;
