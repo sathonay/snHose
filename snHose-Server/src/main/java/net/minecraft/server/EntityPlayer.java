@@ -106,7 +106,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
         this.bO = minecraftserver.getPlayerList().a((EntityHuman) this);
         this.W = 0.0F;
         this.height = 0.0F;
-        this.setPositionRotation((double) i + 0.5D, (double) k, (double) j + 0.5D, 0.0F, 0.0F);
+        this.setPositionRotation((double) i + 0.5D, k, (double) j + 0.5D, 0.0F, 0.0F);
 
         while (!worldserver.getCubes(this, this.boundingBox).isEmpty()) {
             this.setPosition(this.locX, this.locY + 1.0D, this.locZ);
@@ -200,7 +200,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
             containerUpdateDelay = world.paperSpigotConfig.containerUpdateTickRate;
         }
         // PaperSpigot end
-        if (!this.world.isStatic && !this.activeContainer.a((EntityHuman) this)) {
+        if (!this.world.isStatic && !this.activeContainer.a(this)) {
             this.closeInventory();
             this.activeContainer = this.defaultContainer;
         }
@@ -314,7 +314,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
             }
 
             if (this.oldLevel != this.expLevel) {
-                CraftEventFactory.callPlayerLevelChangeEvent(this.world.getServer().getPlayer((EntityPlayer) this), this.oldLevel, this.expLevel);
+                CraftEventFactory.callPlayerLevelChangeEvent(this.world.getServer().getPlayer(this), this.oldLevel, this.expLevel);
                 this.oldLevel = this.expLevel;
             }
             // CraftBukkit end
@@ -361,7 +361,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
                 }
 
                 if (hashset.isEmpty()) {
-                    this.a((Statistic) AchievementList.L);
+                    this.a(AchievementList.L);
                 }
             }
         }
@@ -373,7 +373,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
             return;
         }
 
-        java.util.List<org.bukkit.inventory.ItemStack> loot = new java.util.ArrayList<org.bukkit.inventory.ItemStack>();
+        java.util.List<org.bukkit.inventory.ItemStack> loot = new java.util.ArrayList<>();
         boolean keepInventory = this.world.getGameRules().getBoolean("keepInventory");
 
         if (!keepInventory) {
@@ -429,7 +429,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
 
         if (entityliving != null) {
             int i = EntityTypes.a(entityliving);
-            MonsterEggInfo monsteregginfo = (MonsterEggInfo) EntityTypes.eggInfo.get(Integer.valueOf(i));
+            MonsterEggInfo monsteregginfo = (MonsterEggInfo) EntityTypes.eggInfo.get(i);
 
             if (monsteregginfo != null) {
                 this.a(monsteregginfo.e, 1);
@@ -475,7 +475,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
 
     public boolean a(EntityHuman entityhuman) {
         // CraftBukkit - this.server.getPvP() -> this.world.pvpMode
-        return !this.world.pvpMode ? false : super.a(entityhuman);
+        return this.world.pvpMode && super.a(entityhuman);
     }
 
     public void b(int i) {
@@ -504,7 +504,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
                 */
                 // CraftBukkit end
             } else {
-                this.a((Statistic) AchievementList.y);
+                this.a(AchievementList.y);
             }
         }
 
@@ -542,7 +542,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
         if (enumbedresult == EnumBedResult.OK) {
             PacketPlayOutBed packetplayoutbed = new PacketPlayOutBed(this, i, j, k);
 
-            this.r().getTracker().a((Entity) this, (Packet) packetplayoutbed);
+            this.r().getTracker().a(this, packetplayoutbed);
             this.playerConnection.a(this.locX, this.locY, this.locZ, this.yaw, this.pitch);
             this.playerConnection.sendPacket(packetplayoutbed);
         }
@@ -591,7 +591,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
 
     public void a(TileEntity tileentity) {
         if (tileentity instanceof TileEntitySign) {
-            ((TileEntitySign) tileentity).a((EntityHuman) this);
+            ((TileEntitySign) tileentity).a(this);
             this.playerConnection.sendPacket(new PacketPlayOutOpenSignEditor(tileentity.x, tileentity.y, tileentity.z));
         }
     }
@@ -869,7 +869,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
     }
 
     public void m() {
-        this.activeContainer.b((EntityHuman) this);
+        this.activeContainer.b(this);
         this.activeContainer = this.defaultContainer;
     }
 
@@ -1026,10 +1026,6 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
         this.locale = packetplayinsettings.c();
         int i = 256 >> packetplayinsettings.d();
 
-        if (i > 3 && i < 20) {
-            ;
-        }
-
         this.bV = packetplayinsettings.e();
         this.bW = packetplayinsettings.f();
         if (this.server.N() && this.server.M().equals(this.getName())) {
@@ -1076,9 +1072,9 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
 
     public void d(Entity entity) {
         if (entity instanceof EntityHuman) {
-            this.playerConnection.sendPacket(new PacketPlayOutEntityDestroy(new int[] { entity.getId()}));
+            this.playerConnection.sendPacket(new PacketPlayOutEntityDestroy(entity.getId()));
         } else {
-            this.removeQueue.add(Integer.valueOf(entity.getId()));
+            this.removeQueue.add(entity.getId());
         }
     }
 
@@ -1158,8 +1154,8 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
         // before the update in the tick has a chance to run, and if they
         // match the old effects, the metadata will never be marked dirty
         // and will go out of sync with the client.
-        this.datawatcher.watch(8, Byte.valueOf((byte) 0));
-        this.datawatcher.watch(7, Integer.valueOf(0));
+        this.datawatcher.watch(8, 0);
+        this.datawatcher.watch(7, 0);
         this.setInvisible(false);
         this.activeContainer = this.defaultContainer;
         this.killer = null;
