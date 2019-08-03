@@ -1,7 +1,6 @@
 package net.minecraft.server;
 
 import java.util.*;
-import java.util.concurrent.Callable;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
