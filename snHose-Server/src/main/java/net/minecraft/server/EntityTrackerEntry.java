@@ -327,11 +327,8 @@ public class EntityTrackerEntry {
             if (d0 >= (double) (-this.b) && d0 <= (double) this.b && d1 >= (double) (-this.b) && d1 <= (double) this.b) {
                 if (!this.trackedPlayers.contains(entityplayer) && (this.d(entityplayer) || this.tracker.attachedToPlayer)) {
                     // CraftBukkit start - respect vanish API
-                    if (this.tracker instanceof EntityPlayer) {
-                        Player player = ((EntityPlayer) this.tracker).getBukkitEntity();
-                        if (!entityplayer.getBukkitEntity().canSee(player)) {
-                            return;
-                        }
+                    if (!entityplayer.getBukkitEntity().canSeeEntity(this.tracker.getBukkitEntity())) {
+                        return;
                     }
 
                     entityplayer.removeQueue.remove(Integer.valueOf(this.tracker.getId()));
