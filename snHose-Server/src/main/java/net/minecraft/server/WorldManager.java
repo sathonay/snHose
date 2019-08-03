@@ -29,7 +29,8 @@ public class WorldManager implements IWorldAccess {
 
     public void a(EntityHuman entityhuman, String s, double d0, double d1, double d2, float f, float f1) {
         // CraftBukkit - this.world.dimension
-        this.server.getPlayerList().sendPacketNearby(entityhuman, d0, d1, d2, f > 1.0F ? (double) (16.0F * f) : 16.0D, this.world.dimension, new PacketPlayOutNamedSoundEffect(s, d0, d1, d2, f, f1));
+        final boolean self = ((s.equals("random.drink") || s.contains("step") || s.contains("player") || s.equals("random.eat")) ? false : true);
+        this.server.getPlayerList().sendPacketNearby(entityhuman, d0, d1, d2, f > 1.0F ? (double) (16.0F * f) : 16.0D, this.world.dimension, new PacketPlayOutNamedSoundEffect(s, d0, d1, d2, f, f1), self);
     }
 
     public void a(int i, int j, int k, int l, int i1, int j1) {}
@@ -44,7 +45,8 @@ public class WorldManager implements IWorldAccess {
 
     public void a(EntityHuman entityhuman, int i, int j, int k, int l, int i1) {
         // CraftBukkit - this.world.dimension
-        this.server.getPlayerList().sendPacketNearby(entityhuman, (double) j, (double) k, (double) l, 64.0D, this.world.dimension, new PacketPlayOutWorldEvent(i, j, k, l, i1, false));
+        final boolean self = (i == 2001 ? false : true);
+        this.server.getPlayerList().sendPacketNearby(entityhuman, (double) j, (double) k, (double) l, 64.0D, this.world.dimension, new PacketPlayOutWorldEvent(i, j, k, l, i1, false), self);
     }
 
     public void a(int i, int j, int k, int l, int i1) {
