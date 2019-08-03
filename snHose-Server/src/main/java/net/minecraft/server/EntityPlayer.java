@@ -1154,7 +1154,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
         // before the update in the tick has a chance to run, and if they
         // match the old effects, the metadata will never be marked dirty
         // and will go out of sync with the client.
-        this.datawatcher.watch(8, 0);
+        this.datawatcher.watch(8, (byte) 0);
         this.datawatcher.watch(7, 0);
         this.setInvisible(false);
         this.activeContainer = this.defaultContainer;
