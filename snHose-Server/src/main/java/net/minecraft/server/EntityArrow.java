@@ -242,13 +242,7 @@ public class EntityArrow extends Entity implements IProjectile {
                         k += this.random.nextInt(k / 2 + 2);
                     }
 
-                    DamageSource damagesource = null;
-
-                    if (this.shooter == null) {
-                        damagesource = DamageSource.arrow(this, this);
-                    } else {
-                        damagesource = DamageSource.arrow(this, this.shooter);
-                    }
+                    DamageSource damagesource = (this.shooter == null ? DamageSource.arrow(this, this) : DamageSource.arrow(this, this.shooter));
 
                     // CraftBukkit start - Moved damage call
                     if (movingobjectposition.entity.damageEntity(damagesource, k)) {
@@ -286,8 +280,7 @@ public class EntityArrow extends Entity implements IProjectile {
                                 ((EntityPlayer) this.shooter).playerConnection.sendPacket(new PacketPlayOutGameStateChange(6, 0.0F));
                             }
                         }
-
-                        this.makeSound("random.bowhit", 1.0F, 1.2F / (this.random.nextFloat() * 0.2F + 0.9F));
+                        this.world.makeSound(this.shooter, "random.bowhit", 1.0f, 1.2f / (this.random.nextFloat() * 0.2f + 0.9f));
                         if (!(movingobjectposition.entity instanceof EntityEnderman)) {
                             this.die();
                         }
@@ -312,7 +305,7 @@ public class EntityArrow extends Entity implements IProjectile {
                     this.locX -= this.motX / (double) f2 * 0.05000000074505806D;
                     this.locY -= this.motY / (double) f2 * 0.05000000074505806D;
                     this.locZ -= this.motZ / (double) f2 * 0.05000000074505806D;
-                    this.makeSound("random.bowhit", 1.0F, 1.2F / (this.random.nextFloat() * 0.2F + 0.9F));
+                    this.world.makeSound(this.shooter, "random.bowhit", 1.0f, 1.2f / (this.random.nextFloat() * 0.2f + 0.9f));
                     this.inGround = true;
                     this.shake = 7;
                     this.setCritical(false);
