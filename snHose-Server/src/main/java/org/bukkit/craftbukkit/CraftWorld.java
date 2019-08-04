@@ -333,18 +333,41 @@ public class CraftWorld implements World {
     }
     
     public org.bukkit.entity.Item dropItemNaturally(EntityHuman owner, Location loc, ItemStack item) {
-        double xs = world.random.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
-        double ys = world.random.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
-        double zs = world.random.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
+        final double xs = this.world.random.nextFloat() * 0.7f - 0.35;
+        final double ys = this.world.random.nextFloat() * 0.7f - 0.35;
+        final double zs = this.world.random.nextFloat() * 0.7f - 0.35;
         loc = loc.clone();
-        loc.setX(loc.getX() + xs);
-        loc.setY(loc.getY() + ys);
-        loc.setZ(loc.getZ() + zs);
+        randomLocationWithinBlock(loc, xs, ys, zs);
         return dropItem(owner, loc, item);
     }
 
     public org.bukkit.entity.Item dropItemNaturally(Location loc, ItemStack item) {
         return dropItemNaturally(null, loc, item);
+    }
+    
+    private void randomLocationWithinBlock(Location loc, final double xs, final double ys, final double zs) {
+        final double prevX = loc.getX();
+        final double prevY = loc.getY();
+        final double prevZ = loc.getZ();
+        loc.add(xs, ys, zs);
+        if (loc.getX() < Math.floor(prevX)) {
+            loc.setX(Math.floor(prevX));
+        }
+        if (loc.getX() >= Math.ceil(prevX)) {
+            loc.setX(Math.ceil(prevX - 0.01));
+        }
+        if (loc.getY() < Math.floor(prevY)) {
+            loc.setY(Math.floor(prevY));
+        }
+        if (loc.getY() >= Math.ceil(prevY)) {
+            loc.setY(Math.ceil(prevY - 0.01));
+        }
+        if (loc.getZ() < Math.floor(prevZ)) {
+            loc.setZ(Math.floor(prevZ));
+        }
+        if (loc.getZ() >= Math.ceil(prevZ)) {
+            loc.setZ(Math.ceil(prevZ - 0.01));
+        }
     }
 
     public Arrow spawnArrow(Location loc, Vector velocity, float speed, float spread) {
