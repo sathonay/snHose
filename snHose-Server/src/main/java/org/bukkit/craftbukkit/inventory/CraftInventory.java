@@ -26,7 +26,7 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.Material;
 
-public class CraftInventory implements Inventory {
+public class CraftInventory implements Inventory, Cloneable {
     protected final IInventory inventory;
 
     public CraftInventory(IInventory inventory) {
