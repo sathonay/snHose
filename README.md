@@ -1,6 +1,4 @@
 Hose (PaperSpigot) 1.7.x & 1.8.x [![Travis Status](https://travis-ci.org/PaperSpigot/PaperSpigot.svg?branch=master)](https://travis-ci.org/PaperSpigot/PaperSpigot)
-
-1.7 PROTOCOL
 ===========
 
 THIS REPO AND VERSION ARE DEPRECATED. NEITHER WILL BE SUPPORTED ANY LONGER.
@@ -12,7 +10,7 @@ The only potential exception is for security backports, and even then, they will
 
 We recommend users update to 1.8.8, available [here](https://hub.spigotmc.org/stash/projects/PAPER). If that is not an option we, at the very least, recommend jumping ship to 1.9 as soon as it is available. Either way, we're done with 1.7.10. So long, and thanks for all the fish.
 
-THIS VERSION IS FORKED BY @NoksBlue & @sathonay
+THIS VERSION IS FORKED BY @NoksBlue & @sathonay BASED ON A 1.7 PROTOCOL
 
 
 
