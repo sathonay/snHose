@@ -976,8 +976,8 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
     }
     
     // DO NOT OVERRIDE!
-    public boolean canSeeEntity(final Entity entity) {
-        final net.minecraft.server.v1_7_R4.Entity nmsEntity = ((CraftEntity) entity).getHandle();
+    public boolean canSeeEntity(final org.bukkit.entity.Entity entity) {
+        final net.minecraft.server.Entity nmsEntity = ((CraftEntity) entity).getHandle();
         if (nmsEntity instanceof EntityProjectile) {
             final EntityProjectile entityProjectile = (EntityProjectile) nmsEntity;
             if (entityProjectile.getShooter() instanceof EntityPlayer) {
