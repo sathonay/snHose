@@ -15,7 +15,7 @@ import org.bukkit.event.inventory.InventoryType;
 public interface Inventory extends Iterable<ItemStack> {
 
     /**
-     * 
+     *
      * @return a clone
      */
     public Inventory clone();
