@@ -74,6 +74,7 @@ public class BlockPortal extends BlockHalfTransparent {
             // CraftBukkit start - return portalcreator
             return portalcreator.c();
             // return true;
+        }
         if (portalcreator1.b() && PortalCreator.a(portalcreator1) == 0) {
             return portalcreator1.c();
             // return true;
