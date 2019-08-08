@@ -114,12 +114,7 @@ public class EntityHorse extends EntityAnimal implements IInventoryListener {
 
     private void b(int i, boolean flag) {
         int j = this.datawatcher.getInt(16);
-
-        if (flag) {
-            this.datawatcher.watch(16, Integer.valueOf(j | i));
-        } else {
-            this.datawatcher.watch(16, Integer.valueOf(j & ~i));
-        }
+        this.datawatcher.watch(16, Integer.valueOf((flag ? (j | i) : (j & ~i))));
     }
 
     public boolean cb() {
@@ -149,11 +144,7 @@ public class EntityHorse extends EntityAnimal implements IInventoryListener {
     }
 
     public void a(boolean flag) {
-        if (flag) {
-            this.a(this.ci());
-        } else {
-            this.a(1.0F);
-        }
+        this.a((flag ? this.ci() : 1.0F);
     }
 
     public boolean cj() {
@@ -169,13 +160,7 @@ public class EntityHorse extends EntityAnimal implements IInventoryListener {
     }
 
     public boolean bM() {
-        // PaperSpigot start - Configurable undead horse leashing
-        if (this.world.paperSpigotConfig.allowUndeadHorseLeashing) {
-            return super.bM();
-        } else {
-            return !this.cE() && super.bM();
-        }
-        // PaperSpigot end
+        return (this.world.paperSpigotConfig.allowUndeadHorseLeashing ? super.bM() : (!this.cE() && super.bM()));
     }
 
     protected void o(float f) {
