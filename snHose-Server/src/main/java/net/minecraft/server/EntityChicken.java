@@ -97,12 +97,7 @@ public class EntityChicken extends EntityAnimal {
         for (int k = 0; k < j; ++k) {
             this.a(Items.FEATHER, 1);
         }
-
-        if (this.isBurning()) {
-            this.a(Items.COOKED_CHICKEN, 1);
-        } else {
-            this.a(Items.RAW_CHICKEN, 1);
-        }
+        this.a((this.isBurning() ? Items.COOKED_CHICKEN : Items.RAW_CHICKEN), 1);
     }
 
     public EntityChicken b(EntityAgeable entityageable) {
