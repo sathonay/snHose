@@ -81,12 +81,9 @@ public class EntityPotion extends EntityProjectile {
                         double d0 = this.f(entityliving);
 
                         if (d0 < 16.0D) {
-                            double d1 = 1.0D - Math.sqrt(d0) / 4.0D;
-
-                            if (entityliving == movingobjectposition.entity) {
-                                d1 = 1.0D;
-                            }
-
+                            double d1 = 1.0D;
+                            
+                            if (entityliving != movingobjectposition.entity) d1 -= Math.sqrt(d0) / 4.0D;
                             // CraftBukkit start
                             affected.put((LivingEntity) entityliving.getBukkitEntity(), d1);
                         }
