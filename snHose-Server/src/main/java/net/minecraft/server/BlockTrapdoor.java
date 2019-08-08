@@ -81,7 +81,7 @@ public class BlockTrapdoor extends Block {
             int i1 = world.getData(i, j, k);
 
             world.setData(i, j, k, i1 ^ 4, 2);
-            world.a(entityhuman, 1003, i, j, k, 0);
+            world.a(entityhuman, 2001, i, j, k, 0);
             return true;
         }
     }
@@ -92,7 +92,7 @@ public class BlockTrapdoor extends Block {
 
         if (flag1 != flag) {
             world.setData(i, j, k, l ^ 4, 2);
-            world.a((EntityHuman) null, 1003, i, j, k, 0);
+            world.a((EntityHuman) null, 2001, i, j, k, 0);
         }
     }
 
