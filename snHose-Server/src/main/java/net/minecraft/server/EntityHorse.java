@@ -144,7 +144,7 @@ public class EntityHorse extends EntityAnimal implements IInventoryListener {
     }
 
     public void a(boolean flag) {
-        this.a((flag ? this.ci() : 1.0F);
+        this.a((flag ? this.ci() : 1.0F));
     }
 
     public boolean cj() {
