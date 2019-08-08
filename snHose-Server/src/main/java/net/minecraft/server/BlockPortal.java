@@ -41,11 +41,7 @@ public class BlockPortal extends BlockHalfTransparent {
         int l = b(iblockaccess.getData(i, j, k));
 
         if (l == 0) {
-            if (iblockaccess.getType(i - 1, j, k) != this && iblockaccess.getType(i + 1, j, k) != this) {
-                l = 2;
-            } else {
-                l = 1;
-            }
+            l = (iblockaccess.getType(i - 1, j, k) != this && iblockaccess.getType(i + 1, j, k) != this ? 2 : 1);
 
             if (iblockaccess instanceof World && !((World) iblockaccess).isStatic) {
                 ((World) iblockaccess).setData(i, j, k, l, 2);
@@ -78,13 +74,12 @@ public class BlockPortal extends BlockHalfTransparent {
             // CraftBukkit start - return portalcreator
             return portalcreator.c();
             // return true;
-        } else if (portalcreator1.b() && PortalCreator.a(portalcreator1) == 0) {
+        if (portalcreator1.b() && PortalCreator.a(portalcreator1) == 0) {
             return portalcreator1.c();
             // return true;
             // CraftBukkit end
-        } else {
-            return false;
         }
+        return false;
     }
 
     public void doPhysics(World world, int i, int j, int k, Block block) {
