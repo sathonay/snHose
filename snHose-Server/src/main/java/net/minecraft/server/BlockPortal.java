@@ -68,13 +68,14 @@ public class BlockPortal extends BlockHalfTransparent {
 
     public boolean e(World world, int i, int j, int k) {
         PortalCreator portalcreator = new PortalCreator(world, i, j, k, 1);
-        PortalCreator portalcreator1 = new PortalCreator(world, i, j, k, 2);
 
         if (portalcreator.b() && PortalCreator.a(portalcreator) == 0) {
             // CraftBukkit start - return portalcreator
             return portalcreator.c();
             // return true;
         }
+
+        PortalCreator portalcreator1 = new PortalCreator(world, i, j, k, 2);
         if (portalcreator1.b() && PortalCreator.a(portalcreator1) == 0) {
             return portalcreator1.c();
             // return true;
