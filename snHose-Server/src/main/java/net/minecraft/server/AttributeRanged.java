@@ -1,5 +1,7 @@
 package net.minecraft.server;
 
+import net.minecraft.server.MathHelper;
+
 public class AttributeRanged extends AttributeBase {
 
     private final double a;
@@ -29,14 +31,6 @@ public class AttributeRanged extends AttributeBase {
     }
 
     public double a(double d0) {
-        if (d0 < this.a) {
-            d0 = this.a;
-        }
-
-        if (d0 > this.b) {
-            d0 = this.b;
-        }
-
-        return d0;
+        return MathHelper.limit(d0, this.a, this.b);
     }
 }
