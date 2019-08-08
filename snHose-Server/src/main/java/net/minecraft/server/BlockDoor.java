@@ -118,7 +118,7 @@ public class BlockDoor extends Block {
                 world.c(i, j - 1, k, i, j, k);
             }
 
-            world.a(entityhuman, 1003, i, j, k, 0);
+            world.a(entityhuman, 2001, i, j, k, 0);
             return true;
         }
     }
@@ -139,7 +139,7 @@ public class BlockDoor extends Block {
                 world.c(i, j - 1, k, i, j, k);
             }
 
-            world.a((EntityHuman) null, 1003, i, j, k, 0);
+            world.a((EntityHuman) null, 2001, i, j, k, 0);
         }
     }
 
