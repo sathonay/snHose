@@ -57,33 +57,21 @@ public abstract class EntityHanging extends Entity {
 
         if (i == 2) {
             f5 -= f6;
-        }
-
-        if (i == 1) {
-            f3 -= f6;
-        }
-
-        if (i == 0) {
-            f5 += f6;
-        }
-
-        if (i == 3) {
-            f3 += f6;
-        }
-
-        if (i == 2) {
             f3 -= this.c(this.f());
         }
 
         if (i == 1) {
+            f3 -= f6;
             f5 += this.c(this.f());
         }
 
         if (i == 0) {
+            f5 += f6;
             f3 += this.c(this.f());
         }
 
         if (i == 3) {
+            f3 += f6;
             f5 -= this.c(this.f());
         }
 
@@ -107,14 +95,7 @@ public abstract class EntityHanging extends Entity {
             if (!this.dead && !this.survives()) {
                 // CraftBukkit start - fire break events
                 Material material = this.world.getType((int) this.locX, (int) this.locY, (int) this.locZ).getMaterial();
-                HangingBreakEvent.RemoveCause cause;
-
-                if (!material.equals(Material.AIR)) {
-                    // TODO: This feels insufficient to catch 100% of suffocation cases
-                    cause = HangingBreakEvent.RemoveCause.OBSTRUCTION;
-                } else {
-                    cause = HangingBreakEvent.RemoveCause.PHYSICS;
-                }
+                HangingBreakEvent.RemoveCause cause = (!material.equals(Material.AIR) ? HangingBreakEvent.RemoveCause.OBSTRUCTION : HangingBreakEvent.RemoveCause.PHYSICS);
 
                 HangingBreakEvent event = new HangingBreakEvent((Hanging) this.getBukkitEntity(), cause);
                 this.world.getServer().getPluginManager().callEvent(event);
@@ -168,13 +149,7 @@ public abstract class EntityHanging extends Entity {
 
             for (int j1 = 0; j1 < i; ++j1) {
                 for (int k1 = 0; k1 < j; ++k1) {
-                    Material material;
-
-                    if (this.direction != 2 && this.direction != 0) {
-                        material = this.world.getType(this.x, l + k1, i1 + j1).getMaterial();
-                    } else {
-                        material = this.world.getType(k + j1, l + k1, this.z).getMaterial();
-                    }
+                    Material material = (this.direction != 2 && this.direction != 0 ? this.world.getType(this.x, l + k1, i1 + j1).getMaterial() : this.world.getType(k + j1, l + k1, this.z).getMaterial());
 
                     if (!material.isBuildable()) {
                         return false;
