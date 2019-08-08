@@ -27,13 +27,13 @@ public class EntityGhast extends EntityFlying implements IMonster {
     public boolean damageEntity(DamageSource damagesource, float f) {
         if (this.isInvulnerable()) {
             return false;
-        } else if ("fireball".equals(damagesource.p()) && damagesource.getEntity() instanceof EntityHuman) {
+        }
+        if ("fireball".equals(damagesource.p()) && damagesource.getEntity() instanceof EntityHuman) {
             super.damageEntity(damagesource, 1000.0F);
             ((EntityHuman) damagesource.getEntity()).a((Statistic) AchievementList.z);
             return true;
-        } else {
-            return super.damageEntity(damagesource, f);
         }
+        return super.damageEntity(damagesource, f);
     }
 
     protected void c() {
@@ -84,11 +84,7 @@ public class EntityGhast extends EntityFlying implements IMonster {
             this.world.getServer().getPluginManager().callEvent(event);
 
             if (!event.isCancelled()) {
-                if (event.getTarget() == null) {
-                    this.target = null;
-                } else {
-                    this.target = ((CraftEntity) event.getTarget()).getHandle();
-                }
+                this.target = (event.getTarget() == null ? null : ((CraftEntity) event.getTarget()).getHandle());
             }
             // CraftBukkit end
         }
@@ -101,11 +97,7 @@ public class EntityGhast extends EntityFlying implements IMonster {
                 this.world.getServer().getPluginManager().callEvent(event);
 
                 if (!event.isCancelled()) {
-                    if (event.getTarget() == null) {
-                        this.target = null;
-                    } else {
-                        this.target = ((CraftEntity) event.getTarget()).getHandle();
-                    }
+                    this.target = (event.getTarget() == null ? null : ((CraftEntity) event.getTarget()).getHandle());
                 }
             }
             // CraftBukkit end
