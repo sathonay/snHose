@@ -456,17 +456,11 @@ public class EntityArrow extends Entity implements IProjectile {
 
     public void setCritical(boolean flag) {
         byte b0 = this.datawatcher.getByte(16);
-
-        if (flag) {
-            this.datawatcher.watch(16, Byte.valueOf((byte) (b0 | 1)));
-        } else {
-            this.datawatcher.watch(16, Byte.valueOf((byte) (b0 & -2)));
-        }
+        this.datawatcher.watch(16, Byte.valueOf((byte) (flag ? (b0 | 1) : (b0 & -2))));
     }
 
     public boolean isCritical() {
         byte b0 = this.datawatcher.getByte(16);
-
         return (b0 & 1) != 0;
     }
 
