@@ -359,7 +359,7 @@ public class BlockPiston extends Block {
             Block[] ablock;
             int l2;
             int i3;
-            int j3;
+            int j3 = 0;
 
             for (ablock = new Block[13]; i1 != i || j1 != j || k1 != k; k1 = j3) {
                 l2 = i1 - Facing.b[l];
