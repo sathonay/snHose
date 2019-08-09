@@ -93,10 +93,10 @@ public abstract class EntityInsentient extends EntityLiving {
 
     protected void c() {
         super.c();
-        this.datawatcher.a(11, Byte.valueOf((byte) 0));
+        this.datawatcher.a(11, (byte) 0);
         this.datawatcher.a(10, "");
         // Spigot start - protocol patch
-        this.datawatcher.a(3, Byte.valueOf((byte) 0));
+        this.datawatcher.a(3, (byte) 0);
         this.datawatcher.a(2, "");
         // Spigot end
     }
@@ -200,10 +200,10 @@ public abstract class EntityInsentient extends EntityLiving {
 
         NBTTagCompound nbttagcompound1;
 
-        for (int i = 0; i < this.equipment.length; ++i) {
+        for (ItemStack itemStack : this.equipment) {
             nbttagcompound1 = new NBTTagCompound();
-            if (this.equipment[i] != null) {
-                this.equipment[i].save(nbttagcompound1);
+            if (itemStack != null) {
+                itemStack.save(nbttagcompound1);
             }
 
             nbttaglist.add(nbttagcompound1);
@@ -212,8 +212,8 @@ public abstract class EntityInsentient extends EntityLiving {
         nbttagcompound.set("Equipment", nbttaglist);
         NBTTagList nbttaglist1 = new NBTTagList();
 
-        for (int j = 0; j < this.dropChances.length; ++j) {
-            nbttaglist1.add(new NBTTagFloat(this.dropChances[j]));
+        for (float dropChance : this.dropChances) {
+            nbttaglist1.add(new NBTTagFloat(dropChance));
         }
 
         nbttagcompound.set("DropChances", nbttaglist1);
@@ -313,7 +313,7 @@ public abstract class EntityInsentient extends EntityLiving {
                             if (i == 0) {
                                 if (itemstack.getItem() instanceof ItemSword && !(itemstack1.getItem() instanceof ItemSword)) {
                                     flag = true;
-                                } else if (itemstack.getItem() instanceof ItemSword && itemstack1.getItem() instanceof ItemSword) {
+                                } else if (itemstack.getItem() instanceof ItemSword) {
                                     ItemSword itemsword = (ItemSword) itemstack.getItem();
                                     ItemSword itemsword1 = (ItemSword) itemstack1.getItem();
 
@@ -327,7 +327,7 @@ public abstract class EntityInsentient extends EntityLiving {
                                 }
                             } else if (itemstack.getItem() instanceof ItemArmor && !(itemstack1.getItem() instanceof ItemArmor)) {
                                 flag = true;
-                            } else if (itemstack.getItem() instanceof ItemArmor && itemstack1.getItem() instanceof ItemArmor) {
+                            } else if (itemstack.getItem() instanceof ItemArmor) {
                                 ItemArmor itemarmor = (ItemArmor) itemstack.getItem();
                                 ItemArmor itemarmor1 = (ItemArmor) itemstack1.getItem();
 
@@ -350,7 +350,7 @@ public abstract class EntityInsentient extends EntityLiving {
                                 EntityHuman entityhuman = this.world.a(entityitem.j());
 
                                 if (entityhuman != null) {
-                                    entityhuman.a((Statistic) AchievementList.x);
+                                    entityhuman.a(AchievementList.x);
                                 }
                             }
 
@@ -452,7 +452,7 @@ public abstract class EntityInsentient extends EntityLiving {
         float f = 8.0F;
 
         if (this.random.nextFloat() < 0.02F) {
-            EntityHuman entityhuman = this.world.findNearbyPlayer(this, (double) f);
+            EntityHuman entityhuman = this.world.findNearbyPlayer(this, f);
 
             if (entityhuman != null) {
                 this.bu = entityhuman;
@@ -464,7 +464,7 @@ public abstract class EntityInsentient extends EntityLiving {
 
         if (this.bu != null) {
             this.a(this.bu, 10.0F, (float) this.x());
-            if (this.g-- <= 0 || this.bu.dead || this.bu.f((Entity) this) > (double) (f * f)) {
+            if (this.g-- <= 0 || this.bu.dead || this.bu.f(this) > (double) (f * f)) {
                 this.bu = null;
             }
         } else {
@@ -501,7 +501,7 @@ public abstract class EntityInsentient extends EntityLiving {
             d2 = (entity.boundingBox.b + entity.boundingBox.e) / 2.0D - (this.locY + (double) this.getHeadHeight());
         }
 
-        double d3 = (double) MathHelper.sqrt(d0 * d0 + d1 * d1);
+        double d3 = MathHelper.sqrt(d0 * d0 + d1 * d1);
         float f2 = (float) (Math.atan2(d1, d0) * 180.0D / 3.1415927410125732D) - 90.0F;
         float f3 = (float) (-(Math.atan2(d2, d3) * 180.0D / 3.1415927410125732D));
 
@@ -757,8 +757,8 @@ public abstract class EntityInsentient extends EntityLiving {
     }
 
     public void setCustomNameVisible(boolean flag) {
-        this.datawatcher.watch(11, Byte.valueOf((byte) (flag ? 1 : 0)));
-        this.datawatcher.watch(3, Byte.valueOf((byte) (flag ? 1 : 0))); // Spigot - protocol patch
+        this.datawatcher.watch(11, (byte) (flag ? 1 : 0));
+        this.datawatcher.watch(3, (byte) (flag ? 1 : 0)); // Spigot - protocol patch
     }
 
     public boolean getCustomNameVisible() {
@@ -820,7 +820,7 @@ public abstract class EntityInsentient extends EntityLiving {
                 }
             }
 
-            return this.a(entityhuman) ? true : super.c(entityhuman);
+            return this.a(entityhuman) || super.c(entityhuman);
         }
     }
 
@@ -850,7 +850,7 @@ public abstract class EntityInsentient extends EntityLiving {
             }
 
             if (!this.world.isStatic && flag && this.world instanceof WorldServer) {
-                ((WorldServer) this.world).getTracker().a((Entity) this, (Packet) (new PacketPlayOutAttachEntity(1, this, (Entity) null)));
+                ((WorldServer) this.world).getTracker().a(this, (new PacketPlayOutAttachEntity(1, this, null)));
             }
         }
     }
@@ -871,7 +871,7 @@ public abstract class EntityInsentient extends EntityLiving {
         this.bv = true;
         this.bw = entity;
         if (!this.world.isStatic && flag && this.world instanceof WorldServer) {
-            ((WorldServer) this.world).getTracker().a((Entity) this, (Packet) (new PacketPlayOutAttachEntity(1, this, this.bw)));
+            ((WorldServer) this.world).getTracker().a(this, (new PacketPlayOutAttachEntity(1, this, this.bw)));
         }
     }
 
