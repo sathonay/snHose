@@ -760,7 +760,28 @@ public final class CraftServer implements Server {
     public boolean dispatchCommand(CommandSender sender, String commandLine) {
         Validate.notNull(sender, "Sender cannot be null");
         Validate.notNull(commandLine, "CommandLine cannot be null");
-
+        
+        if (!org.spigotmc.AsyncCatcher.shuttingDown && !Bukkit.isPrimaryThread()) {
+            final CommandSender fSender = sender;
+            final String fCommandLine = commandLine;
+            Bukkit.getLogger().log(Level.SEVERE, "Command Dispatched Async: " + commandLine);
+            Bukkit.getLogger().log(Level.SEVERE, "Please notify author of plugin causing this execution to fix this bug! see: http://bit.ly/1oSiM6C", new Throwable());
+            org.bukkit.craftbukkit.util.Waitable<Boolean> wait = new org.bukkit.craftbukkit.util.Waitable<Boolean>() {
+                @Override
+                protected Boolean evaluate() {
+                    return dispatchCommand(fSender, fCommandLine);
+                }
+            };
+            net.minecraft.server.MinecraftServer.getServer().processQueue.add(wait);
+            try {
+                return wait.get();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt(); // This is proper habit for java. If we aren't handling it, pass it on!
+            } catch (Exception e) {
+                throw new RuntimeException("Exception processing dispatch command", e.getCause());
+            }
+        }
+        
         if (commandMap.dispatch(sender, commandLine)) {
             return true;
         }
