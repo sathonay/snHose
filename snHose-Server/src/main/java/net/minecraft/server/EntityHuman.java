@@ -406,18 +406,13 @@ public abstract class EntityHuman extends EntityLiving implements ICommandListen
         }
 
         this.i((float) attributeinstance.getValue());
-        float f = MathHelper.sqrt(this.motX * this.motX + this.motZ * this.motZ);
+        float f = Math.min(MathHelper.sqrt(this.motX * this.motX + this.motZ * this.motZ), 0.1F);
         // CraftBukkit - Math -> TrigMath
         float f1 = (float) org.bukkit.craftbukkit.TrigMath.atan(-this.motY * 0.20000000298023224D) * 15.0F;
-
-        if (f > 0.1F) {
-            f = 0.1F;
-        }
 
         if (!this.onGround || this.getHealth() <= 0.0F) {
             f = 0.0F;
         }
-
         if (this.onGround || this.getHealth() <= 0.0F) {
             f1 = 0.0F;
         }
@@ -944,15 +939,15 @@ public abstract class EntityHuman extends EntityLiving implements ICommandListen
 
                     // snHose start
                     // Save the victim's velocity before they are potentially knocked back
-                    double victimMotX = entity.motX;
-                    double victimMotY = entity.motY;
-                    double victimMotZ = entity.motZ;
+                    final double victimMotX = entity.motX;
+                    final double victimMotY = entity.motY;
+                    final double victimMotZ = entity.motZ;
                     // snHose end
 
                     final boolean flag2 = entity.damageEntity(DamageSource.playerAttack(this), f);
                     if (flag2) {
                         if (i > 0) {
-                            entity.g((-Math.sin(this.yaw * Math.PI / 180.0F) * (float) i * 0.5F), 0.1D, (Math.cos(this.yaw * Math.PI / 180.0F) * i * 0.5F));
+                            entity.g((-Math.sin(this.yaw * Math.PI / 180.0F) * (float) i * 0.5F), 0.1D / 2.0D /* Try to adjust with friction */, (Math.cos(this.yaw * Math.PI / 180.0F) * i * 0.5F));
                             this.motX *= 0.6D;
                             // NEVER PUT "this.motY *= 0.6D" only skid do that
                             this.motZ *= 0.6D;
