@@ -55,11 +55,7 @@ public abstract class EntityMonster extends EntityCreature implements IMonster {
                         EntityTargetEvent event = org.bukkit.craftbukkit.event.CraftEventFactory.callEntityTargetEvent(this, entity, EntityTargetEvent.TargetReason.TARGET_ATTACKED_ENTITY);
 
                         if (!event.isCancelled()) {
-                            if (event.getTarget() == null) {
-                                this.target = null;
-                            } else {
-                                this.target = ((org.bukkit.craftbukkit.entity.CraftEntity) event.getTarget()).getHandle();
-                            }
+                            this.target = (event.getTarget() == null ? null : ((org.bukkit.craftbukkit.entity.CraftEntity) event.getTarget()).getHandle());
                         }
                     } else {
                         this.target = entity;
@@ -101,7 +97,7 @@ public abstract class EntityMonster extends EntityCreature implements IMonster {
 
         if (flag) {
             if (i > 0) {
-                entity.g((double) (-MathHelper.sin(this.yaw * 3.1415927F / 180.0F) * (float) i * 0.5F), 0.1D, (double) (MathHelper.cos(this.yaw * 3.1415927F / 180.0F) * (float) i * 0.5F));
+                entity.g((double) (-MathHelper.sin(this.yaw * Math.PI / 180.0F) * (float) i * 0.5F), 0.1D, (double) (MathHelper.cos(this.yaw * Math.PI / 180.0F) * (float) i * 0.5F));
                 this.motX *= 0.6D;
                 this.motZ *= 0.6D;
             }
