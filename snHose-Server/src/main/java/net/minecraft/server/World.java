@@ -110,7 +110,7 @@ public abstract class World implements IBlockAccess {
     public boolean populating;
     private int tickPosition;
     // CraftBukkit end
-    private ArrayList L;
+    private List<AxisAlignedBB> L;
     private boolean M;
     int[] I;
 
@@ -243,7 +243,7 @@ public abstract class World implements IBlockAccess {
         this.K = this.random.nextInt(12000);
         this.allowMonsters = true;
         this.allowAnimals = true;
-        this.L = new ArrayList();
+        this.L = new ArrayList<>();
         this.I = new int['\u8000'];
         this.dataManager = idatamanager;
         this.methodProfiler = methodprofiler;
@@ -1242,7 +1242,7 @@ public abstract class World implements IBlockAccess {
         this.u.add(iworldaccess);
     }
 
-    public List getCubes(Entity entity, AxisAlignedBB axisalignedbb) {
+    public List<AxisAlignedBB> getCubes(Entity entity, AxisAlignedBB axisalignedbb) {
         this.L.clear();
         int i = MathHelper.floor(axisalignedbb.a);
         int j = MathHelper.floor(axisalignedbb.d + 1.0D);
@@ -1252,7 +1252,7 @@ public abstract class World implements IBlockAccess {
         int j1 = MathHelper.floor(axisalignedbb.f + 1.0D);
 
         // Spigot start
-        int ystart = ( ( k - 1 ) < 0 ) ? 0 : ( k - 1 );
+        int ystart = Math.max((k - 1), 0);
         for ( int chunkx = ( i >> 4 ); chunkx <= ( ( j - 1 ) >> 4 ); chunkx++ )
         {
             int cx = chunkx << 4;
@@ -1272,10 +1272,10 @@ public abstract class World implements IBlockAccess {
                 }
                 int cz = chunkz << 4;
                 // Compute ranges within chunk
-                int xstart = ( i < cx ) ? cx : i;
-                int xend = ( j < ( cx + 16 ) ) ? j : ( cx + 16 );
-                int zstart = ( i1 < cz ) ? cz : i1;
-                int zend = ( j1 < ( cz + 16 ) ) ? j1 : ( cz + 16 );
+                int xstart = Math.max(i, cx);
+                int xend = Math.min(j, (cx + 16));
+                int zstart = Math.max(i1, cz);
+                int zend = Math.min(j1, (cz + 16));
                 // Loop through blocks within chunk
                 for ( int x = xstart; x < xend; x++ )
                 {
@@ -1308,14 +1308,14 @@ public abstract class World implements IBlockAccess {
         double d0 = 0.25D;
         List list = this.getEntities(entity, axisalignedbb.grow(d0, d0, d0));
 
-        for (int j2 = 0; j2 < list.size(); ++j2) {
-            AxisAlignedBB axisalignedbb1 = ((Entity) list.get(j2)).J();
+        for (Object value : list) {
+            AxisAlignedBB axisalignedbb1 = ((Entity) value).J();
 
             if (axisalignedbb1 != null && axisalignedbb1.b(axisalignedbb)) {
                 this.L.add(axisalignedbb1);
             }
 
-            axisalignedbb1 = entity.h((Entity) list.get(j2));
+            axisalignedbb1 = entity.h((Entity) value);
             if (axisalignedbb1 != null && axisalignedbb1.b(axisalignedbb)) {
                 this.L.add(axisalignedbb1);
             }
