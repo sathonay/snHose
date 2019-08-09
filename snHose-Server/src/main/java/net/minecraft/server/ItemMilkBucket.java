@@ -6,11 +6,7 @@ public class ItemMilkBucket extends Item {
 
     public ItemMilkBucket() {
         // PaperSpigot start - Stackable Buckets
-        if (PaperSpigotConfig.stackableMilkBuckets) {
-            this.e(org.bukkit.Material.BUCKET.getMaxStackSize());
-        } else {
-            this.e(1);
-        }
+        this.e((PaperSpigotConfig.stackableMilkBuckets ? org.bukkit.Material.BUCKET.getMaxStackSize() : 1));
         // PaperSpigot end
         this.a(CreativeModeTab.f);
     }
