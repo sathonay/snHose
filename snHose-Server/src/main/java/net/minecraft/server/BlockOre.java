@@ -19,12 +19,7 @@ public class BlockOre extends Block {
 
     public int getDropCount(int i, Random random) {
         if (i > 0 && Item.getItemOf(this) != this.getDropType(0, random, i)) {
-            int j = random.nextInt(i + 2) - 1;
-
-            if (j < 0) {
-                j = 0;
-            }
-
+            int j = Math.max(random.nextInt(i + 2) - 1, 0);
             return this.a(random) * (j + 1);
         } else {
             return this.a(random);
