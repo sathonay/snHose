@@ -61,7 +61,7 @@ public abstract class EntityCreature extends EntityInsentient {
                 this.pathEntity = this.world.findPath(this, this.target, f11, true, false, false, true);
             }
         } else if (this.target.isAlive()) {
-            float f1 = this.target.e((Entity) this);
+            float f1 = this.target.e(this);
 
             if (this.hasLineOfSight(this.target)) {
                 this.a(this.target, f1);
@@ -99,8 +99,8 @@ public abstract class EntityCreature extends EntityInsentient {
         this.pitch = 0.0F;
         if (this.pathEntity != null && this.random.nextInt(100) != 0) {
             this.world.methodProfiler.a("followpath");
-            Vec3D vec3d = this.pathEntity.a((Entity) this);
-            double d0 = (double) (this.width * 2.0F);
+            Vec3D vec3d = this.pathEntity.a(this);
+            double d0 = this.width * 2.0F;
 
             while (vec3d != null && vec3d.d(this.locX, vec3d.b, this.locZ) < d0 * d0) {
                 this.pathEntity.a();
@@ -108,7 +108,7 @@ public abstract class EntityCreature extends EntityInsentient {
                     vec3d = null;
                     this.pathEntity = null;
                 } else {
-                    vec3d = this.pathEntity.a((Entity) this);
+                    vec3d = this.pathEntity.a(this);
                 }
             }
 
@@ -235,7 +235,7 @@ public abstract class EntityCreature extends EntityInsentient {
     }
 
     public boolean b(int i, int j, int k) {
-        return this.br == -1.0F ? true : this.bq.e(i, j, k) < this.br * this.br;
+        return this.br == -1.0F || this.bq.e(i, j, k) < this.br * this.br;
     }
 
     public void a(int i, int j, int k, int l) {
