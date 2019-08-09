@@ -19,13 +19,9 @@ public class ItemBow extends Item {
             int j = this.d_(itemstack) - i;
             float f = (float) j / 20.0F;
 
-            f = (f * f + f * 2.0F) / 3.0F;
+            f = Math.min((f * f + f * 2.0F) / 3.0F, 1.0F);
             if ((double) f < 0.1D) {
                 return;
-            }
-
-            if (f > 1.0F) {
-                f = 1.0F;
             }
 
             EntityArrow entityarrow = new EntityArrow(world, entityhuman, f * 2.0F);
@@ -77,9 +73,10 @@ public class ItemBow extends Item {
                 entityhuman.inventory.a(Items.ARROW);
             }
 
-            if (!world.isStatic) {
+            // UNUSED
+            /*if (!world.isStatic) {
                 // world.addEntity(entityarrow); // CraftBukkit - moved up
-            }
+            }*/
         }
     }
 
