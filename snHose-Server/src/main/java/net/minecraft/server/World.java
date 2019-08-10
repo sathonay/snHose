@@ -1712,9 +1712,9 @@ public abstract class World implements IBlockAccess {
                     this.getChunkAt(entity.ah, entity.aj).a(entity, entity.ai);
                 }
                 
-                entity.ag = this.isChunkLoaded(k, i1);
+                final boolean loaded = entity.ag = this.isChunkLoaded(k, i1);
 
-                if (this.isChunkLoaded(k, i1)) {
+                if (loaded) {
                     this.getChunkAt(k, i1).a(entity);
                 }
             }
