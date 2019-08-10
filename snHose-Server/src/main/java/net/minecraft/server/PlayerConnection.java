@@ -1202,6 +1202,7 @@ public class PlayerConnection implements PacketPlayInListener {
                     }
 
                     if (event.isCancelled()) {
+                        this.player.updateInventory(this.player.activeContainer);
                         return;
                     }
                     // CraftBukkit end
