@@ -51,6 +51,7 @@ public class ItemBucket extends Item {
                         PlayerBucketFillEvent event = CraftEventFactory.callPlayerBucketFillEvent(entityhuman, i, j, k, -1, itemstack, (!isLava ? Items.WATER_BUCKET : Items.LAVA_BUCKET));
 
                         if (event.isCancelled()) {
+                            ((EntityPlayer)entityhuman).updateInventory(entityhuman.defaultContainer);
                             return itemstack;
                         }
                         // CraftBukkit end
@@ -63,6 +64,7 @@ public class ItemBucket extends Item {
                         PlayerBucketEmptyEvent event = CraftEventFactory.callPlayerBucketEmptyEvent(entityhuman, i, j, k, movingobjectposition.face, itemstack);
 
                         if (event.isCancelled()) {
+                            ((EntityPlayer)entityhuman).updateInventory(entityhuman.defaultContainer);
                             return itemstack;
                         }
 
@@ -104,6 +106,7 @@ public class ItemBucket extends Item {
                     PlayerBucketEmptyEvent event = CraftEventFactory.callPlayerBucketEmptyEvent(entityhuman, clickedX, clickedY, clickedZ, movingobjectposition.face, itemstack);
 
                     if (event.isCancelled()) {
+                        ((EntityPlayer)entityhuman).updateInventory(entityhuman.defaultContainer);
                         return itemstack;
                     }
                     // CraftBukkit end
