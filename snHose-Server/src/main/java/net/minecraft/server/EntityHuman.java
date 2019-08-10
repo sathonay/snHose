@@ -1519,7 +1519,7 @@ public abstract class EntityHuman extends EntityLiving implements ICommandListen
     }
 
     public boolean a(int i, int j, int k, int l, ItemStack itemstack) {
-        return this.abilities.mayBuild ? true : (itemstack != null ? itemstack.z() : false);
+        return this.abilities.mayBuild || (itemstack != null && itemstack.z());
     }
 
     protected int getExpValue(EntityHuman entityhuman) {
