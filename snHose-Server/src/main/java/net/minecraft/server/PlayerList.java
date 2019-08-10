@@ -127,11 +127,7 @@ public abstract class PlayerList {
 
         entityplayer.spawnIn(this.server.getWorldServer(entityplayer.dimension));
         entityplayer.playerInteractManager.a((WorldServer) entityplayer.world);
-        String s1 = "local";
-
-        if (networkmanager.getSocketAddress() != null) {
-            s1 = networkmanager.getSocketAddress().toString();
-        }
+        String s1 = (networkmanager.getSocketAddress() == null ? "local" : networkmanager.getSocketAddress().toString());
 
         // Spigot start - spawn location event
         Player bukkitPlayer = entityplayer.getBukkitEntity();
