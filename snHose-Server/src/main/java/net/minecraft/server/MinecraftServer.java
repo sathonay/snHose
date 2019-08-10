@@ -791,7 +791,7 @@ public abstract class MinecraftServer implements ICommandListener, Runnable, IMo
                 this.methodProfiler.b();
                 this.methodProfiler.a("tracker");
                 worldserver.timings.tracker.startTiming(); // Spigot
-                if (playerList.players.size() > 0) worldserver.getTracker().updatePlayers();
+                if (u.players.size() > 0) worldserver.getTracker().updatePlayers();
                 worldserver.timings.tracker.stopTiming(); // Spigot
                 this.methodProfiler.b();
                 this.methodProfiler.b();
