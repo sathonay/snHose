@@ -5,9 +5,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 // CraftBukkit start
 import com.google.common.base.Function;
-import org.bukkit.craftbukkit.entity.CraftCreature;
 import org.bukkit.craftbukkit.event.CraftEventFactory;
-import org.bukkit.entity.Creature;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageModifier;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
@@ -663,7 +661,6 @@ public abstract class EntityLiving extends Entity {
                 this.aF = 1.5F;
                 boolean flag = true;
 
-
                 if (this.noDamageTicks > 0) {
                     if (f <= this.lastDamage) {
                         return false;
@@ -719,7 +716,7 @@ public abstract class EntityLiving extends Entity {
                         this.Q();
                     }
 
-                    if (entity != null && (damagesource instanceof EntityDamageSource)) {
+                    if (entity != null) {
                         double d0 = entity.locX - this.locX;
 
                         double d1;
@@ -738,8 +735,7 @@ public abstract class EntityLiving extends Entity {
                 if (knockbackCancelled) this.world.broadcastEntityEffect(this, (byte) 2); // PaperSpigot - Disable explosion knockback
 
                 boolean die = this.getHealth() <= 0.0F;
-                String s = die ? this.aU() : this.aT();
-                if (flag)this.makeSound(s, this.bf(), this.bg());
+                if (flag)this.makeSound(die ? this.aU() : this.aT(), this.bf(), this.bg());
                 if (die)this.die(damagesource);
                 return true;
             }
@@ -1027,9 +1023,6 @@ public abstract class EntityLiving extends Entity {
             float absorptionModifier = absorption.apply((double) f).floatValue();
 
             EntityDamageEvent event = CraftEventFactory.handleLivingEntityDamageEvent(this, damagesource, originalDamage, hardHatModifier, blockingModifier, armorModifier, resistanceModifier, magicModifier, absorptionModifier, hardHat, blocking, armor, resistance, magic, absorption);
-
-            if (this.getBukkitEntity() instanceof CraftCreature && !((CraftCreature)this.getBukkitEntity()).isDamageable())return false;
-
             if (event.isCancelled()) {
                 return false;
             }
