@@ -247,7 +247,7 @@
           <target>1.8</target>
         </configuration>
       </plugin>
-      <plugin>
+      <!--<plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>2.11</version>
@@ -258,7 +258,7 @@
               <exclude>org/bukkit/craftbukkit/inventory/ItemStack*Test.java</exclude>
             </excludes>
         </configuration>
-      </plugin>
+      </plugin>-->
       <plugin>
         <artifactId>maven-resources-plugin</artifactId>
         <version>2.4.3</version>
