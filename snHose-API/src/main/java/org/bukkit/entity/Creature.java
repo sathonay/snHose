@@ -23,4 +23,13 @@ public interface Creature extends LivingEntity {
      * @return Current target of this creature, or null if none exists
      */
     public LivingEntity getTarget();
+
+    public void setStationary(boolean stationary);
+    public void setStationaryHead(boolean stationaryHead);
+    public void setPushable(boolean pushable);
+    public void setAttack(boolean attack);
+    public void setDamageable(boolean damageable);
+    public void setMobAI(boolean mobAI);
+
+
 }
