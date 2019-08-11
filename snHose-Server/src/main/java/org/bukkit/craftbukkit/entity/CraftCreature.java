@@ -11,8 +11,6 @@ public class CraftCreature extends CraftLivingEntity implements Creature {
         super(server, entity);
     }
 
-    private boolean pushable = true, damageable = true, stationary = false, stationaryHead = false, attack = true;
-
     public void setTarget(LivingEntity target) {
         EntityCreature entity = getHandle();
         if (target == null) {
@@ -30,60 +28,6 @@ public class CraftCreature extends CraftLivingEntity implements Creature {
         if (!(getHandle().target instanceof EntityLiving)) return null;
 
         return (CraftLivingEntity) getHandle().target.getBukkitEntity();
-    }
-
-    @Override
-    public void setStationary(boolean stationary) {
-        this.stationary = stationary;
-    }
-
-    @Override
-    public void setStationaryHead(boolean stationaryHead) {
-        this.stationaryHead = stationaryHead;
-    }
-
-    @Override
-    public void setPushable(boolean pushable) {
-        this.pushable = pushable;
-    }
-
-    @Override
-    public void setAttack(boolean attack) {
-        this.attack = attack;
-    }
-
-    @Override
-    public void setDamageable(boolean damageable) {
-        this.damageable = damageable;
-    }
-
-    @Override
-    public void setMobAI(boolean mobAI) {
-        this.stationary = !mobAI;
-        this.stationaryHead = !mobAI;
-        this.pushable = mobAI;
-        this.attack = mobAI;
-        this.damageable = !mobAI;
-    }
-
-    public boolean isPushable() {
-        return pushable;
-    }
-
-    public boolean isDamageable() {
-        return damageable;
-    }
-
-    public boolean isStationary() {
-        return stationary;
-    }
-
-    public boolean isStationaryHead() {
-        return stationaryHead;
-    }
-
-    public boolean isAttack() {
-        return attack;
     }
 
     @Override
