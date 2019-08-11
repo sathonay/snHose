@@ -210,7 +210,6 @@ public abstract class PlayerList {
     }
 
     public void sendScoreboard(ScoreboardServer scoreboardserver, EntityPlayer entityplayer) { // CraftBukkit - protected -> public
-        HashSet hashset = new HashSet();
         Iterator iterator = scoreboardserver.getTeams().iterator();
 
         while (iterator.hasNext()) {
@@ -219,21 +218,19 @@ public abstract class PlayerList {
             entityplayer.playerConnection.sendPacket(new PacketPlayOutScoreboardTeam(scoreboardteam, 0));
         }
 
+        Set set = new HashSet();
         for (int i = 0; i < 3; ++i) {
             ScoreboardObjective scoreboardobjective = scoreboardserver.getObjectiveForSlot(i);
+            if (scoreboardobjective == null || set.contains(scoreboardobjective))continue;
+            Iterator iterator1 = scoreboardserver.getScoreboardScorePacketsForObjective(scoreboardobjective).iterator();
 
-            if (scoreboardobjective != null && !hashset.contains(scoreboardobjective)) {
-                List list = scoreboardserver.getScoreboardScorePacketsForObjective(scoreboardobjective);
-                Iterator iterator1 = list.iterator();
+            while (iterator1.hasNext()) {
+                Packet packet = (Packet) iterator1.next();
 
-                while (iterator1.hasNext()) {
-                    Packet packet = (Packet) iterator1.next();
-
-                    entityplayer.playerConnection.sendPacket(packet);
-                }
-
-                hashset.add(scoreboardobjective);
+                entityplayer.playerConnection.sendPacket(packet);
             }
+
+            set.add(scoreboardobjective);
         }
     }
 
