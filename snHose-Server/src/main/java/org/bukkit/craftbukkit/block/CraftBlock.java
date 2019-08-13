@@ -101,11 +101,7 @@ public class CraftBlock implements Block {
     }
 
     public void setData(final byte data, boolean applyPhysics) {
-        if (applyPhysics) {
-            chunk.getHandle().world.setData(x, y, z, data, 3);
-        } else {
-            chunk.getHandle().world.setData(x, y, z, data, 2);
-        }
+        chunk.getHandle().world.setData(x, y, z, data, (applyPhysics ? 3 : 2));
     }
 
     public byte getData() {
