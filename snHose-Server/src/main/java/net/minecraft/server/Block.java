@@ -3,6 +3,7 @@ package net.minecraft.server;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+import net.minecraft.server.MathHelper;
 
 public class Block {
 
@@ -809,12 +810,9 @@ public class Block {
     }
     // CraftBukkit end
 
-    // Spigot start
+    // snHose start
     public static float range(float min, float value, float max) {
-        if (value < min) {
-            return min;
-        }
-        return Math.min(value, max);
+        return MathHelper.limit(value, min, max);
     }
-    // Spigot end
+    // snHose end
 }
