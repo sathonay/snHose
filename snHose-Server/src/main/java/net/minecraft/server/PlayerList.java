@@ -42,7 +42,7 @@ public abstract class PlayerList {
     private static final Logger g = LogManager.getLogger();
     private static final SimpleDateFormat h = new SimpleDateFormat("yyyy-MM-dd \'at\' HH:mm:ss z");
     private final MinecraftServer server;
-    public final List players = new java.util.concurrent.CopyOnWriteArrayList(); // CraftBukkit - ArrayList -> CopyOnWriteArrayList: Iterator safety
+    public final List<EntityPlayer> players = new java.util.concurrent.CopyOnWriteArrayList<>(); // CraftBukkit - ArrayList -> CopyOnWriteArrayList: Iterator safety
     // PaperSpigot start - Player lookup improvements
     public final Map<String, EntityPlayer> playerMap = new java.util.HashMap<String, EntityPlayer>() {
         @Override
@@ -307,34 +307,30 @@ public abstract class PlayerList {
         // CraftBukkit start - sendAll above replaced with this loop
         PacketPlayOutPlayerInfo packet = PacketPlayOutPlayerInfo.addPlayer( entityplayer ); // Spigot - protocol patch
         PacketPlayOutPlayerInfo displayPacket = PacketPlayOutPlayerInfo.updateDisplayName( entityplayer ); // Spigot - protocol patch
-        for (int i = 0; i < this.players.size(); ++i) {
-            EntityPlayer entityplayer1 = (EntityPlayer) this.players.get(i);
+        for (EntityPlayer entityplayer1 : this.players) {
 
             if (entityplayer1.getBukkitEntity().canSee(entityplayer.getBukkitEntity())) {
                 entityplayer1.playerConnection.sendPacket(packet);
                 // Spigot start - protocol patch
-                if ( !entityplayer.getName().equals( entityplayer.listName ) && entityplayer1.playerConnection.networkManager.getVersion() > 28 )
-                {
-                    entityplayer1.playerConnection.sendPacket( displayPacket );
+                if (!entityplayer.getName().equals(entityplayer.listName) && entityplayer1.playerConnection.networkManager.getVersion() > 28) {
+                    entityplayer1.playerConnection.sendPacket(displayPacket);
                 }
                 // Spigot end
             }
         }
         // CraftBukkit end
 
-        for (int i = 0; i < this.players.size(); ++i) {
-            EntityPlayer entityplayer1 = (EntityPlayer) this.players.get(i);
+        for (EntityPlayer player : this.players) {
 
             // CraftBukkit start
-            if (!entityplayer.getBukkitEntity().canSee(entityplayer1.getBukkitEntity())) {
+            if (!entityplayer.getBukkitEntity().canSee(player.getBukkitEntity())) {
                 continue;
             }
             // .name -> .listName
-            entityplayer.playerConnection.sendPacket(PacketPlayOutPlayerInfo.addPlayer( entityplayer1 )); // Spigot - protocol patch
+            entityplayer.playerConnection.sendPacket(PacketPlayOutPlayerInfo.addPlayer(player)); // Spigot - protocol patch
             // Spigot start - protocol patch
-            if ( !entityplayer.getName().equals( entityplayer.listName ) && entityplayer.playerConnection.networkManager.getVersion() > 28 )
-            {
-                entityplayer.playerConnection.sendPacket( PacketPlayOutPlayerInfo.updateDisplayName( entityplayer1 ) );
+            if (!entityplayer.getName().equals(entityplayer.listName) && entityplayer.playerConnection.networkManager.getVersion() > 28) {
+                entityplayer.playerConnection.sendPacket(PacketPlayOutPlayerInfo.updateDisplayName(player));
             }
             // Spigot end
             // CraftBukkit end
@@ -375,8 +371,7 @@ public abstract class PlayerList {
         // CraftBukkit start - .name -> .listName, replace sendAll with loop
         // this.sendAll(new PacketPlayOutPlayerInfo(entityplayer.getName(), false, 9999));
         PacketPlayOutPlayerInfo packet = PacketPlayOutPlayerInfo.removePlayer( entityplayer ); // Spigot - protocol patch
-        for (int i = 0; i < this.players.size(); ++i) {
-            EntityPlayer entityplayer1 = (EntityPlayer) this.players.get(i);
+        for (EntityPlayer entityplayer1 : this.players) {
 
             if (entityplayer1.getBukkitEntity().canSee(entityplayer.getBukkitEntity())) {
                 entityplayer1.playerConnection.sendPacket(packet);
@@ -893,17 +888,16 @@ public abstract class PlayerList {
     }
 
     public void sendAll(Packet packet) {
-        for (int i = 0; i < this.players.size(); ++i) {
-            ((EntityPlayer) this.players.get(i)).playerConnection.sendPacket(packet);
+        for (EntityPlayer player : this.players) {
+            player.playerConnection.sendPacket(packet);
         }
     }
 
     public void a(Packet packet, int i) {
-        for (int j = 0; j < this.players.size(); ++j) {
-            EntityPlayer entityplayer = (EntityPlayer) this.players.get(j);
+        for (EntityPlayer player : this.players) {
 
-            if (entityplayer.dimension == i) {
-                entityplayer.playerConnection.sendPacket(packet);
+            if (player.dimension == i) {
+                player.playerConnection.sendPacket(packet);
             }
         }
     }
@@ -1022,8 +1016,7 @@ public abstract class PlayerList {
                 s1 = s1.substring(1);
             }
 
-            for (int i2 = 0; i2 < this.players.size(); ++i2) {
-                EntityPlayer entityplayer = (EntityPlayer) this.players.get(i2);
+            for (EntityPlayer entityplayer : this.players) {
 
                 if ((world == null || entityplayer.world == world) && (s == null || flag1 != s.equalsIgnoreCase(entityplayer.getName()))) {
                     if (s1 != null) {
@@ -1113,8 +1106,7 @@ public abstract class PlayerList {
     }
 
     public void sendPacketNearby(EntityHuman entityhuman, double d0, double d1, double d2, double d3, int i, Packet packet, boolean self) {
-        for (int j = 0; j < this.players.size(); ++j) {
-            EntityPlayer entityplayer = (EntityPlayer) this.players.get(j);
+        for (EntityPlayer entityplayer : this.players) {
 
             // CraftBukkit start - Test if player receiving packet can see the source of the packet
             if (entityhuman != null && entityhuman instanceof EntityPlayer && !entityplayer.getBukkitEntity().canSee(((EntityPlayer) entityhuman).getBukkitEntity())) {
@@ -1135,8 +1127,8 @@ public abstract class PlayerList {
     }
 
     public void savePlayers() {
-        for (int i = 0; i < this.players.size(); ++i) {
-            this.b((EntityPlayer) this.players.get(i));
+        for (EntityPlayer player : this.players) {
+            this.b(player);
         }
     }
 
@@ -1302,9 +1294,7 @@ public abstract class PlayerList {
             WorldServer[] aworldserver = this.server.worldServer;
             int j = aworldserver.length;
 
-            for (int k = 0; k < j; ++k) {
-                WorldServer worldserver = aworldserver[k];
-
+            for (WorldServer worldserver : aworldserver) {
                 if (worldserver != null) {
                     worldserver.getPlayerChunkMap().a(i);
                 }
