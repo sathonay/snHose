@@ -388,8 +388,9 @@ public class EntityBoat extends Entity {
                 List list = this.world.getEntities(this, this.boundingBox.grow(0.20000000298023224D, 0.0D, 0.20000000298023224D));
 
                 if (list != null && !list.isEmpty()) {
-                    for (int k1 = 0; k1 < list.size(); ++k1) {
-                        Entity entity = (Entity) list.get(k1);
+                    Iterator<Entity> iterator = list.iterator();
+                    while (iterator.hasNext()) {
+                        Entity entity = iterator.next();
 
                         if (entity != this.passenger && entity.S() && entity instanceof EntityBoat) {
                             entity.collide(this);
