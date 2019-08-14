@@ -132,13 +132,7 @@ public class BlockChest extends BlockContainer
             final Block type5 = world.getType(i - 1, j, (type == this) ? (k - 1) : (k + 1));
             final Block type6 = world.getType(i + 1, j, (type == this) ? (k - 1) : (k + 1));
             l = 5;
-            int n;
-            if (type == this) {
-                n = world.getData(i, j, k - 1);
-            }
-            else {
-                n = world.getData(i, j, k + 1);
-            }
+            int n = (type == this ? world.getData(i, j, k - 1) : world.getData(i, j, k + 1));
             if (n == 4) {
                 l = 4;
             }
@@ -153,13 +147,7 @@ public class BlockChest extends BlockContainer
             final Block type7 = world.getType((type3 == this) ? (i - 1) : (i + 1), j, k - 1);
             final Block type8 = world.getType((type3 == this) ? (i - 1) : (i + 1), j, k + 1);
             l = 3;
-            int n2;
-            if (type3 == this) {
-                n2 = world.getData(i - 1, j, k);
-            }
-            else {
-                n2 = world.getData(i + 1, j, k);
-            }
+            int n2 = (type3 == this ? world.getData(i - 1, j, k) : world.getData(i + 1, j, k));
             if (n2 == 2) {
                 l = 2;
             }
@@ -233,10 +221,7 @@ public class BlockChest extends BlockContainer
                     final float n6 = this.b.nextFloat() * 0.8f + 0.1f;
                     final float n7 = this.b.nextFloat() * 0.8f + 0.1f;
                     while (item.count > 0) {
-                        int count = this.b.nextInt(21) + 10;
-                        if (count > item.count) {
-                            count = item.count;
-                        }
+                        int count = Math.min(this.b.nextInt(21) + 10, item.count);
                         final ItemStack itemStack = item;
                         itemStack.count -= count;
                         final EntityItem entity = new EntityItem(world, n + n5, n2 + n6, n3 + n7, new ItemStack(item.getItem(), count, item.getData()));
