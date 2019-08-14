@@ -807,12 +807,13 @@ public abstract class EntityLiving extends Entity {
 
     protected void dropEquipment(boolean flag, int i) {}
 
+    private net.minecraft.server.Knockback knockback = new net.minecraft.server.Knockback();
     public void a(Entity entity, double xo, double zo) {
         if (this.random.nextDouble() >= this.getAttributeInstance(GenericAttributes.c).getValue()) {
             this.al = true;
             final double magnitude = MathHelper.sqrt(xo * xo + zo * zo);
-            double d2 = 0.4F;
-            double friction = 2.0D;
+            double d2 = knockback.getForce();
+            double friction = knockback.getFriction();
             final double knockbackReduction = getBukkitEntity().getKnockbackReduction();
 
             if (knockbackReduction != 0.0D) {
@@ -823,9 +824,9 @@ public abstract class EntityLiving extends Entity {
             this.motY /= friction;
             this.motZ /= friction;
 
-            this.motX -= xo /  magnitude *  d2;
-            this.motY = MathHelper.limit(this.motY + d2, 0.05, 0.4000000059604645);
-            this.motZ -= zo /  magnitude *  d2;
+            this.motX -= xo / magnitude *  d2;
+            this.motY = MathHelper.limit(this.motY + d2, 0.05, knockback.getMaxHeight());
+            this.motZ -= zo / magnitude *  d2;
         }
     }
 
