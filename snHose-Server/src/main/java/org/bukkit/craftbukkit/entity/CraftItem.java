@@ -4,6 +4,7 @@ import net.minecraft.server.Entity;
 import net.minecraft.server.EntityItem;
 
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Item;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.craftbukkit.inventory.CraftItemStack;
@@ -19,6 +20,16 @@ public class CraftItem extends CraftEntity implements Item {
 
     public CraftItem(CraftServer server, EntityItem entity) {
         this(server, entity, entity);
+    }
+
+    @Override
+    public HumanEntity getOwner() {
+        return item.owner.getBukkitEntity();
+    }
+
+    @Override
+    public void setOwner(HumanEntity newOwner) {
+        item.owner = ((CraftHumanEntity)newOwner).getHandle();
     }
 
     public ItemStack getItemStack() {
