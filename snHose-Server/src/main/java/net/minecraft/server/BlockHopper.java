@@ -114,11 +114,7 @@ public class BlockHopper extends BlockContainer {
                     float f2 = this.a.nextFloat() * 0.8F + 0.1F;
 
                     while (itemstack.count > 0) {
-                        int j1 = this.a.nextInt(21) + 10;
-
-                        if (j1 > itemstack.count) {
-                            j1 = itemstack.count;
-                        }
+                        int j1 = Math.min(this.a.nextInt(21) + 10, itemstack.count);
 
                         itemstack.count -= j1;
                         EntityItem entityitem = new EntityItem(world, (double) ((float) i + f), (double) ((float) j + f1), (double) ((float) k + f2), new ItemStack(itemstack.getItem(), j1, itemstack.getData()));
