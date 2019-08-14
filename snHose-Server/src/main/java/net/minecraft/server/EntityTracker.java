@@ -86,10 +86,7 @@ public class EntityTracker {
 
     public void addEntity(Entity entity, int i, int j, boolean flag) {
         org.spigotmc.AsyncCatcher.catchOp( "entity track"); // Spigot
-        i = org.spigotmc.TrackingRange.getEntityTrackingRange(entity, i); // Spigot
-        if (i > this.e) {
-            i = this.e;
-        }
+        i = Math.min(org.spigotmc.TrackingRange.getEntityTrackingRange(entity, i), this.e); // Spigot
 
         try {
             if (this.trackedEntities.b(entity.getId())) {
@@ -143,17 +140,14 @@ public class EntityTracker {
 
     public void updatePlayers() {
         List<EntityPlayer> list = new ArrayList<>();
-        Iterator<EntityTrackerEntry> iterator = this.c.iterator();
 
-        while (iterator.hasNext()) {
-            EntityTrackerEntry entitytrackerentry = iterator.next();
-
+        this.c.parallelStream().forEach(entitytrackerentry -> {
             entitytrackerentry.track(this.world.players);
             if (entitytrackerentry.n && entitytrackerentry.tracker instanceof EntityPlayer) {
                 list.add((EntityPlayer) entitytrackerentry.tracker);
             }
-        }
-
+        });
+                
         for (EntityPlayer entityplayer : list) {
             Iterator<EntityTrackerEntry> iterator1 = this.c.iterator();
 
