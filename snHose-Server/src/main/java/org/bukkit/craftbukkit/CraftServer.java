@@ -79,6 +79,7 @@ import net.minecraft.server.EnumGamemode;
 import net.minecraft.server.ExceptionWorldConflict;
 import net.minecraft.server.Items;
 import net.minecraft.server.JsonListEntry;
+import net.minecraft.server.Knockback;
 import net.minecraft.server.PlayerList;
 import net.minecraft.server.RecipesFurnace;
 import net.minecraft.server.MinecraftServer;
@@ -234,6 +235,10 @@ public final class CraftServer implements Server {
     private final Pattern validUserPattern = Pattern.compile("^[a-zA-Z0-9_]{2,16}$");
     private final UUID invalidUserUUID = UUID.nameUUIDFromBytes("InvalidUsername".getBytes(Charsets.UTF_8));
     private final List<CraftPlayer> playerView;
+    private final Knockback knockback = new Knockback();
+    public Knockback getKnockback() {
+        return this.knockback;
+    }
 
     private final class BooleanWrapper {
         private boolean value = true;
