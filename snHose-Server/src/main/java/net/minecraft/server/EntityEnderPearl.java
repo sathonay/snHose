@@ -3,9 +3,11 @@ package net.minecraft.server;
 // CraftBukkit start
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.craftbukkit.entity.CraftEnderPearl;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.craftbukkit.event.CraftEventFactory;
 import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.event.entity.EnderpearlLandEvent;
 // CraftBukkit end
 
 public class EntityEnderPearl extends EntityProjectile {
@@ -56,6 +58,16 @@ public class EntityEnderPearl extends EntityProjectile {
                     Location location = this.lastValidLocation.clone();
                     location.setPitch(player.getLocation().getPitch());
                     location.setYaw(player.getLocation().getYaw());
+                   
+                    EnderpearlLandEvent.Reason reason = movingobjectposition.entity != null ? EnderpearlLandEvent.Reason.ENTITY : EnderpearlLandEvent.Reason.BLOCK;
+                    CraftEntity bukkitHitEntity = movingobjectposition.entity != null ? movingobjectposition.entity.getBukkitEntity() : null;
+                    EnderpearlLandEvent landEvent = new EnderpearlLandEvent((CraftEnderPearl) getBukkitEntity(), reason, bukkitHitEntity);
+                    Bukkit.getPluginManager().callEvent(landEvent);
+                    
+                    if (landEvent.isCancelled()) {
+                        this.die();
+                        return;
+                    }
 
                     PlayerTeleportEvent teleEvent = new PlayerTeleportEvent(player, player.getLocation(), location, PlayerTeleportEvent.TeleportCause.ENDER_PEARL);
                     Bukkit.getPluginManager().callEvent(teleEvent);
