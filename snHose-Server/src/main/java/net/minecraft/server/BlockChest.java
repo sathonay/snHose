@@ -172,9 +172,12 @@ public class BlockChest extends BlockContainer
         }
         else {
             l = 3;
+            /*
+            l is already at 3 dude :/
             if (type.j() && !type2.j()) {
                 l = 3;
             }
+            */
             if (type2.j() && !type.j()) {
                 l = 2;
             }
