@@ -1,5 +1,6 @@
 package net.minecraft.server;
 
+import java.util.Iterator;
 import java.util.List;
 
 // CraftBukkit start
@@ -385,7 +386,7 @@ public class EntityBoat extends Entity {
             // CraftBukkit end
 
             if (!this.world.isStatic) {
-                List list = this.world.getEntities(this, this.boundingBox.grow(0.20000000298023224D, 0.0D, 0.20000000298023224D));
+                List<Entity> list = this.world.getEntities(this, this.boundingBox.grow(0.20000000298023224D, 0.0D, 0.20000000298023224D));
 
                 if (list != null && !list.isEmpty()) {
                     Iterator<Entity> iterator = list.iterator();
