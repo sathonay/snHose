@@ -136,11 +136,7 @@ public class BlockFire extends Block {
                                         }
 
                                         if (j2 > 0 && random.nextInt(l1) <= j2 && (!world.Q() || !world.isRainingAt(i1, k1, j1)) && !world.isRainingAt(i1 - 1, k1, k) && !world.isRainingAt(i1 + 1, k1, j1) && !world.isRainingAt(i1, k1, j1 - 1) && !world.isRainingAt(i1, k1, j1 + 1)) {
-                                            int k2 = l + random.nextInt(5) / 4;
-
-                                            if (k2 > 15) {
-                                                k2 = 15;
-                                            }
+                                            int k2 = Math.min(l + random.nextInt(5) / 4, 15);
 
                                             // CraftBukkit start - Call to stop spread of fire
                                             if (world.getType(i1, k1, j1) != Blocks.FIRE) {
@@ -195,11 +191,7 @@ public class BlockFire extends Block {
             // CraftBukkit end
 
             if (random.nextInt(i1 + 10) < 5 && !world.isRainingAt(i, j, k)) {
-                int k1 = i1 + random.nextInt(5) / 4;
-
-                if (k1 > 15) {
-                    k1 = 15;
-                }
+                int k1 = Math.min(i1 + random.nextInt(5) / 4, 15);
 
                 world.setTypeAndData(i, j, k, this, k1, 3);
             } else {
