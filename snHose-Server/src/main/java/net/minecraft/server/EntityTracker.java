@@ -141,12 +141,16 @@ public class EntityTracker {
     public void updatePlayers() {
         List<EntityPlayer> list = new ArrayList<>();
 
-        this.c.parallelStream().forEach(entitytrackerentry -> {
+        Iterator<EntityTrackerEntry> iterator = this.c.iterator();
+
+        while (iterator.hasNext()) {
+            EntityTrackerEntry entitytrackerentry = iterator.next();
+
             entitytrackerentry.track(this.world.players);
             if (entitytrackerentry.n && entitytrackerentry.tracker instanceof EntityPlayer) {
                 list.add((EntityPlayer) entitytrackerentry.tracker);
             }
-        });
+        }
                 
         for (EntityPlayer entityplayer : list) {
             Iterator<EntityTrackerEntry> iterator1 = this.c.iterator();
