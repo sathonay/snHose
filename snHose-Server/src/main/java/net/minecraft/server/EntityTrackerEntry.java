@@ -438,9 +438,7 @@ public class EntityTrackerEntry {
     }
 
     public void scanPlayers(List<EntityPlayer> list) {
-        for (EntityPlayer entityPlayer : list) {
-            this.updatePlayer(entityPlayer);
-        }
+        list.stream().forEach(entityPlayer -> this.updatePlayer((EntityPlayer) entityPlayer));
     }
 
     private Packet c() {
