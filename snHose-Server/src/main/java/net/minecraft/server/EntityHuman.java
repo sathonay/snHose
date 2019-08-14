@@ -901,6 +901,8 @@ public abstract class EntityHuman extends EntityLiving implements ICommandListen
     public double ad() {
         return (double) (this.height - 0.5F);
     }
+    
+    private final net.minecraft.server.Knockback knockback = new net.minecraft.server.Knockback();
 
     public void attack(Entity entity) {
         if (entity.av()) {
@@ -947,7 +949,7 @@ public abstract class EntityHuman extends EntityLiving implements ICommandListen
                     final boolean flag2 = entity.damageEntity(DamageSource.playerAttack(this), f);
                     if (flag2) {
                         if (i > 0) {
-                            entity.g((-Math.sin(this.yaw * Math.PI / 180.0F) * (float) i * 0.5F), 0.1D / 2.0D /* Try to adjust with friction */, (Math.cos(this.yaw * Math.PI / 180.0F) * i * 0.5F));
+                            entity.g((-Math.sin(this.yaw * Math.PI / 180.0F) * (float) i * knockback.getSprintForce()), knockback.getSprintHeight() / knockback.getFriction() /* Try to adjust with friction */, (Math.cos(this.yaw * Math.PI / 180.0F) * i * knockback.getSprintHeight()));
                             this.motX *= 0.6D;
                             // NEVER PUT "this.motY *= 0.6D" only skid do that
                             this.motZ *= 0.6D;
