@@ -17,6 +17,11 @@ import org.bukkit.projectiles.ProjectileSource;
 public interface LivingEntity extends Entity, Damageable, ProjectileSource {
 
     /**
+     * set fire tick to 0
+     */
+    public void extinguish();
+
+    /**
      *
      * @return number of arrows on the entity
      */

@@ -117,6 +117,11 @@ public class CraftLivingEntity extends CraftEntity implements LivingEntity {
     }
 
     @Override
+    public void extinguish() {
+        getHandle().extinguish();
+    }
+
+    @Override
     public int getArrowsStuck() {
         return getHandle().aZ();
     }
