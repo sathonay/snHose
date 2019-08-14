@@ -4,7 +4,7 @@ import java.util.*;
 
 public class ItemPotion extends Item
 {
-    private HashMap<Integer, List<MobEffect>> a;
+    private Map<Integer, List<MobEffect>> a;
     private static final Map b;
 
     public ItemPotion() {
@@ -24,7 +24,7 @@ public class ItemPotion extends Item
             }
             return effects;
         }
-        final ArrayList<MobEffect> list = new ArrayList<>();
+        final List<MobEffect> list = new ArrayList<>();
         final NBTTagList list2 = itemStack.getTag().getList("CustomPotionEffects", 10);
         for (int i = 0; i < list2.size(); ++i) {
             final MobEffect b = MobEffect.b(list2.get(i));
