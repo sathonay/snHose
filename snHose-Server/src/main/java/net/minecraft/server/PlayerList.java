@@ -862,22 +862,17 @@ public abstract class PlayerList {
         }
         // CraftBukkit end */
         // Spigot start
-        try
-        {
-            if ( !players.isEmpty() )
-            {
+        try {
+            if ( !players.isEmpty() ) {
                 currentPing = ( currentPing + 1 ) % this.players.size();
                 EntityPlayer player = (EntityPlayer) this.players.get( currentPing );
-                if ( player.lastPing == -1 || Math.abs( player.ping - player.lastPing ) > 20 )
-                {
+                if ( player.lastPing == -1 || Math.abs( player.ping - player.lastPing ) > 20 ) {
                     Packet packet = PacketPlayOutPlayerInfo.updatePing( player ); // Spigot - protocol patch
-                    for ( EntityPlayer splayer : (List<EntityPlayer>) this.players )
-                    {
-                        if ( splayer.getBukkitEntity().canSee( player.getBukkitEntity() ) )
-                        {
+                    this.players.parallelStream().forEach(splayer -> {
+                        if (splayer.getBukkitEntity().canSee( player.getBukkitEntity() ) ) {
                             splayer.playerConnection.sendPacket( packet );
                         }
-                    }
+                    });
                     player.lastPing = player.ping;
                 }
             }
@@ -888,17 +883,16 @@ public abstract class PlayerList {
     }
 
     public void sendAll(Packet packet) {
-        for (EntityPlayer player : this.players) {
+        this.players.stream().forEach(player -> {
             player.playerConnection.sendPacket(packet);
-        }
+        });
     }
 
     public void a(Packet packet, int i) {
         for (EntityPlayer player : this.players) {
-
-            if (player.dimension == i) {
-                player.playerConnection.sendPacket(packet);
-            }
+            if (player.dimension != i) continue;
+            
+            player.playerConnection.sendPacket(packet);
         }
     }
 
