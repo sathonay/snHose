@@ -3,6 +3,7 @@ package net.minecraft.server;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
+import net.minecraft.server.Knockback;
 // CraftBukkit start
 import com.google.common.base.Function;
 import org.bukkit.craftbukkit.event.CraftEventFactory;
@@ -726,7 +727,7 @@ public abstract class EntityLiving extends Entity {
                         }
 
                         this.az = (float) (Math.atan2(d1, d0) * 180.0D / 3.1415927410125732D) - this.yaw;
-                        this.a(entity, d0, d1);
+                        this.a(entity, d0, d1, this.world.getServer().getKnockback());
                     } else {
                         this.az = (float) ((int) (Math.random() * 2.0D) * 180);
                     }
@@ -807,8 +808,7 @@ public abstract class EntityLiving extends Entity {
 
     protected void dropEquipment(boolean flag, int i) {}
 
-    private net.minecraft.server.Knockback knockback = new net.minecraft.server.Knockback();
-    public void a(Entity entity, double xo, double zo) {
+    public void a(Entity entity, double xo, double zo, Knockback knockback) {
         if (this.random.nextDouble() >= this.getAttributeInstance(GenericAttributes.c).getValue()) {
             this.al = true;
             final double magnitude = MathHelper.sqrt(xo * xo + zo * zo);
