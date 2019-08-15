@@ -24,8 +24,7 @@ public class CraftItem extends CraftEntity implements Item {
 
     @Override
     public org.bukkit.entity.Entity getOwner() {
-        if (item.owner == null) return null;
-        return item.owner.getBukkitEntity();
+        return (this.item.owner == null) ? null : this.item.owner.getBukkitEntity();
     }
 
     @Override
