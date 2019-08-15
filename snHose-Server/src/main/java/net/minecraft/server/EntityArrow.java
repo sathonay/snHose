@@ -409,6 +409,7 @@ public class EntityArrow extends Entity implements IProjectile {
             ItemStack itemstack = new ItemStack(Items.ARROW);
             if (this.fromPlayer == 1 && entityhuman.inventory.canHold(itemstack) > 0) {
                 EntityItem item = new EntityItem(this.world, this.locX, this.locY, this.locZ, itemstack);
+                item.owner = shooter;
 
                 PlayerPickupItemEvent event = new PlayerPickupItemEvent((org.bukkit.entity.Player) entityhuman.getBukkitEntity(), new org.bukkit.craftbukkit.entity.CraftItem(this.world.getServer(), this, item), 0);
                 // event.setCancelled(!entityhuman.canPickUpLoot); TODO
