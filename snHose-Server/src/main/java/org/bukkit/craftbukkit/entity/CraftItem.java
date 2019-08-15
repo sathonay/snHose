@@ -23,13 +23,14 @@ public class CraftItem extends CraftEntity implements Item {
     }
 
     @Override
-    public HumanEntity getOwner() {
+    public org.bukkit.entity.Entity getOwner() {
+        if (item.owner == null) return null;
         return item.owner.getBukkitEntity();
     }
 
     @Override
-    public void setOwner(HumanEntity newOwner) {
-        item.owner = ((CraftHumanEntity)newOwner).getHandle();
+    public void setOwner(org.bukkit.entity.Entity newOwner) {
+        item.owner = ((CraftEntity)newOwner).getHandle();
     }
 
     public ItemStack getItemStack() {

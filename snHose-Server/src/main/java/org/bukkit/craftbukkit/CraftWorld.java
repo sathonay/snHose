@@ -320,7 +320,7 @@ public class CraftWorld implements World {
         return dropItem(null, loc, item);
     }
     
-    public org.bukkit.entity.Item dropItem(EntityHuman owner, Location loc, ItemStack item) {
+    public org.bukkit.entity.Item dropItem(EntityLiving owner, Location loc, ItemStack item) {
         Validate.notNull(item, "Cannot drop a Null item.");
         Validate.isTrue(item.getTypeId() != 0, "Cannot drop AIR.");
         EntityItem entity = new EntityItem(world, loc.getX(), loc.getY(), loc.getZ(), CraftItemStack.asNMSCopy(item));
@@ -332,7 +332,7 @@ public class CraftWorld implements World {
         return new CraftItem(world.getServer(), entity);
     }
     
-    public org.bukkit.entity.Item dropItemNaturally(EntityHuman owner, Location loc, ItemStack item) {
+    public org.bukkit.entity.Item dropItemNaturally(EntityLiving owner, Location loc, ItemStack item) {
         final double xs = this.world.random.nextFloat() * 0.7f - 0.35;
         final double ys = this.world.random.nextFloat() * 0.7f - 0.35;
         final double zs = this.world.random.nextFloat() * 0.7f - 0.35;

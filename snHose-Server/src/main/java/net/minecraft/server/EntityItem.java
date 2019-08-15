@@ -17,7 +17,7 @@ public class EntityItem extends Entity {
     private String g;
     public float c;
     private int lastTick = MinecraftServer.currentTick; // CraftBukkit
-    public EntityHuman owner;
+    public Entity owner;
 
     public EntityItem(World world, double d0, double d1, double d2) {
         super(world);
@@ -353,7 +353,7 @@ public class EntityItem extends Entity {
         return LocaleI18n.get("item." + this.getItemStack().a());
     }
     
-    public EntityHuman getOwner() {
+    public Entity getOwner() {
         return this.owner;
     }
 

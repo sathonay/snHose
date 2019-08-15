@@ -1331,6 +1331,7 @@ public abstract class Entity {
             EntityItem entityitem = new EntityItem(this.world, this.locX, this.locY + (double) f, this.locZ, itemstack);
 
             entityitem.pickupDelay = 10;
+            entityitem.owner = this;
             this.world.addEntity(entityitem);
             return entityitem;
         }
