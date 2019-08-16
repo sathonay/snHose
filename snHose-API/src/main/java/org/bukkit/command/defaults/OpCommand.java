@@ -12,7 +12,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
-Import org.bukkit.ConsoleCommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 
 import com.google.common.collect.ImmutableList;
 
