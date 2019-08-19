@@ -225,7 +225,7 @@ public class PaperSpigotConfig
     public static double knockbackSprintHeight = 0.1D;
     public static double knockbackFriction = 2.0D;
     public static double knockbackMaxHeight = 0.4D;
-    public static double knockbackForce 0.4D;
+    public static double knockbackForce = 0.4D;
     private static void knockbackValues() {
         knockbackSprintForce = getDouble( "settings.knockback.sprintforce", knockbackSprintForce );
         knockbackSprintHeight = getDouble( "settings.knockback.sprintheight", knockbackSprintHeight );
