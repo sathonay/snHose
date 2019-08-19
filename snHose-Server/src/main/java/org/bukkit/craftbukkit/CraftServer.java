@@ -540,7 +540,8 @@ public final class CraftServer implements Server {
         // PaperSpigot end
         String lowerName = name.toLowerCase();
         int delta = Integer.MAX_VALUE;
-        for (Player player : getOnlinePlayers()) {
+        List<Player> list = getOnlinePlayers();
+        list.stream().forEach(player -> {
             if (player.getName().toLowerCase().startsWith(lowerName)) {
                 int curDelta = player.getName().length() - lowerName.length();
                 if (curDelta < delta) {
@@ -549,7 +550,7 @@ public final class CraftServer implements Server {
                 }
                 if (curDelta == 0) break;
             }
-        }
+        });
         return found;
     }
 
@@ -564,12 +565,13 @@ public final class CraftServer implements Server {
 
     // TODO: In 1.8+ this should use the server's UUID->EntityPlayer map
     @Override
-    public Player getPlayer(UUID id) {
-        for (Player player : getOnlinePlayers()) {
+    public Player getPlayer(UUID uuid) {
+        List<Player> list = getOnlinePlayers();
+        list.stream().forEach(player -> {
             if (player.getUniqueId().equals(id)) {
                 return player;
             }
-        }
+        });
 
         return null;
     }
@@ -589,8 +591,8 @@ public final class CraftServer implements Server {
         Validate.notNull(partialName, "PartialName cannot be null");
 
         List<Player> matchedPlayers = new ArrayList<Player>();
-
-        for (Player iterPlayer : this.getOnlinePlayers()) {
+        List<Player> list = getOnlinePlayers();
+        list.stream().forEach(iterPlayer -> {
             String iterPlayerName = iterPlayer.getName();
 
             if (partialName.equalsIgnoreCase(iterPlayerName)) {
@@ -603,7 +605,7 @@ public final class CraftServer implements Server {
                 // Partial match
                 matchedPlayers.add(iterPlayer);
             }
-        }
+        });
 
         return matchedPlayers;
     }
@@ -846,17 +848,8 @@ public final class CraftServer implements Server {
         for (WorldServer world : console.worlds) {
             world.difficulty = difficulty;
             world.setSpawnFlags(monsters, animals);
-            if (this.getTicksPerAnimalSpawns() < 0) {
-                world.ticksPerAnimalSpawns = 400;
-            } else {
-                world.ticksPerAnimalSpawns = this.getTicksPerAnimalSpawns();
-            }
-
-            if (this.getTicksPerMonsterSpawns() < 0) {
-                world.ticksPerMonsterSpawns = 1;
-            } else {
-                world.ticksPerMonsterSpawns = this.getTicksPerMonsterSpawns();
-            }
+            world.ticksPerAnimalSpawns = (this.getTicksPerAnimalSpawns() < 0 ? 400 : this.getTicksPerAnimalSpawns());
+            world.ticksPerMonsterSpawns = (this.getTicksPerMonsterSpawns() < 0 ? 1 : this.getTicksPerMonsterSpawns());
             world.spigotConfig.init(); // Spigot
             world.paperSpigotConfig.init(); // PaperSpigot
         }
@@ -1187,9 +1180,8 @@ public final class CraftServer implements Server {
 
         if (command instanceof PluginCommand) {
             return (PluginCommand) command;
-        } else {
-            return null;
         }
+        return null;
     }
 
     @Override
@@ -1425,18 +1417,11 @@ public final class CraftServer implements Server {
             // Spigot Start
             GameProfile profile = null;
             // Only fetch an online UUID in online mode
-            if ( MinecraftServer.getServer().getOnlineMode() || org.spigotmc.SpigotConfig.bungee )
-            {
+            if ( MinecraftServer.getServer().getOnlineMode() || org.spigotmc.SpigotConfig.bungee ) {
                 profile = MinecraftServer.getServer().getUserCache().getProfile( name );
             }
             // Spigot end
-            if (profile == null) {
-                // Make an OfflinePlayer using an offline mode UUID since the name has no profile
-                result = getOfflinePlayer(new GameProfile(UUID.nameUUIDFromBytes(("OfflinePlayer:" + name).getBytes(Charsets.UTF_8)), name));
-            } else {
-                // Use the GameProfile even when we get a UUID so we ensure we still have a name
-                result = getOfflinePlayer(profile);
-            }
+            result = (profile == null ? getOfflinePlayer(new GameProfile(UUID.nameUUIDFromBytes(("OfflinePlayer:" + name).getBytes(Charsets.UTF_8)), name)) : getOfflinePlayer(profile));
         } else {
             offlinePlayers.remove(result.getUniqueId());
         }
@@ -1585,13 +1570,7 @@ public final class CraftServer implements Server {
             if (testEntityPlayer != entityPlayer && testEntityPlayer.listName.equals(entityPlayer.listName)) {
                 String oldName = entityPlayer.listName;
                 int spaceLeft = 16 - oldName.length();
-
-                if (spaceLeft <= 1) { // We also hit the list name length limit!
-                    entityPlayer.listName = oldName.subSequence(0, oldName.length() - 2 - spaceLeft) + String.valueOf(System.currentTimeMillis() % 99);
-                } else {
-                    entityPlayer.listName = oldName + String.valueOf(System.currentTimeMillis() % 99);
-                }
-
+                entityPlayer.listName = (spaceLeft <= 1 ? oldName.subSequence(0, oldName.length() - 2 - spaceLeft) + String.valueOf(System.currentTimeMillis() % 99) : oldName + String.valueOf(System.currentTimeMillis() % 99));
                 return;
             }
         }
