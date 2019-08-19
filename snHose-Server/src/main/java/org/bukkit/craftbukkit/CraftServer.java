@@ -565,7 +565,7 @@ public final class CraftServer implements Server {
 
     // TODO: In 1.8+ this should use the server's UUID->EntityPlayer map
     @Override
-    public Player getPlayer(UUID uuid) {
+    public Player getPlayer(UUID id) {
         List<Player> list = getOnlinePlayers();
         list.stream().forEach(player -> {
             if (player.getUniqueId().equals(id)) {
