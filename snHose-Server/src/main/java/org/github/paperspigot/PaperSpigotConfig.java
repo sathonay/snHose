@@ -221,16 +221,16 @@ public class PaperSpigotConfig
         }
     }
 
-    public static double knockbackSprintForce;
-    public static double knockbackSprintHeight;
-    public static double knockbackFriction;
-    public static double knockbackMaxHeight;
-    public static double knockbackForce;
+    public static double knockbackSprintForce = 0.5D;
+    public static double knockbackSprintHeight = 0.1D;
+    public static double knockbackFriction = 2.0D;
+    public static double knockbackMaxHeight = 0.4D;
+    public static double knockbackForce 0.4D;
     private static void knockbackValues() {
-        knockbackSprintForce = getDouble( "settings.knockback.sprintforce", 0.5 );
-        knockbackSprintHeight = getDouble( "settings.knockback.sprintheight", 0.1 );
-        knockbackFriction = getDouble( "settings.knockback.friction", 2.0 );
-        knockbackMaxHeight = getDouble( "settings.knockback.maxheight", 0.4 );
-        knockbackForce = getDouble( "settings.knockback.force", 0.4 );
+        knockbackSprintForce = getDouble( "settings.knockback.sprintforce", knockbackSprintForce );
+        knockbackSprintHeight = getDouble( "settings.knockback.sprintheight", knockbackSprintHeight );
+        knockbackFriction = getDouble( "settings.knockback.friction", knockbackFrction );
+        knockbackMaxHeight = getDouble( "settings.knockback.maxheight", knockbackMaxHeight );
+        knockbackForce = getDouble( "settings.knockback.force", knockbackForce );
     }
 }
