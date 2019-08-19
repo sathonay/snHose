@@ -305,8 +305,8 @@ public abstract class PlayerList {
         // CraftBukkit end
 
         // CraftBukkit start - sendAll above replaced with this loop
-        PacketPlayOutPlayerInfo packet = PacketPlayOutPlayerInfo.addPlayer( entityplayer ); // Spigot - protocol patch
-        PacketPlayOutPlayerInfo displayPacket = PacketPlayOutPlayerInfo.updateDisplayName( entityplayer ); // Spigot - protocol patch
+        PacketPlayOutPlayerInfo packet = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.PlayerInfo.ADD_PLAYER, entityplayer); // Spigot - protocol patch
+        PacketPlayOutPlayerInfo displayPacket = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.PlayerInfo.UPDATE_DISPLAY_NAME, entityplayer); // Spigot - protocol patch
         for (EntityPlayer entityplayer1 : this.players) {
 
             if (entityplayer1.getBukkitEntity().canSee(entityplayer.getBukkitEntity())) {
@@ -327,10 +327,10 @@ public abstract class PlayerList {
                 continue;
             }
             // .name -> .listName
-            entityplayer.playerConnection.sendPacket(PacketPlayOutPlayerInfo.addPlayer(player)); // Spigot - protocol patch
+            entityplayer.playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.PlayerInfo.ADD_PLAYER, player)); // Spigot - protocol patch
             // Spigot start - protocol patch
             if (!entityplayer.getName().equals(entityplayer.listName) && entityplayer.playerConnection.networkManager.getVersion() > 28) {
-                entityplayer.playerConnection.sendPacket(PacketPlayOutPlayerInfo.updateDisplayName(player));
+                entityplayer.playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.PlayerInfo.UPDATE_DISPLAY_NAME, player));
             }
             // Spigot end
             // CraftBukkit end
@@ -370,7 +370,7 @@ public abstract class PlayerList {
 
         // CraftBukkit start - .name -> .listName, replace sendAll with loop
         // this.sendAll(new PacketPlayOutPlayerInfo(entityplayer.getName(), false, 9999));
-        PacketPlayOutPlayerInfo packet = PacketPlayOutPlayerInfo.removePlayer( entityplayer ); // Spigot - protocol patch
+        PacketPlayOutPlayerInfo packet = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.PlayerInfo.REMOVE_PLAYER, entityplayer); // Spigot - protocol patch
         for (EntityPlayer entityplayer1 : this.players) {
 
             if (entityplayer1.getBukkitEntity().canSee(entityplayer.getBukkitEntity())) {
@@ -867,7 +867,7 @@ public abstract class PlayerList {
                 currentPing = ( currentPing + 1 ) % this.players.size();
                 EntityPlayer player = (EntityPlayer) this.players.get( currentPing );
                 if ( player.lastPing == -1 || Math.abs( player.ping - player.lastPing ) > 20 ) {
-                    Packet packet = PacketPlayOutPlayerInfo.updatePing( player ); // Spigot - protocol patch
+                    Packet packet = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.PlayerInfo.UPDATE_LATENCY, player); // Spigot - protocol patch
                     this.players.parallelStream().forEach(splayer -> {
                         if (splayer.getBukkitEntity().canSee( player.getBukkitEntity() ) ) {
                             splayer.playerConnection.sendPacket( packet );
