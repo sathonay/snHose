@@ -207,8 +207,7 @@ public class PlayerConnection implements PacketPlayInListener {
             // CraftBukkit start - fire PlayerMoveEvent
             Player player = this.getPlayer();
             // Spigot Start
-            if (!hasMoved)
-            {
+            if (!hasMoved) {
                 Location curPos = player.getLocation();
                 lastPosX = curPos.getX();
                 lastPosY = curPos.getY();
@@ -235,10 +234,9 @@ public class PlayerConnection implements PacketPlayInListener {
             }
 
             if (this.checkMovement && !this.player.dead) {
-
                 // Prevent 40 event-calls for less than a single pixel of movement >.>
-                double delta = Math.pow(this.lastPosX - to.getX(), 2.0D) + Math.pow(this.lastPosY - to.getY(), 2.0D) + Math.pow(this.lastPosZ - to.getZ(), 2.0D);
-                float deltaAngle = Math.abs(this.lastYaw - to.getYaw()) + Math.abs(this.lastPitch - to.getPitch());
+                final double delta = Math.pow(this.lastPosX - to.getX(), 2.0D) + Math.pow(this.lastPosY - to.getY(), 2.0D) + Math.pow(this.lastPosZ - to.getZ(), 2.0D);
+                final float deltaAngle = Math.abs(this.lastYaw - to.getYaw()) + Math.abs(this.lastPitch - to.getPitch());
                 if (deltaAngle > 10.0F) {
                     this.lastYaw = to.getYaw();
                     this.lastPitch = to.getPitch();
@@ -1162,8 +1160,7 @@ public class PlayerConnection implements PacketPlayInListener {
         WorldServer worldserver = this.minecraftServer.getWorldServer(this.player.dimension);
         Entity entity = packetplayinuseentity.a((World) worldserver);
         // Spigot Start
-        if ( entity == player )
-        {
+        if ( entity == player ) {
             disconnect( "Cannot interact with self!" );
             return;
         }
@@ -1653,12 +1650,7 @@ public class PlayerConnection implements PacketPlayInListener {
             // CraftBukkit end
 
             if (flag1 && flag2 && flag3) {
-                if (itemstack == null) {
-                    this.player.defaultContainer.setItem(packetplayinsetcreativeslot.c(), (ItemStack) null);
-                } else {
-                    this.player.defaultContainer.setItem(packetplayinsetcreativeslot.c(), itemstack);
-                }
-
+                this.player.defaultContainer.setItem(packetplayinsetcreativeslot.c(), (itemstack == null ? (ItemStack) null : itemstack));
                 this.player.defaultContainer.a(this.player, true);
             } else if (flag && flag2 && flag3 && this.x < 200) {
                 this.x += 20;
@@ -1788,16 +1780,16 @@ public class PlayerConnection implements PacketPlayInListener {
     }
 
     public void a(PacketPlayInTabComplete packetplayintabcomplete) {
-        ArrayList arraylist = Lists.newArrayList();
-        Iterator iterator = this.minecraftServer.a(this.player, packetplayintabcomplete.c()).iterator();
+        List<String> list = Lists.newArrayList();
+        Iterator<String> iterator = this.minecraftServer.a(this.player, packetplayintabcomplete.c()).iterator();
 
         while (iterator.hasNext()) {
-            String s = (String) iterator.next();
+            String s = iterator.next();
 
-            arraylist.add(s);
+            list.add(s);
         }
 
-        this.player.playerConnection.sendPacket(new PacketPlayOutTabComplete((String[]) arraylist.toArray(new String[arraylist.size()])));
+        this.player.playerConnection.sendPacket(new PacketPlayOutTabComplete((String[]) list.toArray(new String[list.size()])));
     }
 
     public void a(PacketPlayInSettings packetplayinsettings) {
@@ -2022,7 +2014,7 @@ public class PlayerConnection implements PacketPlayInListener {
 
     // CraftBukkit start - Add "isDisconnected" method
     public boolean isDisconnected() {
-        return !this.player.joining && !NetworkManager.a(this.networkManager).config().isAutoRead();
+        return (!this.player.joining && !this.networkManager.isConnected()) || this.processedDisconnect;
     }
     // CraftBukkit end
 }
