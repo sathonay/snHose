@@ -51,6 +51,10 @@ public class EntityTrackerEntry {
         this.i = MathHelper.d(entity.getHeadRotation() * 256.0F / 360.0F);
     }
 
+    private void sendPlayerPacket(EntityPlayer player, Packet packet) {
+        player.playerConnection.sendPacket(packet);
+    }
+
     public boolean equals(Object object) {
         return object instanceof EntityTrackerEntry && ((EntityTrackerEntry) object).tracker.getId() == this.tracker.getId();
     }
@@ -175,9 +179,9 @@ public class EntityTrackerEntry {
                                 if(teleportPacket == null) {
                                     teleportPacket = new PacketPlayOutEntityTeleport(this.tracker);
                                 }
-                                viewer.getKey().playerConnection.sendPacket(teleportPacket);
+                                this.sendPlayerPacket(viewer.getKey(), teleportPacket);
                             } else {
-                                viewer.getKey().playerConnection.sendPacket(packet);
+                                this.sendPlayerPacket(viewer.getKey(), packet);
                             }
                         }
                     }
