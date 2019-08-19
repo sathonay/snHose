@@ -181,6 +181,7 @@ import org.bukkit.plugin.messaging.StandardMessenger;
 import org.bukkit.scheduler.BukkitWorker;
 import org.bukkit.util.StringUtil;
 import org.bukkit.util.permissions.DefaultPermissions;
+import org.github.paperspigot.PaperSpigotConfig;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.SafeConstructor;
 import org.yaml.snakeyaml.error.MarkedYAMLException;
@@ -235,7 +236,7 @@ public final class CraftServer implements Server {
     private final Pattern validUserPattern = Pattern.compile("^[a-zA-Z0-9_]{2,16}$");
     private final UUID invalidUserUUID = UUID.nameUUIDFromBytes("InvalidUsername".getBytes(Charsets.UTF_8));
     private final List<CraftPlayer> playerView;
-    private final Knockback knockback = new Knockback();
+    private final Knockback knockback;
     public Knockback getKnockback() {
         return this.knockback;
     }
@@ -335,6 +336,11 @@ public final class CraftServer implements Server {
         // loadPlugins();
         // enablePlugins(PluginLoadOrder.STARTUP);
         // Spigot End
+        knockback = new Knockback(PaperSpigotConfig.knockbackSprintForce,
+                PaperSpigotConfig.knockbackSprintHeight,
+                PaperSpigotConfig.knockbackFriction,
+                PaperSpigotConfig.knockbackMaxHeight,
+                PaperSpigotConfig.knockbackForce);
     }
 
     public boolean getCommandBlockOverride(String command) {

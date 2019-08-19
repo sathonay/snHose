@@ -220,4 +220,17 @@ public class PaperSpigotConfig
             e.printStackTrace();
         }
     }
+
+    public static double knockbackSprintForce;
+    public static double knockbackSprintHeight;
+    public static double knockbackFriction;
+    public static double knockbackMaxHeight;
+    public static double knockbackForce;
+    private static void knockbackValues() {
+        knockbackSprintForce = getDouble( "settings.knockback.sprintforce", 0.5 );
+        knockbackSprintHeight = getDouble( "settings.knockback.sprintheight", 0.1 );
+        knockbackFriction = getDouble( "settings.knockback.friction", 2.0 );
+        knockbackMaxHeight = getDouble( "settings.knockback.maxheight", 0.4 );
+        knockbackForce = getDouble( "settings.knockback.force", 0.4 );
+    }
 }
