@@ -51,11 +51,7 @@ public class ColouredConsoleSender extends CraftConsoleCommandSender {
             if (!conversationTracker.isConversingModaly()) {
                 String result = message;
                 for (ChatColor color : colors) {
-                    if (replacements.containsKey(color)) {
-                        result = result.replaceAll("(?i)" + color.toString(), replacements.get(color));
-                    } else {
-                        result = result.replaceAll("(?i)" + color.toString(), "");
-                    }
+                    result = result.replaceAll("(?i)" + color.toString(), (replacements.containsKey(color) ? replacements.get(color) : ""));
                 }
                 System.out.println(result + Ansi.ansi().reset().toString());
             }
@@ -67,8 +63,7 @@ public class ColouredConsoleSender extends CraftConsoleCommandSender {
     public static ConsoleCommandSender getInstance() {
         if (Bukkit.getConsoleSender() != null) {
             return Bukkit.getConsoleSender();
-        } else {
-            return new ColouredConsoleSender();
         }
+        return new ColouredConsoleSender();
     }
 }
