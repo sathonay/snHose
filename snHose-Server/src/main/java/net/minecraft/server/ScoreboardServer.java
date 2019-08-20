@@ -62,9 +62,8 @@ public class ScoreboardServer extends Scoreboard {
             this.sendAll(new PacketPlayOutScoreboardTeam(scoreboardteam, Arrays.asList(new String[] { s}), 3)); // CraftBukkit - Internal packet method
             this.b();
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     public void removePlayerFromTeam(String s, ScoreboardTeam scoreboardteam) {
@@ -125,13 +124,13 @@ public class ScoreboardServer extends Scoreboard {
     }
 
     public List getScoreboardScorePacketsForObjective(ScoreboardObjective scoreboardobjective) {
-        ArrayList arraylist = new ArrayList();
+        List list = new ArrayList();
 
-        arraylist.add(new PacketPlayOutScoreboardObjective(scoreboardobjective, 0));
+        list.add(new PacketPlayOutScoreboardObjective(scoreboardobjective, 0));
 
         for (int i = 0; i < 3; ++i) {
             if (this.getObjectiveForSlot(i) == scoreboardobjective) {
-                arraylist.add(new PacketPlayOutScoreboardDisplayObjective(i, scoreboardobjective));
+                list.add(new PacketPlayOutScoreboardDisplayObjective(i, scoreboardobjective));
             }
         }
 
@@ -140,10 +139,10 @@ public class ScoreboardServer extends Scoreboard {
         while (iterator.hasNext()) {
             ScoreboardScore scoreboardscore = (ScoreboardScore) iterator.next();
 
-            arraylist.add(new PacketPlayOutScoreboardScore(scoreboardscore, 0));
+            list.add(new PacketPlayOutScoreboardScore(scoreboardscore, 0));
         }
 
-        return arraylist;
+        return list;
     }
 
     public void e(ScoreboardObjective scoreboardobjective) {
@@ -166,17 +165,17 @@ public class ScoreboardServer extends Scoreboard {
     }
 
     public List f(ScoreboardObjective scoreboardobjective) {
-        ArrayList arraylist = new ArrayList();
+        List arraylist = new ArrayList();
 
-        arraylist.add(new PacketPlayOutScoreboardObjective(scoreboardobjective, 1));
+        list.add(new PacketPlayOutScoreboardObjective(scoreboardobjective, 1));
 
         for (int i = 0; i < 3; ++i) {
             if (this.getObjectiveForSlot(i) == scoreboardobjective) {
-                arraylist.add(new PacketPlayOutScoreboardDisplayObjective(i, scoreboardobjective));
+                list.add(new PacketPlayOutScoreboardDisplayObjective(i, scoreboardobjective));
             }
         }
 
-        return arraylist;
+        return list;
     }
 
     public void g(ScoreboardObjective scoreboardobjective) {
