@@ -313,6 +313,11 @@ public class EntityEnderman extends EntityMonster {
                 this.a(item, 1);
             }
         }
+        
+        Item carriedItem = Item.getItemOf(getCarried().getBlock());
+        if (carriedItem != null) {
+            this.a(carriedItem, 1);
+        }
     }
 
     public void setCarried(Block block) {
