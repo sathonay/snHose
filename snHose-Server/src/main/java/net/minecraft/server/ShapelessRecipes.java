@@ -38,7 +38,7 @@ public class ShapelessRecipes implements IRecipe {
     }
 
     public boolean a(InventoryCrafting inventorycrafting, World world) {
-        ArrayList arraylist = new ArrayList(this.ingredients);
+        List list = new ArrayList(this.ingredients);
 
         for (int i = 0; i < 3; ++i) {
             for (int j = 0; j < 3; ++j) {
@@ -46,14 +46,14 @@ public class ShapelessRecipes implements IRecipe {
 
                 if (itemstack != null) {
                     boolean flag = false;
-                    Iterator iterator = arraylist.iterator();
+                    Iterator iterator = list.iterator();
 
                     while (iterator.hasNext()) {
                         ItemStack itemstack1 = (ItemStack) iterator.next();
 
                         if (itemstack.getItem() == itemstack1.getItem() && (itemstack1.getData() == 32767 || itemstack.getData() == itemstack1.getData())) {
                             flag = true;
-                            arraylist.remove(itemstack1);
+                            list.remove(itemstack1);
                             break;
                         }
                     }
@@ -65,7 +65,7 @@ public class ShapelessRecipes implements IRecipe {
             }
         }
 
-        return arraylist.isEmpty();
+        return list.isEmpty();
     }
 
     public ItemStack a(InventoryCrafting inventorycrafting) {
