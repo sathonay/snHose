@@ -10,6 +10,8 @@ public class WorldData
     private int spawnX;
     private int spawnY;
     private int spawnZ;
+    private float spawnYaw;
+    private float spawnPitch;
     private long time;
     private long dayTime;
     private long lastPlayed;
@@ -57,22 +59,14 @@ public class WorldData
             }
         }
         this.gameType = EnumGamemode.getById(nbtTagCompound.getInt("GameType"));
-        if (nbtTagCompound.hasKeyOfType("MapFeatures", 99)) {
-            this.useMapFeatures = nbtTagCompound.getBoolean("MapFeatures");
-        }
-        else {
-            this.useMapFeatures = true;
-        }
+        this.useMapFeatures = (nbtTagCompound.hasKeyOfType("MapFeatures", 99) ? nbtTagCompound.getBoolean("MapFeatures") : true);
         this.spawnX = nbtTagCompound.getInt("SpawnX");
         this.spawnY = nbtTagCompound.getInt("SpawnY");
         this.spawnZ = nbtTagCompound.getInt("SpawnZ");
+        this.spawnYaw = nbtTagCompound.getFloat("SpawnYaw");
+        this.spawnPitch = nbtTagCompound.getFloat("SpawnPitch");
         this.time = nbtTagCompound.getLong("Time");
-        if (nbtTagCompound.hasKeyOfType("DayTime", 99)) {
-            this.dayTime = nbtTagCompound.getLong("DayTime");
-        }
-        else {
-            this.dayTime = this.time;
-        }
+        this.dayTime = (nbtTagCompound.hasKeyOfType("DayTime", 99) ? nbtTagCompound.getLong("DayTime") : this.time);
         this.lastPlayed = nbtTagCompound.getLong("LastPlayed");
         this.sizeOnDisk = nbtTagCompound.getLong("SizeOnDisk");
         this.name = nbtTagCompound.getString("LevelName");
@@ -82,18 +76,8 @@ public class WorldData
         this.thunderTicks = nbtTagCompound.getInt("thunderTime");
         this.isThundering = nbtTagCompound.getBoolean("thundering");
         this.hardcore = nbtTagCompound.getBoolean("hardcore");
-        if (nbtTagCompound.hasKeyOfType("initialized", 99)) {
-            this.initialized = nbtTagCompound.getBoolean("initialized");
-        }
-        else {
-            this.initialized = true;
-        }
-        if (nbtTagCompound.hasKeyOfType("allowCommands", 99)) {
-            this.allowCommands = nbtTagCompound.getBoolean("allowCommands");
-        }
-        else {
-            this.allowCommands = (this.gameType == EnumGamemode.CREATIVE);
-        }
+        this.initialized = (nbtTagCompound.hasKeyOfType("initialized", 99) ? nbtTagCompound.getBoolean("initialized") : true);
+        this.allowCommands = (nbtTagCompound.hasKeyOfType("allowCommands", 99) ? nbtTagCompound.getBoolean("allowCommands") ? (this.gameType == EnumGamemode.CREATIVE));
         if (nbtTagCompound.hasKeyOfType("Player", 10)) {
             this.playerData = nbtTagCompound.getCompound("Player");
             this.dimension = this.playerData.getInt("Dimension");
@@ -130,6 +114,8 @@ public class WorldData
         this.spawnX = worldData.spawnX;
         this.spawnY = worldData.spawnY;
         this.spawnZ = worldData.spawnZ;
+        this.spawnYaw = worldData.spawnYaw;
+        this.spawnPitch = worldData.spawnPitch;
         this.time = worldData.time;
         this.dayTime = worldData.dayTime;
         this.lastPlayed = worldData.lastPlayed;
@@ -170,6 +156,8 @@ public class WorldData
         nbtTagCompound.setInt("SpawnX", this.spawnX);
         nbtTagCompound.setInt("SpawnY", this.spawnY);
         nbtTagCompound.setInt("SpawnZ", this.spawnZ);
+        nbtTagCompound.setFloat("SpawnYaw", this.spawnYaw);
+        nbtTagCompound.setFloat("SpawnPitch", this.spawnPitch);
         nbtTagCompound.setLong("Time", this.time);
         nbtTagCompound.setLong("DayTime", this.dayTime);
         nbtTagCompound.setLong("SizeOnDisk", this.sizeOnDisk);
@@ -204,6 +192,14 @@ public class WorldData
     public int e() {
         return this.spawnZ;
     }
+    
+    public float getSpawnYaw() {
+        return this.spawnYaw;
+    }
+    
+    public float getSpawnPitch() {
+        return this.spawnPitch;
+    }
 
     public long getTime() {
         return this.time;
@@ -228,11 +224,17 @@ public class WorldData
     public void setDayTime(final long dayTime) {
         this.dayTime = dayTime;
     }
-
-    public void setSpawn(final int spawnX, final int spawnY, final int spawnZ) {
+    
+    public void setSpawn(final int spawnX, final int spawnY, final int spawnZ, final float spawnYaw, final float spawnPitch) {
         this.spawnX = spawnX;
         this.spawnY = spawnY;
         this.spawnZ = spawnZ;
+        this.spawnYaw = spawnYaw;
+        this.spawnPitch = spawnPitch;
+    }
+
+    public void setSpawn(final int spawnX, final int spawnY, final int spawnZ) {
+        setSpawn(spawnX, spawnY, spawnZ, 0, 0);
     }
 
     public String getName() {
