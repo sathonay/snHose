@@ -1,7 +1,5 @@
 package net.minecraft.server;
 
-import net.minecraft.server.MathHelper;
-
 public class TileEntityNote extends TileEntity {
 
     public byte note;
@@ -16,7 +14,7 @@ public class TileEntityNote extends TileEntity {
 
     public void a(NBTTagCompound nbttagcompound) {
         super.a(nbttagcompound);
-        this.note = MathHelper.limit(nbttagcompound.getByte("note"), 0, 24);
+        this.note = (byte) MathHelper.limit(nbttagcompound.getByte("note"), 0, 24);
     }
 
     public void a() {
