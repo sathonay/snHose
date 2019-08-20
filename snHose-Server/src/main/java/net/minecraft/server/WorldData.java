@@ -76,8 +76,8 @@ public class WorldData
         this.thunderTicks = nbtTagCompound.getInt("thunderTime");
         this.isThundering = nbtTagCompound.getBoolean("thundering");
         this.hardcore = nbtTagCompound.getBoolean("hardcore");
-        this.initialized = (nbtTagCompound.hasKeyOfType("initialized", 99) ? nbtTagCompound.getBoolean("initialized") : true);
-        this.allowCommands = (nbtTagCompound.hasKeyOfType("allowCommands", 99) ? nbtTagCompound.getBoolean("allowCommands") ? (this.gameType == EnumGamemode.CREATIVE));
+        this.initialized = (!nbtTagCompound.hasKeyOfType("initialized", 99) || nbtTagCompound.getBoolean("initialized"));
+        this.allowCommands = (nbtTagCompound.hasKeyOfType("allowCommands", 99) ? nbtTagCompound.getBoolean("allowCommands") : (this.gameType == EnumGamemode.CREATIVE));
         if (nbtTagCompound.hasKeyOfType("Player", 10)) {
             this.playerData = nbtTagCompound.getCompound("Player");
             this.dimension = this.playerData.getInt("Dimension");
