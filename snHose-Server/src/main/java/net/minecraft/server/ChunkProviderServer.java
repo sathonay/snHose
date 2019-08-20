@@ -30,7 +30,7 @@ public class ChunkProviderServer implements IChunkProvider {
     public LongHashSet unloadQueue = new LongHashSet(); // LongHashSet
     public Chunk emptyChunk;
     public IChunkProvider chunkProvider;
-    private IChunkLoader f;
+    public IChunkLoader f;
     public boolean forceChunkLoad = false; // true -> false
     public LongObjectHashMap<Chunk> chunks = new LongObjectHashMap<Chunk>();
     public WorldServer world;
@@ -41,10 +41,6 @@ public class ChunkProviderServer implements IChunkProvider {
         this.world = worldserver;
         this.f = ichunkloader;
         this.chunkProvider = ichunkprovider;
-    }
-    
-    public IChunkLoader getIChunkLoader() {
-        return this.f;
     }
 
     public boolean isChunkLoaded(int i, int j) {
