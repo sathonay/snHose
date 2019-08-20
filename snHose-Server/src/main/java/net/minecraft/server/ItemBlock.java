@@ -1,7 +1,6 @@
 package net.minecraft.server;
 
-public class ItemBlock extends Item
-{
+public class ItemBlock extends Item {
     protected final Block block;
 
     public ItemBlock(final Block block) {
@@ -57,7 +56,7 @@ public class ItemBlock extends Item
                     this.block.postPlace(world, i, j, k, entityHuman, itemstack);
                     this.block.postPlace(world, i, j, k, placedData);
                 }
-                world.makeSound(i + 0.5f, j + 0.5f, k + 0.5f, this.block.stepSound.getPlaceSound(), (this.block.stepSound.getVolume1() + 1.0f) / 2.0f, this.block.stepSound.getVolume2() * 0.8f);
+                world.makeSound(entityHuman, i + 0.5f, j + 0.5f, k + 0.5f, this.block.stepSound.getPlaceSound(), (this.block.stepSound.getVolume1() + 1.0f) / 2.0f, this.block.stepSound.getVolume2() * 0.8f);
                 --itemstack.count;
             }
             return true;
