@@ -539,19 +539,8 @@ public final class CraftServer implements Server {
         }
         // PaperSpigot end
         String lowerName = name.toLowerCase();
-        int delta = Integer.MAX_VALUE;
-        List<Player> list = getOnlinePlayers();
-        list.stream().forEach(player -> {
-            if (player.getName().toLowerCase().startsWith(lowerName)) {
-                int curDelta = player.getName().length() - lowerName.length();
-                if (curDelta < delta) {
-                    found = player;
-                    delta = curDelta;
-                }
-                if (curDelta == 0) break;
-            }
-        });
-        return found;
+        List<CraftPlayer> list = getOnlinePlayers();
+        return list.stream().filter(craftPlayer -> craftPlayer.getName().toLowerCase().startsWith(lowerName)).findFirst().orElse(null);
     }
 
     @Override
@@ -566,14 +555,8 @@ public final class CraftServer implements Server {
     // TODO: In 1.8+ this should use the server's UUID->EntityPlayer map
     @Override
     public Player getPlayer(UUID id) {
-        List<Player> list = getOnlinePlayers();
-        list.stream().forEach(player -> {
-            if (player.getUniqueId().equals(id)) {
-                return player;
-            }
-        });
-
-        return null;
+        List<CraftPlayer> list = getOnlinePlayers();
+        return list.stream().filter(craftPlayer -> craftPlayer.getUniqueId().equals(id)).findFirst().orElse(null);
     }
 
     @Override
@@ -591,8 +574,7 @@ public final class CraftServer implements Server {
         Validate.notNull(partialName, "PartialName cannot be null");
 
         List<Player> matchedPlayers = new ArrayList<Player>();
-        List<Player> list = getOnlinePlayers();
-        list.stream().forEach(iterPlayer -> {
+        for (Player iterPlayer : this.getOnlinePlayers()) {
             String iterPlayerName = iterPlayer.getName();
 
             if (partialName.equalsIgnoreCase(iterPlayerName)) {
@@ -605,7 +587,7 @@ public final class CraftServer implements Server {
                 // Partial match
                 matchedPlayers.add(iterPlayer);
             }
-        });
+        }
 
         return matchedPlayers;
     }
