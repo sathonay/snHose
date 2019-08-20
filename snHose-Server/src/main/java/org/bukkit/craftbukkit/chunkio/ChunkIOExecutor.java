@@ -7,7 +7,7 @@ import net.minecraft.server.World;
 import org.bukkit.craftbukkit.util.AsynchronousExecutor;
 
 public class ChunkIOExecutor {
-    static final int BASE_THREADS = 1;
+    static final int BASE_THREADS = 2;
     static final int PLAYERS_PER_THREAD = 50;
 
     private static final AsynchronousExecutor<QueuedChunk, Chunk, Runnable, RuntimeException> instance = new AsynchronousExecutor<QueuedChunk, Chunk, Runnable, RuntimeException>(new ChunkIOProvider(), BASE_THREADS);
@@ -26,7 +26,7 @@ public class ChunkIOExecutor {
     }
 
     public static void adjustPoolSize(int players) {
-        int size = Math.max(BASE_THREADS, (int) Math.ceil(players / PLAYERS_PER_THREAD));
+        final int size = Math.max(BASE_THREADS, (int) Math.ceil(players / PLAYERS_PER_THREAD));
         instance.setActiveThreads(size);
     }
 
