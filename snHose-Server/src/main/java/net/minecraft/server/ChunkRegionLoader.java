@@ -17,8 +17,8 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
 
     private java.util.LinkedHashMap<ChunkCoordIntPair, PendingChunkToSave> pendingSaves = new java.util.LinkedHashMap<ChunkCoordIntPair, PendingChunkToSave>(); // Spigot
     private static final Logger a = LogManager.getLogger();
-    private List b = new ArrayList();
-    private Set c = new HashSet();
+    public List b = new ArrayList();
+    public Set c = new HashSet();
     private Object d = new Object();
     private final File e;
 
