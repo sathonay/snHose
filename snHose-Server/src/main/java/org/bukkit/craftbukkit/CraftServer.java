@@ -6,17 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
@@ -1130,12 +1120,8 @@ public final class CraftServer implements Server {
 
     @Override
     public World getWorld(UUID uid) {
-        for (World world : worlds.values()) {
-            if (world.getUID().equals(uid)) {
-                return world;
-            }
-        }
-        return null;
+        Collection<World> worlds = this.worlds.values();
+        return worlds.stream().filter(world -> world.getUID().equals(uid)).findFirst().orElse(null);
     }
 
     public void addWorld(World world) {
