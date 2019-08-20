@@ -120,11 +120,13 @@ public abstract class EntityProjectile extends Entity implements IProjectile {
         }
 
         if (!this.world.isStatic) {
+
+            List<Entity> list = this.world.getEntities(this, this.boundingBox.a(this.motX, this.motY, this.motZ).grow(1.0D, 1.0D, 1.0D));
             Entity entity = null;
             double d0 = 0.0D;
             EntityLiving entityliving = this.getShooter();
 
-            Iterator<Entity> iterator =  this.world.getEntities(this, this.boundingBox.a(this.motX, this.motY, this.motZ).grow(1.0D, 1.0D, 1.0D)).iterator();
+            Iterator<Entity> iterator =  list.iterator();
 
             while (iterator.hasNext()){
                 Entity entity1 = iterator.next();

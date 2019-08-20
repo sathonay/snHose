@@ -102,10 +102,10 @@ public abstract class EntityFireball extends Entity {
             }
 
             Entity entity = null;
-            List list = this.world.getEntities(this, this.boundingBox.a(this.motX, this.motY, this.motZ).grow(1.0D, 1.0D, 1.0D));
+            List<Entity> list = this.world.getEntities(this, this.boundingBox.a(this.motX, this.motY, this.motZ).grow(1.0D, 1.0D, 1.0D));
             double d0 = 0.0D;
 
-            Iterator<Entity> iterator = this.world.getEntities(this, this.boundingBox.a(this.motX, this.motY, this.motZ).grow(1.0D, 1.0D, 1.0D)).iterator();
+            Iterator<Entity> iterator = list.iterator();
             while (iterator.hasNext()){
                 Entity entity1 = iterator.next();
 
