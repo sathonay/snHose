@@ -1,7 +1,6 @@
 package net.minecraft.server;
 
-public class EntityMinecartFurnace extends EntityMinecartAbstract
-{
+public class EntityMinecartFurnace extends EntityMinecartAbstract {
     private int c;
     public double a;
     public double b;
@@ -56,16 +55,9 @@ public class EntityMinecartFurnace extends EntityMinecartAbstract
         final double var0 = this.a * this.a + this.b * this.b;
         if (var0 > 1.0E-4 && this.motX * this.motX + this.motZ * this.motZ > 0.001) {
             final double n = MathHelper.sqrt(var0);
-            this.a /= n;
-            this.b /= n;
-            if (this.a * this.motX + this.b * this.motZ < 0.0) {
-                this.a = 0.0;
-                this.b = 0.0;
-            }
-            else {
-                this.a = this.motX;
-                this.b = this.motZ;
-            }
+            final double d1 = (double) MathHelper.sqrt(this.motX * this.motX + this.motZ * this.motZ);
+            this.a = (this.motX / d1) * n;
+            this.b = (this.motZ / d1) * n;
         }
     }
 
@@ -129,12 +121,7 @@ public class EntityMinecartFurnace extends EntityMinecartAbstract
     }
 
     protected void f(final boolean b) {
-        if (b) {
-            this.datawatcher.watch(16, (byte)(this.datawatcher.getByte(16) | 0x1));
-        }
-        else {
-            this.datawatcher.watch(16, (byte)(this.datawatcher.getByte(16) & 0xFFFFFFFE));
-        }
+        this.datawatcher.watch(16, (byte) (b ? (this.datawatcher.getByte(16) | 0x1) : (this.datawatcher.getByte(16) & 0xFFFFFFFE)));
     }
 
     @Override
