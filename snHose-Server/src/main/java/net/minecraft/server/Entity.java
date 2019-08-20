@@ -35,7 +35,18 @@ public abstract class Entity {
 
     // CraftBukkit start
     private static final int CURRENT_LEVEL = 2;
-    public static Random SHARED_RANDOM = new Random();
+    public static Random SHARED_RANDOM = new Random() {
+        private boolean locked = false;
+        @Override
+        public synchronized void setSeed(long seed) {
+            if (locked) {
+                LogManager.getLogger().error("Ignoring setSeed on Entity.SHARED_RANDOM", new Throwable());
+            } else {
+                super.setSeed(seed);
+                locked = true;
+            }
+        }
+    };
     static boolean isLevelAtLeast(NBTTagCompound tag, int level) {
         return tag.hasKey("Bukkit.updateLevel") && tag.getInt("Bukkit.updateLevel") >= level;
     }
