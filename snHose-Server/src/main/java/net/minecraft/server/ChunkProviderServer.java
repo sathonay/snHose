@@ -42,6 +42,10 @@ public class ChunkProviderServer implements IChunkProvider {
         this.f = ichunkloader;
         this.chunkProvider = ichunkprovider;
     }
+    
+    public IChunkLoader getIChunkLoader() {
+        return this.f;
+    }
 
     public boolean isChunkLoaded(int i, int j) {
         return this.chunks.containsKey(LongHash.toLong(i, j)); // CraftBukkit
