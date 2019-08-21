@@ -213,13 +213,11 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         getHandle().listName = temp;
         PacketPlayOutPlayerInfo packet = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.PlayerInfo.ADD_PLAYER, getHandle());
         PacketPlayOutPlayerInfo newPacket = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.PlayerInfo.UPDATE_DISPLAY_NAME, getHandle());
-        for (int i = 0; i < server.getHandle().players.size(); ++i) {
-            EntityPlayer entityplayer = (EntityPlayer) server.getHandle().players.get(i);
+        for (EntityPlayer entityplayer : server.getHandle().players) {
             if (entityplayer.playerConnection == null) continue;
 
             if (entityplayer.getBukkitEntity().canSee(this)) {
-                if (entityplayer.playerConnection.networkManager.getVersion() < 28)
-                {
+                if (entityplayer.playerConnection.networkManager.getVersion() < 28) {
                     entityplayer.playerConnection.sendPacket(oldpacket);
                     entityplayer.playerConnection.sendPacket(packet);
                 } else {
@@ -947,7 +945,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         }
 
         //remove the hidden player from this player user list
-        getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.PlayerInfo.REMOVE_PLAYER, ((CraftPlayer) player).getHandle())); // Spigot - protocol patch
+        //getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.PlayerInfo.REMOVE_PLAYER, ((CraftPlayer) player).getHandle())); // Spigot - protocol patch
     }
 
     public void showPlayer(Player player) {
@@ -963,8 +961,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         if (entry != null && !entry.trackedPlayers.contains(getHandle())) {
             entry.updatePlayer(getHandle());
         }
-
-        getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.PlayerInfo.ADD_PLAYER, ((CraftPlayer) player).getHandle())); // Spigot - protocol patch
+        //getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.PlayerInfo.ADD_PLAYER, ((CraftPlayer) player).getHandle())); // Spigot - protocol patch
     }
 
     public void removeDisconnectingPlayer(Player player) {
