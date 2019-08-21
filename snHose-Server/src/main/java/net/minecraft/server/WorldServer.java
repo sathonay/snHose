@@ -750,7 +750,7 @@ public class WorldServer extends World {
                     if (spawn.getWorld() != ((WorldServer) this).getWorld()) {
                         throw new IllegalStateException("Cannot set spawn point for " + this.worldData.getName() + " to be in another world (" + spawn.getWorld().getName() + ")");
                     } else {
-                        this.worldData.setSpawn(spawn.getBlockX(), spawn.getBlockY(), spawn.getBlockZ());
+                        this.worldData.setSpawn(spawn.getBlockX(), spawn.getBlockY(), spawn.getBlockZ(), spawn.getYaw(), spawn.getPitch());
                         this.isLoading = false;
                         return;
                     }
