@@ -106,7 +106,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
         this.bO = minecraftserver.getPlayerList().a((EntityHuman) this);
         this.W = 0.0F;
         this.height = 0.0F;
-        this.setPositionRotation((double) i + 0.5D, k, (double) j + 0.5D, 0.0F, 0.0F);
+        this.setPositionRotation((double) i + 0.5D, k, (double) j + 0.5D, worldserver.getWorldData().getSpawnYaw(), worldserver.getWorldData().getSpawnPitch());
 
         while (!worldserver.getCubes(this, this.boundingBox).isEmpty()) {
             this.setPosition(this.locX, this.locY + 1.0D, this.locZ);
@@ -141,6 +141,8 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
         if (world == null) {
             this.dead = false;
             ChunkCoordinates position = null;
+            float yaw = 0;
+            float pitch = 0;
             if (this.spawnWorld != null && !this.spawnWorld.equals("")) {
                 CraftWorld cworld = (CraftWorld) Bukkit.getServer().getWorld(this.spawnWorld);
                 if (cworld != null && this.getBed() != null) {
@@ -151,9 +153,11 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
             if (world == null || position == null) {
                 world = ((CraftWorld) Bukkit.getServer().getWorlds().get(0)).getHandle();
                 position = world.getSpawn();
+                yaw = world.getWorldData().getSpawnYaw();
+                pitch = world.getWorldData().getSpawnPitch();
             }
             this.world = world;
-            this.setPosition(position.x + 0.5, position.y, position.z + 0.5);
+            this.setPosition(position.x + 0.5, position.y, position.z + 0.5, yaw, pitch);
         }
         this.dimension = ((WorldServer) this.world).dimension;
         this.playerInteractManager.a((WorldServer) world);
