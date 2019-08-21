@@ -35,6 +35,7 @@ public class SetWorldSpawnCommand extends VanillaCommand {
         }
 
         final int x, y, z;
+        float yaw, pitch;
 
         if (args.length == 0) {
             if (player == null) {
@@ -47,6 +48,8 @@ public class SetWorldSpawnCommand extends VanillaCommand {
             x = location.getBlockX();
             y = location.getBlockY();
             z = location.getBlockZ();
+            yaw = location.getYaw();
+            pitch = location.getPitch();
         } else if (args.length == 3) {
             try {
                 x = getInteger(sender, args[0], MIN_COORD, MAX_COORD, true);
@@ -61,7 +64,7 @@ public class SetWorldSpawnCommand extends VanillaCommand {
             return false;
         }
 
-        world.setSpawnLocation(x, y, z);
+        world.setSpawnLocation(x, y, z, yaw, pitch);
 
         Command.broadcastCommandMessage(sender, "Set world " + world.getName() + "'s spawnpoint to (" + x + ", " + y + ", " + z + ")");
         return true;
