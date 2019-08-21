@@ -85,7 +85,6 @@ public class EntityBoat extends Entity {
         this.lastX = d0;
         this.lastY = d1;
         this.lastZ = d2;
-
         this.world.getServer().getPluginManager().callEvent(new org.bukkit.event.vehicle.VehicleCreateEvent((Vehicle) this.getBukkitEntity())); // CraftBukkit
     }
 
@@ -327,8 +326,9 @@ public class EntityBoat extends Entity {
                 this.motY *= 0.5D;
                 this.motZ *= 0.5D;
             }
-
-            this.move(this.motX, this.motY, this.motZ);
+            if (Math.abs(this.motX) > 0.05 || Math.abs(this.motY) > 0.05 || Math.abs(this.motZ) > 0.05) {
+                this.move(this.motX, this.motY, this.motZ);
+            }
             if (this.positionChanged && d3 > 0.2D) {
                 if (!this.world.isStatic && !this.dead) {
                     // CraftBukkit start
@@ -356,16 +356,7 @@ public class EntityBoat extends Entity {
                 d5 = (double) ((float) (Math.atan2(d11, d10) * 180.0D / 3.141592653589793D));
             }
 
-            double d12 = MathHelper.g(d5 - (double) this.yaw);
-
-            if (d12 > 20.0D) {
-                d12 = 20.0D;
-            }
-
-            if (d12 < -20.0D) {
-                d12 = -20.0D;
-            }
-
+            double d12 = MathHelper.limit(MathHelper.g(d5 - (double) this.yaw), -20.0D, 20.0D);
             this.yaw = (float) ((double) this.yaw + d12);
             this.b(this.yaw, this.pitch);
 
@@ -423,13 +414,11 @@ public class EntityBoat extends Entity {
     public boolean c(EntityHuman entityhuman) {
         if (this.passenger != null && this.passenger instanceof EntityHuman && this.passenger != entityhuman) {
             return true;
-        } else {
-            if (!this.world.isStatic) {
-                entityhuman.mount(this);
-            }
-
-            return true;
         }
+        if (!this.world.isStatic) {
+            entityhuman.mount(this);
+        }
+        return true;
     }
 
     protected void a(double d0, boolean flag) {
@@ -447,12 +436,10 @@ public class EntityBoat extends Entity {
                     this.world.getServer().getPluginManager().callEvent(destroyEvent);
                     if (!destroyEvent.isCancelled()) {
                         this.die();
-
                         breakNaturally(); // PaperSpigot - Customizable boat drops
                     }
                     // CraftBukkit end
                 }
-
                 this.fallDistance = 0.0F;
             }
         } else if (this.world.getType(i, j - 1, k).getMaterial() != Material.WATER && d0 < 0.0D) {
@@ -494,7 +481,6 @@ public class EntityBoat extends Entity {
             for (int k = 0; k < 3; ++k) {
                 this.a(Item.getItemOf(Blocks.WOOD), 1, 0.0F);
             }
-
             for (int k = 0; k < 2; ++k) {
                 this.a(Items.STICK, 1, 0.0F);
             }
