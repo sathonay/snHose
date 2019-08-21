@@ -99,13 +99,17 @@ public class CraftWorld implements World {
 
     public Location getSpawnLocation() {
         ChunkCoordinates spawn = world.getSpawn();
-        return new Location(this, spawn.x, spawn.y, spawn.z);
+        return new Location(this, spawn.x, spawn.y, spawn.z, world.getWorldData().getSpawnYaw(), world.getWorldData().getSpawnPitch());
+    }
+    
+    public boolean setSpawnLocation(int x, int y, int z) {
+        return setSpawnLocation(x, y, z, 0, 0);
     }
 
-    public boolean setSpawnLocation(int x, int y, int z) {
+    public boolean setSpawnLocation(int x, int y, int z, float yaw, float pitch) {
         try {
             Location previousLocation = getSpawnLocation();
-            world.worldData.setSpawn(x, y, z);
+            world.worldData.setSpawn(x, y, z, yaw, pitch);
 
             // Notify anyone who's listening.
             SpawnChangeEvent event = new SpawnChangeEvent(this, previousLocation);
