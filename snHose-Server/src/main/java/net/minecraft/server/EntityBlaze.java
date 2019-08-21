@@ -1,7 +1,6 @@
 package net.minecraft.server;
 
-public class EntityBlaze extends EntityMonster
-{
+public class EntityBlaze extends EntityMonster {
     private float bp;
     private int bq;
     private int br;
@@ -77,8 +76,7 @@ public class EntityBlaze extends EntityMonster
         if (this.attackTicks <= 0 && var0 < 2.0f && entity.boundingBox.e > this.boundingBox.b && entity.boundingBox.b < this.boundingBox.e) {
             this.attackTicks = 20;
             this.n(entity);
-        }
-        else if (var0 < 30.0f) {
+        } else if (var0 < 30.0f && this.hasLineOfSight(entity)) {
             final double n = entity.locX - this.locX;
             final double d1 = entity.boundingBox.b + entity.length / 2.0f - (this.locY + this.length / 2.0f);
             final double n2 = entity.locZ - this.locZ;
@@ -140,13 +138,7 @@ public class EntityBlaze extends EntityMonster
 
     public void a(final boolean b) {
         final byte byte1 = this.datawatcher.getByte(16);
-        byte b2;
-        if (b) {
-            b2 = (byte)(byte1 | 0x1);
-        }
-        else {
-            b2 = (byte)(byte1 & 0xFFFFFFFE);
-        }
+        final byte b2 = (b ? (byte1 | 0x1) : (byte1 & 0xFFFFFFFE));
         this.datawatcher.watch(16, b2);
     }
 
