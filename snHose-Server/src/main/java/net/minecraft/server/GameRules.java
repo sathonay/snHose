@@ -7,7 +7,7 @@ public class GameRules
     private TreeMap<String, GameRuleValue> a;
 
     public GameRules() {
-        this.a = new TreeMap<>();
+        this.a = Maps.newLinkedHashMap();
         this.a("doFireTick", "true");
         this.a("mobGriefing", "true");
         this.a("keepInventory", "false");
