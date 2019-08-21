@@ -64,9 +64,15 @@ public class RegionFile {
             this.c.seek(0L);
 
             int k;
+            java.nio.ByteBuffer header = java.nio.ByteBuffer.allocate(8192);
+            while (header.hasRemaining())  {
+                if (this.c.getChannel().read(header) == -1) throw new java.io.EOFException();
+            }
+            header.clear();
+            java.nio.IntBuffer headerAsInts = header.asIntBuffer();
 
             for (j = 0; j < 1024; ++j) {
-                k = this.c.readInt();
+                k = headerAsInts.get();
                 this.d[j] = k;
                 if (k != 0 && (k >> 8) + (k & 255) <= this.f.size()) {
                     for (int l = 0; l < (k & 255); ++l) {
@@ -76,7 +82,7 @@ public class RegionFile {
             }
 
             for (j = 0; j < 1024; ++j) {
-                k = this.c.readInt();
+                k = headerAsInts.get();
                 this.e[j] = k;
             }
         } catch (IOException ioexception) {
