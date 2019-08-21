@@ -77,7 +77,7 @@ public abstract class EntityHuman extends EntityLiving implements ICommandListen
         this.height = 1.62F;
         ChunkCoordinates chunkcoordinates = world.getSpawn();
 
-        this.setPositionRotation((double) chunkcoordinates.x + 0.5D, (double) (chunkcoordinates.y + 1), (double) chunkcoordinates.z + 0.5D, 0.0F, 0.0F);
+        this.setPositionRotation((double) chunkcoordinates.x + 0.5D, (double) (chunkcoordinates.y + 1), (double) chunkcoordinates.z + 0.5D, world.getWorldData().getSpawnYaw(), world.getWorldData().getSpawnPitch());
         this.aZ = 180.0F;
         this.maxFireTicks = 20;
     }
