@@ -429,7 +429,7 @@ public abstract class PlayerList {
 
     public EntityPlayer processLogin(GameProfile gameprofile, EntityPlayer player) { // CraftBukkit - added EntityPlayer
         UUID uuid = EntityHuman.a(gameprofile);
-        ArrayList arraylist = Lists.newArrayList();
+        List arraylist = Lists.newArrayList();
 
         EntityPlayer entityplayer;
 
@@ -525,7 +525,7 @@ public abstract class PlayerList {
             if (location == null) {
                 cworld = (CraftWorld) this.server.server.getWorlds().get(0);
                 chunkcoordinates = cworld.getHandle().getSpawn();
-                location = new Location(cworld, chunkcoordinates.x + 0.5, chunkcoordinates.y, chunkcoordinates.z + 0.5);
+                location = new Location(cworld, chunkcoordinates.x + 0.5, chunkcoordinates.y, chunkcoordinates.z + 0.5, cworld.getHandle().getWorldData().getSpawnYaw(), cworld.getHandle().getWorldData().getSpawnPitch());
             }
 
             Player respawnPlayer = this.cserver.getPlayer(entityplayer1);
