@@ -308,24 +308,17 @@ public abstract class PlayerList {
         PacketPlayOutPlayerInfo packet = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.PlayerInfo.ADD_PLAYER, entityplayer); // Spigot - protocol patch
         PacketPlayOutPlayerInfo displayPacket = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.PlayerInfo.UPDATE_DISPLAY_NAME, entityplayer); // Spigot - protocol patch
         for (EntityPlayer entityplayer1 : this.players) {
-
-            if (entityplayer1.getBukkitEntity().canSee(entityplayer.getBukkitEntity())) {
-                entityplayer1.playerConnection.sendPacket(packet);
-                // Spigot start - protocol patch
-                if (!entityplayer.getName().equals(entityplayer.listName) && entityplayer1.playerConnection.networkManager.getVersion() > 28) {
-                    entityplayer1.playerConnection.sendPacket(displayPacket);
-                }
-                // Spigot end
+            entityplayer1.playerConnection.sendPacket(packet);
+            // Spigot start - protocol patch
+            if (!entityplayer.getName().equals(entityplayer.listName) && entityplayer1.playerConnection.networkManager.getVersion() > 28) {
+                entityplayer1.playerConnection.sendPacket(displayPacket);
             }
+            // Spigot end
         }
         // CraftBukkit end
 
         for (EntityPlayer player : this.players) {
-
             // CraftBukkit start
-            if (!entityplayer.getBukkitEntity().canSee(player.getBukkitEntity())) {
-                continue;
-            }
             // .name -> .listName
             entityplayer.playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.PlayerInfo.ADD_PLAYER, player)); // Spigot - protocol patch
             // Spigot start - protocol patch
@@ -372,12 +365,8 @@ public abstract class PlayerList {
         // this.sendAll(new PacketPlayOutPlayerInfo(entityplayer.getName(), false, 9999));
         PacketPlayOutPlayerInfo packet = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.PlayerInfo.REMOVE_PLAYER, entityplayer); // Spigot - protocol patch
         for (EntityPlayer entityplayer1 : this.players) {
-
-            if (entityplayer1.getBukkitEntity().canSee(entityplayer.getBukkitEntity())) {
-                entityplayer1.playerConnection.sendPacket(packet);
-            } else {
-                entityplayer1.getBukkitEntity().removeDisconnectingPlayer(entityplayer.getBukkitEntity());
-            }
+            entityplayer1.playerConnection.sendPacket(packet);
+            entityplayer1.getBukkitEntity().removeDisconnectingPlayer(entityplayer.getBukkitEntity());
         }
         // This removes the scoreboard (and player reference) for the specific player in the manager
         this.cserver.getScoreboardManager().removePlayer(entityplayer.getBukkitEntity());
