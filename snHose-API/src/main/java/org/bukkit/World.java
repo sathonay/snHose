@@ -475,6 +475,8 @@ public interface World extends PluginMessageRecipient, Metadatable {
      * @return True if it was successfully set.
      */
     public boolean setSpawnLocation(int x, int y, int z);
+    
+    public boolean setSpawnLocation(int x, int y, int z, float yaw, float pitch);
 
     /**
      * Gets the relative in-game time of this world.
