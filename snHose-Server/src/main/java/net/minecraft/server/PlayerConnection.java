@@ -3,10 +3,7 @@ package net.minecraft.server;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.Callable;
 
 import net.minecraft.util.com.google.common.base.Charsets;
@@ -21,7 +18,6 @@ import org.apache.logging.log4j.Logger;
 import java.io.UnsupportedEncodingException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicIntegerFieldUpdater;
-import java.util.HashSet;
 
 import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.craftbukkit.event.CraftEventFactory;
@@ -1756,8 +1752,7 @@ public class PlayerConnection implements PacketPlayInListener {
         if (packetplayinkeepalive.c() == this.h) {
             int i = (int) (this.d() - this.i);
 
-            this.player.ping = i;
-            this.player.pingAvg = (this.player.ping * 3 + i) / 4;
+            this.player.ping = (this.player.ping * 3 + i) / 4;
         }
     }
 

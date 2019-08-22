@@ -52,7 +52,6 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
     private int containerCounter;
     public boolean g;
     public int ping;
-    public int pingAvg;
     public boolean viewingCredits;
     // CraftBukkit start
     public String displayName;
