@@ -138,7 +138,7 @@ public class EntityBlaze extends EntityMonster {
 
     public void a(final boolean b) {
         final byte byte1 = this.datawatcher.getByte(16);
-        final byte b2 = (b ? (byte1 | 0x1) : (byte1 & 0xFFFFFFFE));
+        final byte b2 = (byte) (b ? (byte1 | 0x1) : (byte1 & 0xFFFFFFFE));
         this.datawatcher.watch(16, b2);
     }
 
