@@ -157,7 +157,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
                 pitch = world.getWorldData().getSpawnPitch();
             }
             this.world = world;
-            this.setPosition(position.x + 0.5, position.y, position.z + 0.5, yaw, pitch);
+            this.setPositionRotation(position.x + 0.5, position.y, position.z + 0.5, yaw, pitch);
         }
         this.dimension = ((WorldServer) this.world).dimension;
         this.playerInteractManager.a((WorldServer) world);
