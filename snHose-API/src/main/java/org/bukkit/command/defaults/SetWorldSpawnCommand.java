@@ -55,6 +55,8 @@ public class SetWorldSpawnCommand extends VanillaCommand {
                 x = getInteger(sender, args[0], MIN_COORD, MAX_COORD, true);
                 y = getInteger(sender, args[1], 0, world.getMaxHeight(), true);
                 z = getInteger(sender, args[2], MIN_COORD, MAX_COORD, true);
+                yaw = getInteger(sender, args[0], -360, 360, true);
+                pitch = getInteger(sender, args[0], -90, 90, true);
             } catch (NumberFormatException ex) {
                 sender.sendMessage(ex.getMessage());
                 return true;
