@@ -736,8 +736,13 @@ public abstract class EntityLiving extends Entity {
                 if (knockbackCancelled) this.world.broadcastEntityEffect(this, (byte) 2); // PaperSpigot - Disable explosion knockback
 
                 boolean die = this.getHealth() <= 0.0F;
-                if (flag)this.makeSound(die ? this.aU() : this.aT(), this.bf(), this.bg());
-                if (die)this.die(damagesource);
+
+                if (flag) {
+                    String sound = (die ? this.aU() : this.aT());
+                    if (sound != null) this.makeSound(sound, this.bf(), this.bg());
+                }
+
+                if (die) this.die(damagesource);
                 return true;
             }
         }
