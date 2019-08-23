@@ -1,10 +1,12 @@
 package net.minecraft.server;
 
+import com.google.common.collect.Maps;
+
 import java.util.*;
 
 public class GameRules
 {
-    private TreeMap<String, GameRuleValue> a;
+    private Map<String, GameRuleValue> a;
 
     public GameRules() {
         this.a = Maps.newLinkedHashMap();
