@@ -145,12 +145,8 @@ public class PersistentCollection {
 
     public int a(String s) {
         Short oshort = (Short) this.d.get(s);
-
-        if (oshort == null) {
-            oshort = Short.valueOf((short) 0);
-        } else {
-            oshort = Short.valueOf((short) (oshort.shortValue() + 1));
-        }
+        
+        oshort = (oshort == null ? Short.valueOf((short) 0) : Short.valueOf((short) (oshort.shortValue() + 1)));
 
         this.d.put(s, oshort);
         if (this.a == null) {
