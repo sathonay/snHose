@@ -1362,11 +1362,7 @@ public class PlayerConnection implements PacketPlayInListener {
                         action = InventoryAction.NOTHING;
                     } else {
                         Slot slot = this.player.activeContainer.getSlot(packetplayinwindowclick.d());
-                        if (slot != null && slot.isAllowed(this.player) && slot.hasItem()) {
-                            action = InventoryAction.MOVE_TO_OTHER_INVENTORY;
-                        } else {
-                            action = InventoryAction.NOTHING;
-                        }
+                        action = (slot != null && slot.isAllowed(this.player) && slot.hasItem() ? InventoryAction.MOVE_TO_OTHER_INVENTORY : InventoryAction.NOTHING);
                     }
                 }
             } else if (packetplayinwindowclick.h() == 2) {
@@ -1381,17 +1377,11 @@ public class PlayerConnection implements PacketPlayInListener {
                                 action = InventoryAction.HOTBAR_SWAP;
                             } else {
                                 int firstEmptySlot = player.inventory.getFirstEmptySlotIndex();
-                                if (firstEmptySlot > -1) {
-                                    action = InventoryAction.HOTBAR_MOVE_AND_READD;
-                                } else {
-                                    action = InventoryAction.NOTHING; // This is not sane! Mojang: You should test for other slots of same type
-                                }
+                                action = (firstEmptySlot > -1 ? InventoryAction.HOTBAR_MOVE_AND_READD : InventoryAction.NOTHING);
                             }
-                        } else if (!clickedSlot.hasItem() && hotbar != null && clickedSlot.isAllowed(hotbar)) {
-                            action = InventoryAction.HOTBAR_SWAP;
                         } else {
-                            action = InventoryAction.NOTHING;
-                        }
+                            action = (!clickedSlot.hasItem() && hotbar != null && clickedSlot.isAllowed(hotbar) ? InventoryAction.HOTBAR_SWAP : InventoryAction.NOTHING);
+                        } 
                     } else {
                         action = InventoryAction.NOTHING;
                     }
@@ -1405,11 +1395,7 @@ public class PlayerConnection implements PacketPlayInListener {
                         action = InventoryAction.NOTHING;
                     } else {
                         Slot slot = this.player.activeContainer.getSlot(packetplayinwindowclick.d());
-                        if (slot != null && slot.hasItem() && player.abilities.canInstantlyBuild && player.inventory.getCarried() == null) {
-                            action = InventoryAction.CLONE_STACK;
-                        } else {
-                            action = InventoryAction.NOTHING;
-                        }
+                        action = (slot != null && slot.hasItem() && player.abilities.canInstantlyBuild && player.inventory.getCarried() == null ? InventoryAction.CLONE_STACK : InventoryAction.NOTHING);
                     }
                 } else {
                     click = ClickType.UNKNOWN;
@@ -1459,21 +1445,13 @@ public class PlayerConnection implements PacketPlayInListener {
             // TODO check on updates
 
             if (packetplayinwindowclick.h() != 5) {
-                if (click == ClickType.NUMBER_KEY) {
-                    event = new InventoryClickEvent(inventory, type, packetplayinwindowclick.d(), click, action, packetplayinwindowclick.e());
-                } else {
-                    event = new InventoryClickEvent(inventory, type, packetplayinwindowclick.d(), click, action);
-                }
+                event = (click == ClickType.NUMBER_KEY ? new InventoryClickEvent(inventory, type, packetplayinwindowclick.d(), click, action, packetplayinwindowclick.e()) : new InventoryClickEvent(inventory, type, packetplayinwindowclick.d(), click, action));
 
                 org.bukkit.inventory.Inventory top = inventory.getTopInventory();
                 if (packetplayinwindowclick.d() == 0 && top instanceof CraftingInventory) {
                     org.bukkit.inventory.Recipe recipe = ((CraftingInventory) top).getRecipe();
                     if (recipe != null) {
-                        if (click == ClickType.NUMBER_KEY) {
-                            event = new CraftItemEvent(recipe, inventory, type, packetplayinwindowclick.d(), click, action, packetplayinwindowclick.e());
-                        } else {
-                            event = new CraftItemEvent(recipe, inventory, type, packetplayinwindowclick.d(), click, action);
-                        }
+                        event = (click == ClickType.NUMBER_KEY ? new CraftItemEvent(recipe, inventory, type, packetplayinwindowclick.d(), click, action, packetplayinwindowclick.e()) : new CraftItemEvent(recipe, inventory, type, packetplayinwindowclick.d(), click, action));
                     }
                 }
 
@@ -1560,7 +1538,7 @@ public class PlayerConnection implements PacketPlayInListener {
                 this.n.a(this.player.activeContainer.windowId, Short.valueOf(packetplayinwindowclick.f()));
                 this.player.playerConnection.sendPacket(new PacketPlayOutTransaction(packetplayinwindowclick.c(), packetplayinwindowclick.f(), false));
                 this.player.activeContainer.a(this.player, false);
-                ArrayList arraylist = new ArrayList();
+                List arraylist = new ArrayList();
 
                 for (int i = 0; i < this.player.activeContainer.c.size(); ++i) {
                     arraylist.add(((Slot) this.player.activeContainer.c.get(i)).getItem());
@@ -1765,7 +1743,6 @@ public class PlayerConnection implements PacketPlayInListener {
 
         while (iterator.hasNext()) {
             String s = iterator.next();
-
             list.add(s);
         }
 
