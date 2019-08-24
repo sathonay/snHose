@@ -511,14 +511,7 @@ public class PlayerConnection implements PacketPlayInListener {
         } else if (packetplayinblockdig.g() == 5) {
             this.player.bA();
         } else {
-            boolean flag = false;
-
-            if (packetplayinblockdig.g() == 0
-                    || packetplayinblockdig.g() == 1
-                    || packetplayinblockdig.g() == 2) {
-                flag = true;
-            }
-
+            boolean flag = (packetplayinblockdig.g() == 0 || packetplayinblockdig.g() == 1 || packetplayinblockdig.g() == 2);
             int i = packetplayinblockdig.c();
             int j = packetplayinblockdig.d();
             int k = packetplayinblockdig.e();
@@ -575,8 +568,7 @@ public class PlayerConnection implements PacketPlayInListener {
         // PaperSpigot - Allow disabling the player interaction limiter
         if (org.github.paperspigot.PaperSpigotConfig.interactLimitEnabled && lastPlace != -1 && packetplayinblockplace.timestamp - lastPlace < 30 && packets++ >= 4) {
             throttled = true;
-        } else if ( packetplayinblockplace.timestamp - lastPlace >= 30 || lastPlace == -1 )
-        {
+        } else if ( packetplayinblockplace.timestamp - lastPlace >= 30 || lastPlace == -1 ) {
             lastPlace = packetplayinblockplace.timestamp;
             packets = 0;
         }
@@ -625,10 +617,10 @@ public class PlayerConnection implements PacketPlayInListener {
             int itemstackAmount = itemstack.count;
             // Spigot start - skip the event if throttled
             if (!throttled) {
-            org.bukkit.event.player.PlayerInteractEvent event = CraftEventFactory.callPlayerInteractEvent(this.player, Action.RIGHT_CLICK_AIR, itemstack);
-            if (event.useItemInHand() != Event.Result.DENY) {
-                this.player.playerInteractManager.useItem(this.player, this.player.world, itemstack);
-            }
+                org.bukkit.event.player.PlayerInteractEvent event = CraftEventFactory.callPlayerInteractEvent(this.player, Action.RIGHT_CLICK_AIR, itemstack);
+                if (event.useItemInHand() != Event.Result.DENY) {
+                    this.player.playerInteractManager.useItem(this.player, this.player.world, itemstack);
+                }
             }
             // Spigot end
 
@@ -1214,6 +1206,8 @@ public class PlayerConnection implements PacketPlayInListener {
                         return;
                     }
 
+                    // TODO: if anyone want to do a reach check do it here
+                    
                     this.player.attack(entity);
 
                     // CraftBukkit start
@@ -1248,15 +1242,12 @@ public class PlayerConnection implements PacketPlayInListener {
                 if (this.player.getHealth() > 0.0F) {
                     return;
                 }
-
                 this.player = this.minecraftServer.getPlayerList().moveToWorld(this.player, 0, false);
             }
             break;
-
         case 2:
             this.player.getStatisticManager().a(this.player);
             break;
-
         case 3:
             this.player.a((Statistic) AchievementList.f);
         }
@@ -1264,9 +1255,7 @@ public class PlayerConnection implements PacketPlayInListener {
 
     public void a(PacketPlayInCloseWindow packetplayinclosewindow) {
         if (this.player.dead) return; // CraftBukkit
-
         CraftEventFactory.handleInventoryCloseEvent(this.player); // CraftBukkit
-
         this.player.m();
     }
 
@@ -1616,11 +1605,7 @@ public class PlayerConnection implements PacketPlayInListener {
                 if (flag) {
                     type = SlotType.OUTSIDE;
                 } else if (packetplayinsetcreativeslot.c() < 36) {
-                    if (packetplayinsetcreativeslot.c() >= 5 && packetplayinsetcreativeslot.c() < 9) {
-                        type = SlotType.ARMOR;
-                    } else {
-                        type = SlotType.CONTAINER;
-                    }
+                    type = ((packetplayinsetcreativeslot.c() >= 5 && packetplayinsetcreativeslot.c() < 9) ? SlotType.ARMOR : SlotType.CONTAINER);
                 }
                 InventoryCreativeEvent event = new InventoryCreativeEvent(inventory, type, flag ? -999 : packetplayinsetcreativeslot.c(), item);
                 server.getPluginManager().callEvent(event);
