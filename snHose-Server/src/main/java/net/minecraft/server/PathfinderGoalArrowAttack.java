@@ -84,7 +84,7 @@ public class PathfinderGoalArrowAttack extends PathfinderGoal {
                 return;
             }
             f = MathHelper.sqrt(d0) / this.i;
-            float f1 = MathHelper.limit(f, 0.1F, 1.0F);
+            float f1 = (float) MathHelper.limit(f, 0.1F, 1.0F);
             
             this.b.a(this.c, f1);
             this.d = MathHelper.d(f * (float) (this.h - this.g) + (float) this.g);
