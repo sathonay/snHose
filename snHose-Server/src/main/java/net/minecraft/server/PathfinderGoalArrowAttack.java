@@ -1,6 +1,7 @@
 package net.minecraft.server;
 
 import org.bukkit.event.entity.EntityTargetEvent; // CraftBukkit
+import net.minecraft.server.MathHelper;
 
 public class PathfinderGoalArrowAttack extends PathfinderGoal {
 
@@ -40,10 +41,9 @@ public class PathfinderGoalArrowAttack extends PathfinderGoal {
 
         if (entityliving == null) {
             return false;
-        } else {
-            this.c = entityliving;
-            return true;
         }
+        this.c = entityliving;
+        return true;
     }
 
     public boolean b() {
@@ -83,18 +83,9 @@ public class PathfinderGoalArrowAttack extends PathfinderGoal {
             if (d0 > (double) this.j || !flag) {
                 return;
             }
-
             f = MathHelper.sqrt(d0) / this.i;
-            float f1 = f;
-
-            if (f < 0.1F) {
-                f1 = 0.1F;
-            }
-
-            if (f1 > 1.0F) {
-                f1 = 1.0F;
-            }
-
+            float f1 = MathHelper.limit(f, 0.1F, 1.0F);
+            
             this.b.a(this.c, f1);
             this.d = MathHelper.d(f * (float) (this.h - this.g) + (float) this.g);
         } else if (this.d < 0) {
