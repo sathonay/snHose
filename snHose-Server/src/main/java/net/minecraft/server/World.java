@@ -1343,14 +1343,7 @@ public abstract class World implements IBlockAccess {
             for (int l1 = i1; l1 < j1; ++l1) {
                 if (this.isLoaded(k1, 64, l1)) {
                     for (int i2 = k - 1; i2 < l; ++i2) {
-                        Block block;
-
-                        if (k1 >= -30000000 && k1 < 30000000 && l1 >= -30000000 && l1 < 30000000) {
-                            block = this.getType(k1, i2, l1);
-                        } else {
-                            block = Blocks.BEDROCK;
-                        }
-
+                        Block block = (k1 >= -30000000 && k1 < 30000000 && l1 >= -30000000 && l1 < 30000000 ? this.getType(k1, i2, l1) : Blocks.BEDROCK);
                         block.a(this, k1, i2, l1, axisalignedbb, this.L, (Entity) null);
                     }
                 }
@@ -1362,15 +1355,7 @@ public abstract class World implements IBlockAccess {
 
     public int a(float f) {
         float f1 = this.c(f);
-        float f2 = 1.0F - (MathHelper.cos(f1 * 3.1415927F * 2.0F) * 2.0F + 0.5F);
-
-        if (f2 < 0.0F) {
-            f2 = 0.0F;
-        }
-
-        if (f2 > 1.0F) {
-            f2 = 1.0F;
-        }
+        float f2 = (float) MathHelper.limit(1.0F - (MathHelper.cos(f1 * 3.1415927F * 2.0F) * 2.0F + 0.5F), 0.0F, 1.0F);
 
         f2 = 1.0F - f2;
         f2 = (float) ((double) f2 * (1.0D - (double) (this.j(f) * 5.0F) / 16.0D));
@@ -1390,7 +1375,7 @@ public abstract class World implements IBlockAccess {
     public float d(float f) {
         float f1 = this.c(f);
 
-        return f1 * 3.1415927F * 2.0F;
+        return f1 * (float) Math.PI * 2.0F;
     }
 
     public int h(int i, int j) {
@@ -2216,11 +2201,7 @@ public abstract class World implements IBlockAccess {
                 }
 
                 this.o = this.p;
-                if (this.worldData.isThundering()) {
-                    this.p = (float) ((double) this.p + 0.01D);
-                } else {
-                    this.p = (float) ((double) this.p - 0.01D);
-                }
+                this.p = (float) ((double) this.p + (this.worldData.isThundering() ? 0.01D : -0.01D));
 
                 this.p = MathHelper.a(this.p, 0.0F, 1.0F);
                 int j = this.worldData.getWeatherDuration();
@@ -2247,12 +2228,7 @@ public abstract class World implements IBlockAccess {
                 }
 
                 this.m = this.n;
-                if (this.worldData.hasStorm()) {
-                    this.n = (float) ((double) this.n + 0.01D);
-                } else {
-                    this.n = (float) ((double) this.n - 0.01D);
-                }
-
+                this.n = (float) ((double) this.n + (this.worldData.hasStorm() ? 0.01D : -0.01D));
                 this.n = MathHelper.a(this.n, 0.0F, 1.0F);
             }
         }
@@ -2447,13 +2423,9 @@ public abstract class World implements IBlockAccess {
         } else {
             Block block = this.getType(i, j, k);
             int l = enumskyblock == EnumSkyBlock.SKY ? 0 : block.m();
-            int i1 = block.k();
+            int i1 = Math.max(block.k(), 1);
 
             if (i1 >= 15 && block.m() > 0) {
-                i1 = 1;
-            }
-
-            if (i1 < 1) {
                 i1 = 1;
             }
 
@@ -2687,7 +2659,7 @@ public abstract class World implements IBlockAccess {
         int j = MathHelper.floor((axisalignedbb.d + 2.0D) / 16.0D);
         int k = MathHelper.floor((axisalignedbb.c - 2.0D) / 16.0D);
         int l = MathHelper.floor((axisalignedbb.f + 2.0D) / 16.0D);
-        ArrayList arraylist = new ArrayList();
+        List arraylist = new ArrayList();
 
         for (int i1 = i; i1 <= j; ++i1) {
             for (int j1 = k; j1 <= l; ++j1) {
