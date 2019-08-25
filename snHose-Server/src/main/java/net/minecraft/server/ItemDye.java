@@ -15,7 +15,7 @@ public class ItemDye extends Item {
     }
 
     public String a(ItemStack itemstack) {
-        int i = MathHelper.a(itemstack.getData(), 0, 15);
+        int i = MathHelper.limit(itemstack.getData(), 0, 15);
 
         return super.getName() + "." + a[i];
     }

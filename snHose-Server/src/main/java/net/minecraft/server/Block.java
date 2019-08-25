@@ -812,7 +812,7 @@ public class Block {
 
     // snHose start
     public static float range(float min, float value, float max) {
-        return (float) MathHelper.limit(value, min, max);
+        return MathHelper.limit(value, min, max);
     }
     // snHose end
 }

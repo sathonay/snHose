@@ -186,7 +186,7 @@ public class BlockSapling extends BlockPlant implements IBlockFragilePlantElemen
     }
 
     public int getDropData(int i) {
-        return MathHelper.a(i & 7, 0, 5);
+        return MathHelper.limit(i & 7, 0, 5);
     }
 
     public boolean a(World world, int i, int j, int k, boolean flag) {

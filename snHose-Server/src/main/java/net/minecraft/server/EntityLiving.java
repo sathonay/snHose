@@ -638,7 +638,7 @@ public abstract class EntityLiving extends Entity {
             return;
         }
         // CraftBukkit end
-        this.datawatcher.watch(6, MathHelper.a(f, 0.0F, this.getMaxHealth()));
+        this.datawatcher.watch(6, MathHelper.limit(f, 0.0F, this.getMaxHealth()));
     }
 
     public boolean damageEntity(DamageSource damagesource, float f) {

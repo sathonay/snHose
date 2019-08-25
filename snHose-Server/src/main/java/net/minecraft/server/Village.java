@@ -340,7 +340,7 @@ public class Village {
 
     public int a(String s, int i) {
         int j = this.a(s);
-        int k = MathHelper.a(j + i, -30, 10);
+        int k = MathHelper.limit(j + i, -30, 10);
 
         this.playerStandings.put(s, Integer.valueOf(k));
         return k;

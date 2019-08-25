@@ -50,7 +50,7 @@ public class BlockDaylightDetector extends BlockContainer {
                     i1 = 15;
                 }
             } else {
-                i1 = (int) MathHelper.limit(Math.round((float) i1 * MathHelper.cos(f)), 0, 15);
+                i1 = MathHelper.limit(Math.round((float) i1 * MathHelper.cos(f)), 0, 15);
             }
             // PaperSpigot end
 

@@ -459,8 +459,8 @@ public class EntityFishingHook extends Entity {
         float f1 = 0.1F - (float) i * 0.025F - (float) j * 0.01F;
         float f2 = 0.05F + (float) i * 0.01F - (float) j * 0.01F;
 
-        f1 = MathHelper.a(f1, 0.0F, 1.0F);
-        f2 = MathHelper.a(f2, 0.0F, 1.0F);
+        f1 = MathHelper.limit(f1, 0.0F, 1.0F);
+        f2 = MathHelper.limit(f2, 0.0F, 1.0F);
         if (f < f1) {
             this.owner.a(StatisticList.A, 1);
             return ((PossibleFishingResult) WeightedRandom.a(this.random, (Collection) d)).a(this.random);

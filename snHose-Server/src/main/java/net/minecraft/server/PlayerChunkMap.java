@@ -269,7 +269,7 @@ public class PlayerChunkMap {
     }
 
     public void a(int i) {
-        i = MathHelper.a(i, 3, 20);
+        i = MathHelper.limit(i, 3, 20);
         if (i != this.g) {
             int j = i - this.g;
             Iterator iterator = this.managedPlayers.iterator();
@@ -308,7 +308,7 @@ public class PlayerChunkMap {
 
     // PaperSpigot start - Player view distance API
     public void updateViewDistance(EntityPlayer player, int viewDistance) {
-        viewDistance = MathHelper.a(viewDistance, 3, 20);
+        viewDistance = MathHelper.limit(viewDistance, 3, 20);
         if (viewDistance != player.viewDistance) {
             int cx = (int) player.locX >> 4;
             int cz = (int) player.locZ >> 4;

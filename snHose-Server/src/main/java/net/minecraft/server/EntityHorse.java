@@ -233,7 +233,7 @@ public class EntityHorse extends EntityAnimal implements IInventoryListener {
     }
 
     public int v(int i) {
-        int j = MathHelper.a(this.getTemper() + i, 0, this.getMaxDomestication());
+        int j = MathHelper.limit(this.getTemper() + i, 0, this.getMaxDomestication());
 
         this.setTemper(j);
         return j;

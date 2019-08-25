@@ -921,8 +921,8 @@ public class Chunk {
         int i = MathHelper.floor((axisalignedbb.b - 2.0D) / 16.0D);
         int j = MathHelper.floor((axisalignedbb.e + 2.0D) / 16.0D);
 
-        i = MathHelper.a(i, 0, this.entitySlices.length - 1);
-        j = MathHelper.a(j, 0, this.entitySlices.length - 1);
+        i = MathHelper.limit(i, 0, this.entitySlices.length - 1);
+        j = MathHelper.limit(j, 0, this.entitySlices.length - 1);
 
         for (int k = i; k <= j; ++k) {
             List list1 = this.entitySlices[k];
@@ -951,8 +951,8 @@ public class Chunk {
         int i = MathHelper.floor((axisalignedbb.b - 2.0D) / 16.0D);
         int j = MathHelper.floor((axisalignedbb.e + 2.0D) / 16.0D);
 
-        i = MathHelper.a(i, 0, this.entitySlices.length - 1);
-        j = MathHelper.a(j, 0, this.entitySlices.length - 1);
+        i = MathHelper.limit(i, 0, this.entitySlices.length - 1);
+        j = MathHelper.limit(j, 0, this.entitySlices.length - 1);
 
         for (int k = i; k <= j; ++k) {
             List list1 = this.entitySlices[k];

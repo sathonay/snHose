@@ -719,9 +719,9 @@ public abstract class PlayerList {
                 chunkcoordinates = worldserver1.getDimensionSpawn();
             }
 
-            d0 = (double) chunkcoordinates.x;
-            y = (double) chunkcoordinates.y;
-            d1 = (double) chunkcoordinates.z;
+            d0 = chunkcoordinates.x;
+            y = chunkcoordinates.y;
+            d1 = chunkcoordinates.z;
             yaw = 90.0F;
             pitch = 0.0F;
             /*
@@ -735,8 +735,8 @@ public abstract class PlayerList {
         // worldserver.methodProfiler.b();
         if (i != 1) {
             // worldserver.methodProfiler.a("placing");
-            d0 = (double) MathHelper.a((int) d0, -29999872, 29999872);
-            d1 = (double) MathHelper.a((int) d1, -29999872, 29999872);
+            d0 = MathHelper.limit(d0, -29999872, 29999872);
+            d1 = MathHelper.limit(d1, -29999872, 29999872);
             /*
             if (entity.isAlive()) {
                 worldserver1.addEntity(entity);

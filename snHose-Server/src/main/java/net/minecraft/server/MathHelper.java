@@ -55,27 +55,6 @@ public class MathHelper {
         return var0 > (double)var2 ? var2 + 1 : var2;
     }
 
-    public static int a(int var0, int var1, int var2) {
-        if (var0 < var1) {
-            return var1;
-        } 
-        return var0 > var2 ? var2 : var0;
-    }
-
-    public static float a(float var0, float var1, float var2) {
-        if (var0 < var1) {
-            return var1;
-        }
-        return var0 > var2 ? var2 : var0;
-    }
-
-    public static double a(double var0, double var2, double var4) {
-        if (var0 < var2) {
-            return var2;
-        }
-        return var0 > var4 ? var4 : var0;
-    }
-
     public static double b(double var0, double var2, double var4) {
         if (var4 < 0.0D) {
             return var0;
@@ -196,6 +175,18 @@ public class MathHelper {
 
     public static double limit(double actual, double minimum, double maximum) {
         return Math.min(Math.max(actual, minimum), maximum);
+    }
+
+    public static int limit(int actual, int minimum, int maximum) {
+        return Math.min(Math.max(actual, minimum), maximum);
+    }
+
+    public static float limit(float actual, float minimum, float maximum) {
+        return Math.min(Math.max(actual, minimum), maximum);
+    }
+
+    public static byte limit(byte actual, byte minimum, byte maximum) {
+        return (byte) Math.min(Math.max(actual, minimum), maximum);
     }
 
     static {

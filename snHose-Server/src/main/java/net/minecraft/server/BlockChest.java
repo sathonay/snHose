@@ -306,7 +306,7 @@ public class BlockChest extends BlockContainer
         if (!this.isPowerSource()) {
             return 0;
         }
-        return MathHelper.a(((TileEntityChest)blockAccess.getTileEntity(n, n2, n3)).o, 0, 15);
+        return MathHelper.limit(((TileEntityChest)blockAccess.getTileEntity(n, n2, n3)).o, 0, 15);
     }
 
     @Override
