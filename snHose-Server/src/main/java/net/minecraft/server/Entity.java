@@ -302,14 +302,7 @@ public abstract class Entity {
                     if (this.vehicle == null && this.ao++ >= i) {
                         this.ao = i;
                         this.portalCooldown = this.ai();
-                        byte b0;
-
-                        if (this.world.worldProvider.dimension == -1) {
-                            b0 = 0;
-                        } else {
-                            b0 = -1;
-                        }
-
+                        byte b0 = (this.world.worldProvider.dimension == -1 ? 0 : -1);
                         this.b(b0);
                     }
 
@@ -715,12 +708,7 @@ public abstract class Entity {
                 if (this.Q > (float) this.d && block.getMaterial() != Material.AIR) {
                     this.d = (int) this.Q + 1;
                     if (this.M()) {
-                        float f = MathHelper.sqrt(this.motX * this.motX * 0.20000000298023224D + this.motY * this.motY + this.motZ * this.motZ * 0.20000000298023224D) * 0.35F;
-
-                        if (f > 1.0F) {
-                            f = 1.0F;
-                        }
-
+                        float f = Math.min(MathHelper.sqrt(this.motX * this.motX * 0.20000000298023224D + this.motY * this.motY + this.motZ * this.motZ * 0.20000000298023224D) * 0.35F, 1.0F);
                         this.makeSound(this.H(), f, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.4F);
                     }
 
@@ -869,12 +857,7 @@ public abstract class Entity {
     public boolean N() {
         if (this.world.a(this.boundingBox.grow(0.0D, -0.4000000059604645D, 0.0D).shrink(0.001D, 0.001D, 0.001D), Material.WATER, this)) {
             if (!this.inWater && !this.justCreated) {
-                float f = MathHelper.sqrt(this.motX * this.motX * 0.20000000298023224D + this.motY * this.motY + this.motZ * this.motZ * 0.20000000298023224D) * 0.2F;
-
-                if (f > 1.0F) {
-                    f = 1.0F;
-                }
-
+                float f = Math.min(MathHelper.sqrt(this.motX * this.motX * 0.20000000298023224D + this.motY * this.motY + this.motZ * this.motZ * 0.20000000298023224D) * 0.2F, 1.0F);
                 this.makeSound(this.O(), f, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.4F);
                 float f1 = (float) MathHelper.floor(this.boundingBox.b);
 
@@ -946,11 +929,7 @@ public abstract class Entity {
         float f3 = f * f + f1 * f1;
 
         if (f3 >= 1.0E-4F) {
-            f3 = MathHelper.c(f3);
-            if (f3 < 1.0F) {
-                f3 = 1.0F;
-            }
-
+            f3 = Math.max(MathHelper.c(f3), 1.0F);
             f3 = f2 / f3;
             f *= f3;
             f1 *= f3;
@@ -1063,12 +1042,7 @@ public abstract class Entity {
                 d2 = (double) MathHelper.sqrt(d2);
                 d0 /= d2;
                 d1 /= d2;
-                double d3 = 1.0D / d2;
-
-                if (d3 > 1.0D) {
-                    d3 = 1.0D;
-                }
-
+                double d3 = Math.min(1.0D / d2, 1.0D);
                 d0 *= d3;
                 d1 *= d3;
                 d0 *= 0.05000000074505806D;
@@ -1406,27 +1380,10 @@ public abstract class Entity {
                 while (this.g < -180.0D) {
                     this.g += 360.0D;
                 }
-
-                double d0 = this.h * 0.5D;
-                double d1 = this.g * 0.5D;
+         
                 float f = 10.0F;
-
-                if (d0 > (double) f) {
-                    d0 = (double) f;
-                }
-
-                if (d0 < (double) (-f)) {
-                    d0 = (double) (-f);
-                }
-
-                if (d1 > (double) f) {
-                    d1 = (double) f;
-                }
-
-                if (d1 < (double) (-f)) {
-                    d1 = (double) (-f);
-                }
-
+                double d0 = MathHelper.limit(this.h * 0.5D, (double)(-f), (double)f);
+                double d1 = MathHelper.limit(this.g * 0.5D, (double)(-f), (double)f);
                 this.h -= d0;
                 this.g -= d1;
             }
@@ -1625,12 +1582,7 @@ public abstract class Entity {
 
     protected void a(int i, boolean flag) {
         byte b0 = this.datawatcher.getByte(0);
-
-        if (flag) {
-            this.datawatcher.watch(0, (byte) (b0 | 1 << i));
-        } else {
-            this.datawatcher.watch(0, (byte) (b0 & ~(1 << i)));
-        }
+        this.datawatcher.watch(0, (byte) (flag ? (b0 | 1 << i) : (b0 & ~(1 << i))));
     }
 
     public int getAirTicks() {
