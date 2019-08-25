@@ -1225,15 +1225,12 @@ public abstract class PlayerList {
     }
 
     public void u() {
-        while (!this.players.isEmpty()) {
-            // Spigot start
-            EntityPlayer p = (EntityPlayer) this.players.get( 0 );
-            p.playerConnection.disconnect( this.server.server.getShutdownMessage() );
-            if ( ( !this.players.isEmpty() ) && ( this.players.get( 0 ) == p ) )
-            {
-                this.players.remove( 0 ); // Prevent shutdown hang if already disconnected
-            }
-            // Spigot end
+        Iterator<EntityPlayer> iterator = this.players.iterator();
+        while (iterator.hasNext()) {
+            EntityPlayer entityplayer = iterator.next();
+            if (entityplayer == null) continue;
+            entityplayer.playerConnection.disconnect(this.server.getShutdownMessage());
+            iterator.remove();
         }
     }
 
