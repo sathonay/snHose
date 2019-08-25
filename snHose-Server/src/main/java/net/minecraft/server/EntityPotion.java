@@ -94,11 +94,10 @@ public class EntityPotion extends EntityProjectile {
                         for (LivingEntity victim : event.getAffectedEntities()) {
                             if (!(victim instanceof CraftLivingEntity)) continue;
 
-                            EntityLiving entityliving = ((CraftLivingEntity) victim).getHandle();
-
-                            if ((this.getShooter() instanceof EntityPlayer
-                                    && entityliving instanceof EntityPlayer)
-                                    && !((EntityPlayer)this.getShooter()).getBukkitEntity().canSee((Player) entityliving.getBukkitEntity())) continue;
+                            final EntityLiving entityliving = ((CraftLivingEntity)victim).getHandle();
+                            if (entityliving instanceof EntityPlayer && !((EntityPlayer)entityliving).getBukkitEntity().canSeeEntity(this.getShooter().getBukkitEntity())) {
+                                continue;
+                            }
 
                             double d1 = event.getIntensity(victim);
                             // CraftBukkit end
