@@ -940,8 +940,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         Validate.notNull(player, "shown player cannot be null");
         if (getHandle().playerConnection == null) return;
         if (equals(player)) return;
-        if (!hiddenPlayers.contains(player.getUniqueId())) return;
-        hiddenPlayers.remove(player.getUniqueId());
+        if (!hiddenPlayers.remove(player.getUniqueId(), true)) return;
 
         EntityTracker tracker = ((WorldServer) entity.world).tracker;
         EntityPlayer other = ((CraftPlayer) player).getHandle();
@@ -957,7 +956,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
     }
 
     public boolean canSee(Player player) {
-        return !hiddenPlayers.contains(player.getUniqueId());
+        return !hiddenPlayers.containsKey(player.getUniqueId());
     }
     
     // DO NOT OVERRIDE!
@@ -1439,15 +1438,13 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         }
 
         @Override
-        public Set<Player> getHiddenPlayers()
-        {
-            Set<Player> ret = new HashSet<Player>();
-            for ( UUID u : hiddenPlayers )
-            {
-                ret.add( getServer().getPlayer( u ) );
+        public Set<Player> getHiddenPlayers() {
+            Set<Player> ret = new HashSet<>();
+            for (UUID u : hiddenPlayers.keySet()) {
+                ret.add( getServer().getPlayer(u));
             }
 
-            return java.util.Collections.unmodifiableSet( ret );
+            return java.util.Collections.unmodifiableSet(ret);
         }
 
         /**
