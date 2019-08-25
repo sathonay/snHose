@@ -522,6 +522,10 @@ public abstract class EntityLiving extends Entity {
         return this.effects.values();
     }
 
+    public boolean hasEffect() {
+        return this.effects.size() != 0;
+    }
+
     public boolean hasEffect(int i) {
         // CraftBukkit - Add size check for efficiency
         return this.effects.size() != 0 && this.effects.containsKey(i);
