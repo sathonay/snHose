@@ -1084,12 +1084,19 @@ public abstract class PlayerList {
         }
     }
 
-    public void sendPacketNearby(double d0, double d1, double d2, double d3, int i, Packet packet) {
-        this.sendPacketNearby((EntityHuman) null, d0, d1, d2, d3, i, packet, false);
+    public void sendPacketNearby(double d0, double d1, double d2, double d3, World world, Packet packet) {
+        this.sendPacketNearby((EntityHuman) null, d0, d1, d2, d3, world, packet, false);
     }
 
-    public void sendPacketNearby(EntityHuman entityhuman, double d0, double d1, double d2, double d3, int i, Packet packet, boolean self) {
-        for (EntityPlayer entityplayer : this.players) {
+    public void sendPacketNearby(EntityHuman entityhuman, double d0, double d1, double d2, double d3, World world, Packet packet, boolean self) {
+
+        if (world == null && entityhuman != null && entityhuman.world instanceof WorldServer) {
+                world = (WorldServer) entityhuman.world;
+        }
+
+        List<EntityPlayer> players = world == null ? this.players : world.players;
+
+        for (EntityPlayer entityplayer : players) {
 
             // CraftBukkit start - Test if player receiving packet can see the source of the packet
             if (entityhuman != null && entityhuman instanceof EntityPlayer && !entityplayer.getBukkitEntity().canSee(((EntityPlayer) entityhuman).getBukkitEntity())) {
@@ -1097,7 +1104,7 @@ public abstract class PlayerList {
             }
             // CraftBukkit end
 
-            if ((!self && entityplayer != entityhuman || self) && entityplayer.dimension == i) {
+            if ((!self && entityplayer != entityhuman || self) && entityplayer.getWorld() == world) {
                 double d4 = d0 - entityplayer.locX;
                 double d5 = d1 - entityplayer.locY;
                 double d6 = d2 - entityplayer.locZ;
