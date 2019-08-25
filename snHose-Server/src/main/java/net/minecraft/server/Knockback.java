@@ -1,13 +1,12 @@
 package net.minecraft.server;
 
 public class Knockback {
-    private final double sprintForce = 0.5D;
-    private final double sprintHeight = 0.1D;
-    private final double friction = 2.0D;
-    private final double maxHeight = 0.4D;
-    private final double force = 0.4D;
-    
-    public Knockback() {}
+    private final double sprintForce;
+    private final double sprintHeight;
+    private final double friction;
+    private final double maxHeight;
+    private final double force;
+
     public Knockback(final double sprintForce, final double sprintHeight, final double friction, final double maxHeight, final double force) {
         this.sprintForce = sprintForce;
         this.sprintHeight = sprintHeight;
