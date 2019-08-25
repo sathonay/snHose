@@ -302,7 +302,7 @@ public abstract class Entity {
                     if (this.vehicle == null && this.ao++ >= i) {
                         this.ao = i;
                         this.portalCooldown = this.ai();
-                        byte b0 = (this.world.worldProvider.dimension == -1 ? 0 : -1);
+                        byte b0 = (byte) (this.world.worldProvider.dimension == -1 ? 0 : -1);
                         this.b(b0);
                     }
 
