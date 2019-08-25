@@ -332,6 +332,7 @@ public class EntityTrackerEntry {
                 if (!this.trackedPlayers.contains(entityplayer) && (this.d(entityplayer) || this.tracker.attachedToPlayer)) {
                     // CraftBukkit start - respect vanish API
                     if (!entityplayer.getBukkitEntity().canSeeEntity(this.tracker.getBukkitEntity())) {
+                        // TODO: Hide already dropped item here 
                         return;
                     }
 
@@ -351,6 +352,8 @@ public class EntityTrackerEntry {
                         }
                     }
                     // Spigot end
+                    
+                    // TODO: Show already dropped item if they are hide here
 
                     entityplayer.playerConnection.sendPacket(packet);
                     if (!this.tracker.getDataWatcher().d()) {
