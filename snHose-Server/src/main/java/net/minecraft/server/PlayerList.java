@@ -891,7 +891,7 @@ public abstract class PlayerList {
         List<EntityPlayer> list = Lists.newArrayList(this.players);
 
         for (EntityPlayer entityplayer : list) {
-            s.add(entityplayer.getName() + (flag ? " (" + entityplayer.getUniqueID().toString() + ")" : "")):
+            s.add(entityplayer.getName() + (flag ? " (" + entityplayer.getUniqueID().toString() + ")" : ""));
         }
 
         return s.toString();
