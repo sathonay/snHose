@@ -2181,11 +2181,7 @@ public abstract class World implements IBlockAccess {
                 int i = this.worldData.getThunderDuration();
 
                 if (i <= 0) {
-                    if (this.worldData.isThundering()) {
-                        this.worldData.setThunderDuration(this.random.nextInt(12000) + 3600);
-                    } else {
-                        this.worldData.setThunderDuration(this.random.nextInt(168000) + 12000);
-                    }
+                    this.worldData.setThunderDuration((this.worldData.isThundering() ? this.random.nextInt(12000) + 3600 : this.random.nextInt(168000) + 12000));
                 } else {
                     --i;
                     this.worldData.setThunderDuration(i);
@@ -2207,11 +2203,7 @@ public abstract class World implements IBlockAccess {
                 int j = this.worldData.getWeatherDuration();
 
                 if (j <= 0) {
-                    if (this.worldData.hasStorm()) {
-                        this.worldData.setWeatherDuration(this.random.nextInt(12000) + 12000);
-                    } else {
-                        this.worldData.setWeatherDuration(this.random.nextInt(168000) + 12000);
-                    }
+                    this.worldData.setWeatherDuration((this.worldData.hasStorm() ? this.random.nextInt(12000) : this.random.nextInt(168000)) + 12000);
                 } else {
                     --j;
                     this.worldData.setWeatherDuration(j);
@@ -2731,14 +2723,12 @@ public abstract class World implements IBlockAccess {
         // this.entityList.addAll(list);
         Entity entity = null;
 
-        for (int i = 0; i < list.size(); ++i) {
-            entity = (Entity) list.get(i);
-            if (entity == null) {
-                continue;
-            }
+        for (Entity entities : (List<Entity>) list) {
+            entity = (Entity) entities;
+            if (entity == null) continue;
             this.entityList.add(entity);
             // CraftBukkit end
-            this.a((Entity) list.get(i));
+            this.a(entities);
         }
     }
 
@@ -2901,8 +2891,9 @@ public abstract class World implements IBlockAccess {
             if (entityhuman1 == null || !entityhuman1.isAlive()) continue;
             // CraftBukkit end
 
+            double d5 = entityhuman1.d(d0, entityhuman1.locY, d2);
+            if (d3 < 0.0D || d5 < d3 * d3)
             if (!entityhuman1.abilities.isInvulnerable && entityhuman1.isAlive()) {
-                double d5 = entityhuman1.e(d0, entityhuman1.locY, d2);
                 double d6 = d3;
 
                 if (entityhuman1.isSneaking()) {
