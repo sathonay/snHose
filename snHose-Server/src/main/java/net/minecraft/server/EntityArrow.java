@@ -428,7 +428,7 @@ public class EntityArrow extends Entity implements IProjectile {
             }
 
             if (flag) {
-                this.world.makeSound(this.shooter, "random.pop", 0.2F, ((this.random.nextFloat() - this.random.nextFloat()) * 0.7F + 1.0F) * 2.0F);
+                this.world.makeSound(entityhuman, "random.pop", 0.2F, ((this.random.nextFloat() - this.random.nextFloat()) * 0.7F + 1.0F) * 2.0F);
                 entityhuman.receive(this, 1);
                 this.die();
             }
