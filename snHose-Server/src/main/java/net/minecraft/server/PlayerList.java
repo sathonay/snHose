@@ -1223,9 +1223,9 @@ public abstract class PlayerList {
         while (iterator.hasNext()) {
             EntityPlayer entityplayer = iterator.next();
             if (entityplayer == null) continue;
-            entityplayer.playerConnection.disconnect(this.server.getShutdownMessage());
-            iterator.remove();
+            entityplayer.playerConnection.disconnect(this.server.server.getShutdownMessage());
         }
+        this.players.clear();
     }
 
     // CraftBukkit start - Support multi-line messages
