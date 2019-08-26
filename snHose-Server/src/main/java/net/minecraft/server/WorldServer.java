@@ -31,7 +31,7 @@ public class WorldServer extends World {
     private final MinecraftServer server;
     public EntityTracker tracker; // CraftBukkit - private final -> public
     private final PlayerChunkMap manager;
-    private HashTreeSet<NextTickListEntry> N; // PaperSpigot
+    private TreeSet<NextTickListEntry> N; // PaperSpigot
     public ChunkProviderServer chunkProviderServer;
     public boolean savingDisabled;
     private boolean O;
@@ -612,7 +612,7 @@ public class WorldServer extends World {
     }
 
     public List a(Chunk chunk, boolean flag) {
-        ArrayList arraylist = null;
+        List arraylist = null;
         ChunkCoordIntPair chunkcoordintpair = chunk.l();
         int i = (chunkcoordintpair.x << 4) - 2;
         int j = i + 16 + 2;
@@ -688,7 +688,7 @@ public class WorldServer extends World {
     }
 
     public List getTileEntities(int i, int j, int k, int l, int i1, int j1) {
-        ArrayList arraylist = new ArrayList();
+        List arraylist = new ArrayList();
 
         // CraftBukkit start - Get tile entities from chunks instead of world
         for (int chunkX = (i >> 4); chunkX <= ((l - 1) >> 4); chunkX++) {
@@ -1000,9 +1000,9 @@ public class WorldServer extends World {
         // */
         if (flag != this.Q()) {
             // Only send weather packets to those affected
-            for (int i = 0; i < this.players.size(); ++i) {
-                if (((EntityPlayer) this.players.get(i)).world == this) {
-                    ((EntityPlayer) this.players.get(i)).setPlayerWeather((!flag ? WeatherType.DOWNFALL : WeatherType.CLEAR), false);
+            for (EntityPlayer entityPlayers : this.players) {
+                if (entityPlayers.world == this) {
+                    entityPlayers.setPlayerWeather((!flag ? WeatherType.DOWNFALL : WeatherType.CLEAR), false);
                 }
             }
             // CraftBukkit end
@@ -1032,8 +1032,7 @@ public class WorldServer extends World {
     public void a(String s, double d0, double d1, double d2, int i, double d3, double d4, double d5, double d6) {
         PacketPlayOutWorldParticles packetplayoutworldparticles = new PacketPlayOutWorldParticles(s, (float) d0, (float) d1, (float) d2, (float) d3, (float) d4, (float) d5, (float) d6, i);
 
-        for (int j = 0; j < this.players.size(); ++j) {
-            EntityPlayer entityplayer = (EntityPlayer) this.players.get(j);
+        for (EntityPlayer entityplayer : this.players) {
             ChunkCoordinates chunkcoordinates = entityplayer.getChunkCoordinates();
             double d7 = d0 - (double) chunkcoordinates.x;
             double d8 = d1 - (double) chunkcoordinates.y;
