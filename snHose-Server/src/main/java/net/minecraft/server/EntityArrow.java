@@ -280,7 +280,7 @@ public class EntityArrow extends Entity implements IProjectile {
                                 ((EntityPlayer) this.shooter).playerConnection.sendPacket(new PacketPlayOutGameStateChange(6, 0.0F));
                             }
                         }
-                        this.world.makeSound(this.shooter, "random.bowhit", 1.0f, 1.2f / (this.random.nextFloat() * 0.2f + 0.9f));
+                        this.world.makeSound(this.shooter, this, "random.bowhit", 1.0f, 1.2f / (this.random.nextFloat() * 0.2f + 0.9f));
                         if (!(movingobjectposition.entity instanceof EntityEnderman)) {
                             this.die();
                         }
@@ -305,7 +305,7 @@ public class EntityArrow extends Entity implements IProjectile {
                     this.locX -= this.motX / (double) f2 * 0.05000000074505806D;
                     this.locY -= this.motY / (double) f2 * 0.05000000074505806D;
                     this.locZ -= this.motZ / (double) f2 * 0.05000000074505806D;
-                    this.world.makeSound(this.shooter, "random.bowhit", 1.0f, 1.2f / (this.random.nextFloat() * 0.2f + 0.9f));
+                    this.world.makeSound(this.shooter, this, "random.bowhit", 1.0f, 1.2f / (this.random.nextFloat() * 0.2f + 0.9f));
                     this.inGround = true;
                     this.shake = 7;
                     this.setCritical(false);
@@ -428,7 +428,7 @@ public class EntityArrow extends Entity implements IProjectile {
             }
 
             if (flag) {
-                this.world.makeSound(entityhuman, "random.pop", 0.2F, ((this.random.nextFloat() - this.random.nextFloat()) * 0.7F + 1.0F) * 2.0F);
+                this.world.makeSound(entityhuman, this, "random.pop", 0.2F, ((this.random.nextFloat() - this.random.nextFloat()) * 0.7F + 1.0F) * 2.0F);
                 entityhuman.receive(this, 1);
                 this.die();
             }
