@@ -236,9 +236,7 @@ public class PlayerConnection implements PacketPlayInListener {
                 if (deltaAngle > 10.0F) {
                     this.lastYaw = to.getYaw();
                     this.lastPitch = to.getPitch();
-                    // TODO: PlayerHeadRotationEvent
                 }
-
                 if (delta > 0.00390625D) {
                     this.lastPosX = to.getX();
                     this.lastPosY = to.getY();
@@ -1406,19 +1404,11 @@ public class PlayerConnection implements PacketPlayInListener {
                     if (packetplayinwindowclick.e() == 0) {
                         click = ClickType.DROP;
                         Slot slot = this.player.activeContainer.getSlot(packetplayinwindowclick.d());
-                        if (slot != null && slot.hasItem() && slot.isAllowed(player) && slot.getItem() != null && slot.getItem().getItem() != Item.getItemOf(Blocks.AIR)) {
-                            action = InventoryAction.DROP_ONE_SLOT;
-                        } else {
-                            action = InventoryAction.NOTHING;
-                        }
+                        action = (slot != null && slot.hasItem() && slot.isAllowed(player) && slot.getItem() != null && slot.getItem().getItem() != Item.getItemOf(Blocks.AIR) ? InventoryAction.DROP_ONE_SLOT : InventoryAction.NOTHING);
                     } else if (packetplayinwindowclick.e() == 1) {
                         click = ClickType.CONTROL_DROP;
                         Slot slot = this.player.activeContainer.getSlot(packetplayinwindowclick.d());
-                        if (slot != null && slot.hasItem() && slot.isAllowed(player) && slot.getItem() != null && slot.getItem().getItem() != Item.getItemOf(Blocks.AIR)) {
-                            action = InventoryAction.DROP_ALL_SLOT;
-                        } else {
-                            action = InventoryAction.NOTHING;
-                        }
+                        action = (slot != null && slot.hasItem() && slot.isAllowed(player) && slot.getItem() != null && slot.getItem().getItem() != Item.getItemOf(Blocks.AIR) ? InventoryAction.DROP_ALL_SLOT : InventoryAction.NOTHING);
                     }
                 } else {
                     // Sane default (because this happens when they are holding nothing. Don't ask why.)
