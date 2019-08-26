@@ -1048,7 +1048,7 @@ public abstract class World implements IBlockAccess {
         }
     }
     
-    public void makeSound(EntityHuman human, Entity entity, float f, float f1) {
+    public void makeSound(EntityHuman human, Entity entity, String s, float f, float f1) {
         for (int i = 0; i < this.u.size(); ++i) {
             ((IWorldAccess) this.u.get(i)).a(human, s, entity.locX, entity.locY, entity.locZ, f, f1);
         }
