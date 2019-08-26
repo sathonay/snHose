@@ -450,39 +450,44 @@ public abstract class MinecraftServer implements ICommandListener, Runnable, IMo
     public static class RollingAverage {
         private final int size;
         private long time;
-        private double total;
+        private java.math.BigDecimal total;
         private int index = 0;
-        private final double[] samples;
+        private final java.math.BigDecimal[] samples;
         private final long[] times;
 
         RollingAverage(int size) {
             this.size = size;
             this.time = size * SEC_IN_NANO;
-            this.total = TPS * SEC_IN_NANO * size;
-            this.samples = new double[size];
+            this.total = dec(TPS).multiply(dec(SEC_IN_NANO)).multiply(dec(size));
+            this.samples = new java.math.BigDecimal[size];
             this.times = new long[size];
             for (int i = 0; i < size; i++) {
-                this.samples[i] = TPS;
+                this.samples[i] = dec(TPS);
                 this.times[i] = SEC_IN_NANO;
             }
         }
 
-        public void add(double x, long t) {
+        private static java.math.BigDecimal dec(long t) {
+            return new java.math.BigDecimal(t);
+        }
+        
+        public void add(java.math.BigDecimal x, long t) {
             time -= times[index];
-            total -= samples[index]*times[index];
+            total = total.subtract(samples[index].multiply(dec(times[index])));
             samples[index] = x;
             times[index] = t;
             time += t;
-            total += x*t;
+            total = total.add(x.multiply(dec(t)));
             if (++index == size) {
                 index = 0;
             }
         }
 
         public double getAverage() {
-            return total / time;
+            return total.divide(dec(time), 30, java.math.RoundingMode.HALF_UP).doubleValue();
         }
     }
+    private static final java.math.BigDecimal TPS_BASE = new java.math.BigDecimal(1E9).multiply(new java.math.BigDecimal(SAMPLE_INTERVAL));
     // PaperSpigot End
  
     public void run() {
@@ -508,7 +513,7 @@ public abstract class MinecraftServer implements ICommandListener, Runnable, IMo
                     if (wait > 0) {
                         if (catchupTime < 2E6) {
                             wait += Math.abs(catchupTime);
-                        }else if (wait < catchupTime) {
+                        } else if (wait < catchupTime) {
                             catchupTime -= wait;
                             wait = 0;
                         } else {
@@ -529,7 +534,7 @@ public abstract class MinecraftServer implements ICommandListener, Runnable, IMo
                     {
                         // PaperSpigot start - Further improve tick loop
                         final long diff = curTime - tickSection;
-                        double currentTps = 1E9 / diff * SAMPLE_INTERVAL;
+                        java.math.BigDecimal currentTps = TPS_BASE.divide(new java.math.BigDecimal(diff), 30, java.math.RoundingMode.HALF_UP);
                         tps1.add(currentTps, diff);
                         tps5.add(currentTps, diff);
                         tps15.add(currentTps, diff);
