@@ -5,6 +5,7 @@ import java.net.SocketAddress;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Map.Entry;
+import java.util.StringJoiner;
 
 import net.minecraft.util.com.google.common.base.Charsets;
 import net.minecraft.util.com.google.common.collect.Lists;
@@ -857,15 +858,15 @@ public abstract class PlayerList {
                 EntityPlayer player = (EntityPlayer) this.players.get( currentPing );
                 if ( player.lastPing == -1 || Math.abs( player.ping - player.lastPing ) > 20 ) {
                     Packet packet = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.PlayerInfo.UPDATE_LATENCY, player); // Spigot - protocol patch
-                    this.players.parallelStream().forEach(splayer -> {
-                        if (splayer.getBukkitEntity().canSee( player.getBukkitEntity() ) ) {
-                            splayer.playerConnection.sendPacket( packet );
+                    this.players.stream().forEach(splayer -> {
+                        if (splayer.getBukkitEntity().canSee(player.getBukkitEntity())) {
+                            splayer.playerConnection.sendPacket(packet);
                         }
                     });
                     player.lastPing = player.ping;
                 }
             }
-        } catch ( Exception e ) {
+        } catch (Exception e) {
             // Better safe than sorry :)
         }
         // Spigot end
@@ -886,21 +887,14 @@ public abstract class PlayerList {
     }
 
     public String b(boolean flag) {
-        String s = "";
-        ArrayList arraylist = Lists.newArrayList(this.players);
+        StringJoiner s = new StringJoiner(", ");
+        List<EntityPlayer> list = Lists.newArrayList(this.players);
 
-        for (int i = 0; i < arraylist.size(); ++i) {
-            if (i > 0) {
-                s = s + ", ";
-            }
-
-            s = s + ((EntityPlayer) arraylist.get(i)).getName();
-            if (flag) {
-                s = s + " (" + ((EntityPlayer) arraylist.get(i)).getUniqueID().toString() + ")";
-            }
+        for (EntityPlayer entityplayer : list) {
+            s.add(entityplayer.getName() + (flag ? " (" + entityplayer.getUniqueID().toString() + ")" : "")):
         }
 
-        return s;
+        return s.toString();
     }
 
     public String[] f() {
