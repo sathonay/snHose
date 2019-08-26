@@ -2891,7 +2891,7 @@ public abstract class World implements IBlockAccess {
             if (entityhuman1 == null || !entityhuman1.isAlive()) continue;
             // CraftBukkit end
 
-            double d5 = entityhuman1.d(d0, entityhuman1.locY, d2);
+            double d5 = entityhuman1.e(d0, entityhuman1.locY, d2);
             if (d3 < 0.0D || d5 < d3 * d3)
             if (!entityhuman1.abilities.isInvulnerable && entityhuman1.isAlive()) {
                 double d6 = d3;
