@@ -27,6 +27,12 @@ public class WorldManager implements IWorldAccess {
         this.server.getPlayerList().sendPacketNearby(d0, d1, d2, f > 1.0F ? (double) (16.0F * f) : 16.0D, this.world, new PacketPlayOutNamedSoundEffect(s, d0, d1, d2, f, f1));
     }
 
+    public void a(Entity entity, String s, double d0, double d1, double d2, float f, float f1) {
+        // CraftBukkit - this.world.dimension
+        final boolean self = (s.equals("random.drink") || s.contains("step") || s.contains("player") || s.equals("random.eat"));
+        this.server.getPlayerList().sendPacketNearby(entity, d0, d1, d2, f > 1.0F ? (double) (16.0F * f) : 16.0D, this.world, new PacketPlayOutNamedSoundEffect(s, d0, d1, d2, f, f1), !self);
+    }
+
     public void a(EntityHuman entityhuman, String s, double d0, double d1, double d2, float f, float f1) {
         // CraftBukkit - this.world.dimension
         final boolean self = (s.equals("random.drink") || s.contains("step") || s.contains("player") || s.equals("random.eat"));
