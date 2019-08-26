@@ -61,7 +61,7 @@ public class WorldServer extends World {
         }
 
         if (this.N == null) {
-            this.N = new HashTreeSet<NextTickListEntry>(); // PaperSpigot
+            this.N = new TreeSet<>(); // PaperSpigot
         }
 
         this.Q = new org.bukkit.craftbukkit.CraftTravelAgent(this); // CraftBukkit
@@ -721,7 +721,7 @@ public class WorldServer extends World {
         }
 
         if (this.N == null) {
-            this.N = new HashTreeSet<NextTickListEntry>(); // PaperSpigot
+            this.N = new TreeSet<>(); // PaperSpigot
         }
 
         this.b(worldsettings);
