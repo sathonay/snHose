@@ -944,10 +944,7 @@ public abstract class EntityLiving extends Entity {
             if (f <= 0.0F) {
                 return 0.0F;
             } else {
-                i = EnchantmentManager.a(this.getEquipment(), damagesource);
-                if (i > 20) {
-                    i = 20;
-                }
+                i = Math.min(EnchantmentManager.a(this.getEquipment(), damagesource), 20);
 
                 if (i > 0) {
                     j = 25 - i;
@@ -1254,26 +1251,12 @@ public abstract class EntityLiving extends Entity {
                 this.motY = 0.30000001192092896D;
             }
         } else {
-            float f2 = 0.91F;
-
-            if (this.onGround) {
-                f2 = this.world.getType(MathHelper.floor(this.locX), MathHelper.floor(this.boundingBox.b) - 1, MathHelper.floor(this.locZ)).frictionFactor * 0.91F;
-            }
-
+            float f2 = (!this.onGround ? 0.91F : this.world.getType(MathHelper.floor(this.locX), MathHelper.floor(this.boundingBox.b) - 1, MathHelper.floor(this.locZ)).frictionFactor * 0.91F);
             float f3 = 0.16277136F / (f2 * f2 * f2);
-            float f4;
-
-            if (this.onGround) {
-                f4 = this.bl() * f3;
-            } else {
-                f4 = this.aQ;
-            }
+            float f4 = (this.onGround ? this.bl() * f3 : this.aQ);
 
             this.a(f, f1, f4);
-            f2 = 0.91F;
-            if (this.onGround) {
-                f2 = this.world.getType(MathHelper.floor(this.locX), MathHelper.floor(this.boundingBox.b) - 1, MathHelper.floor(this.locZ)).frictionFactor * 0.91F;
-            }
+            f2 = (!this.onGround ? 0.91F : this.world.getType(MathHelper.floor(this.locX), MathHelper.floor(this.boundingBox.b) - 1, MathHelper.floor(this.locZ)).frictionFactor * 0.91F);
 
             if (this.h_()) {
                 float f5 = 0.15F;
@@ -1329,11 +1312,7 @@ public abstract class EntityLiving extends Entity {
         this.aE = this.aF;
         d0 = this.locX - this.lastX;
         double d1 = this.locZ - this.lastZ;
-        float f6 = MathHelper.sqrt(d0 * d0 + d1 * d1) * 4.0F;
-
-        if (f6 > 1.0F) {
-            f6 = 1.0F;
-        }
+        float f6 = Math.min(MathHelper.sqrt(d0 * d0 + d1 * d1) * 4.0F, 1.0F);
 
         this.aF += (f6 - this.aF) * 0.4F;
         this.aG += this.aF;
@@ -1714,11 +1693,7 @@ public abstract class EntityLiving extends Entity {
     }
 
     public void setAbsorptionHearts(float f) {
-        if (f < 0.0F) {
-            f = 0.0F;
-        }
-
-        this.br = f;
+        this.br = Math.max(f, 0.0F);
     }
 
     public ScoreboardTeamBase getScoreboardTeam() {
