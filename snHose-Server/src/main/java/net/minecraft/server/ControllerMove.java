@@ -1,5 +1,7 @@
 package net.minecraft.server;
 
+import net.minecraft.server.MathHelper;
+
 public class ControllerMove {
 
     private EntityInsentient a;
@@ -56,16 +58,7 @@ public class ControllerMove {
     }
 
     private float a(float f, float f1, float f2) {
-        float f3 = MathHelper.g(f1 - f);
-
-        if (f3 > f2) {
-            f3 = f2;
-        }
-
-        if (f3 < -f2) {
-            f3 = -f2;
-        }
-
+        float f3 = MathHelper.limit(MathHelper.g(f1 - f), -f2, f2);
         return f + f3;
     }
 }
