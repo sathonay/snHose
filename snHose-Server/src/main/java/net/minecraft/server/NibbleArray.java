@@ -1,7 +1,6 @@
 package net.minecraft.server;
 
 public class NibbleArray {
-
     public final byte[] a;
     private final int b;
     private final int c;
@@ -22,7 +21,6 @@ public class NibbleArray {
         int l = j << this.c | k << this.b | i;
         int i1 = l >> 1;
         int j1 = l & 1;
-
         return j1 == 0 ? this.a[i1] & 15 : this.a[i1] >> 4 & 15;
     }
 
@@ -30,11 +28,6 @@ public class NibbleArray {
         int i1 = j << this.c | k << this.b | i;
         int j1 = i1 >> 1;
         int k1 = i1 & 1;
-
-        if (k1 == 0) {
-            this.a[j1] = (byte) (this.a[j1] & 240 | l & 15);
-        } else {
-            this.a[j1] = (byte) (this.a[j1] & 15 | (l & 15) << 4);
-        }
+        this.a[j1] = (byte) (k1 == 0 ? (this.a[j1] & 240 | l & 15) : (this.a[j1] & 15 | (l & 15) << 4));
     }
 }
