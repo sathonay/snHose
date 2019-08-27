@@ -3,6 +3,7 @@ package net.minecraft.server;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.List;
 
 import org.bukkit.craftbukkit.event.CraftEventFactory; // CraftBukkit
@@ -190,7 +191,7 @@ public class CraftingManager {
             }
         }
 
-        HashMap hashmap;
+        Map hashmap;
 
         for (hashmap = new HashMap(); i < aobject.length; i += 2) {
             Character character = (Character) aobject[i];
@@ -211,12 +212,7 @@ public class CraftingManager {
 
         for (int i1 = 0; i1 < j * k; ++i1) {
             char c0 = s.charAt(i1);
-
-            if (hashmap.containsKey(Character.valueOf(c0))) {
-                aitemstack[i1] = ((ItemStack) hashmap.get(Character.valueOf(c0))).cloneItemStack();
-            } else {
-                aitemstack[i1] = null;
-            }
+            aitemstack[i1] = (hashmap.containsKey(Character.valueOf(c0)) ? ((ItemStack) hashmap.get(Character.valueOf(c0))).cloneItemStack() : null);
         }
 
         ShapedRecipes shapedrecipes = new ShapedRecipes(j, k, aitemstack, itemstack);
@@ -227,7 +223,7 @@ public class CraftingManager {
 
     // CraftBukkit - default -> public
     public void registerShapelessRecipe(ItemStack itemstack, Object... aobject) {
-        ArrayList arraylist = new ArrayList();
+        List arraylist = new ArrayList();
         Object[] aobject1 = aobject;
         int i = aobject.length;
 
@@ -278,11 +274,7 @@ public class CraftingManager {
             int k = item.getMaxDurability() - itemstack.j();
             int l = item.getMaxDurability() - itemstack1.j();
             int i1 = k + l + item.getMaxDurability() * 5 / 100;
-            int j1 = item.getMaxDurability() - i1;
-
-            if (j1 < 0) {
-                j1 = 0;
-            }
+            int j1 = Math.max(item.getMaxDurability() - i1, 0);
 
             // CraftBukkit start - Construct a dummy repair recipe
             ItemStack result = new ItemStack(itemstack.getItem(), 1, j1);
