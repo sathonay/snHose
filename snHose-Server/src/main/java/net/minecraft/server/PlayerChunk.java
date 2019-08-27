@@ -10,7 +10,7 @@ import java.util.HashMap;
 
 class PlayerChunk {
 
-    private final List b;
+    private final List<EntityPlayer> b;
     private final ChunkCoordIntPair location;
     private short[] dirtyBlocks;
     private int dirtyCount;
@@ -135,9 +135,7 @@ class PlayerChunk {
     }
 
     public void sendAll(Packet packet) {
-        for (int i = 0; i < this.b.size(); ++i) {
-            EntityPlayer entityplayer = (EntityPlayer) this.b.get(i);
-
+        for (EntityPlayer entityplayer : this.b) {
             if (!entityplayer.chunkCoordIntPairQueue.contains(this.location)) {
                 entityplayer.playerConnection.sendPacket(packet);
             }
@@ -168,13 +166,9 @@ class PlayerChunk {
                     //this.sendAll(new PacketPlayOutMapChunk(PlayerChunkMap.a(this.playerChunkMap).getChunkAt(this.location.x, this.location.z), (this.f == 0xFFFF), this.f)); // CraftBukkit - send everything (including biome) if all sections flagged
 
                     Chunk chunk = PlayerChunkMap.a( this.playerChunkMap ).getChunkAt( this.location.x, this.location.z );
-                    for (int idx = 0; idx < this.b.size(); ++idx) {
-                        EntityPlayer entityplayer = (EntityPlayer) this.b.get(idx);
-
+                    for (EntityPlayer entityplayer : this.b) {
                         if (!entityplayer.chunkCoordIntPairQueue.contains(this.location)) {
-                            entityplayer.playerConnection.sendPacket(
-                                    new PacketPlayOutMapChunk( chunk, (this.f == 0xFFFF), this.f, entityplayer.playerConnection.networkManager.getVersion())
-                            );
+                            entityplayer.playerConnection.sendPacket(new PacketPlayOutMapChunk(chunk, (this.f == 0xFFFF), this.f, entityplayer.playerConnection.networkManager.getVersion()));
                         }
                     }
 
