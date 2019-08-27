@@ -283,7 +283,7 @@ public class EntityArrow extends Entity implements IProjectile {
                         if (shooter instanceof EntityHuman) {
                             this.world.makeSound((EntityHuman) this.shooter, this, "random.bowhit", 1.0f, 1.2f / (this.random.nextFloat() * 0.2f + 0.9f));
                         } else {
-                            this.world.makeSound(this.shooter, "random.bowhit", 1.0f, 1.2f / (this.random.nextFloat() * 0.2f + 0.9f));
+                            this.makeSound("random.bowhit", 1.0f, 1.2f / (this.random.nextFloat() * 0.2f + 0.9f));
                         }
                         if (!(movingobjectposition.entity instanceof EntityEnderman)) {
                             this.die();
@@ -312,7 +312,7 @@ public class EntityArrow extends Entity implements IProjectile {
                     if (shooter instanceof EntityHuman) {
                         this.world.makeSound((EntityHuman) this.shooter, this, "random.bowhit", 1.0f, 1.2f / (this.random.nextFloat() * 0.2f + 0.9f));
                     } else {
-                        this.world.makeSound(this.shooter, "random.bowhit", 1.0f, 1.2f / (this.random.nextFloat() * 0.2f + 0.9f));
+                        this.makeSound("random.bowhit", 1.0f, 1.2f / (this.random.nextFloat() * 0.2f + 0.9f));
                     }
                     this.inGround = true;
                     this.shake = 7;
