@@ -223,13 +223,7 @@ public class CraftWorld implements World {
 
         world.chunkProviderServer.unloadQueue.remove(x, z);
 
-        net.minecraft.server.Chunk chunk = null;
-
-        if (world.chunkProviderServer.chunkProvider == null) {
-            chunk = world.chunkProviderServer.emptyChunk;
-        } else {
-            chunk = world.chunkProviderServer.chunkProvider.getOrCreateChunk(x, z);
-        }
+        net.minecraft.server.Chunk chunk = (world.chunkProviderServer.chunkProvider == null ? world.chunkProviderServer.emptyChunk : world.chunkProviderServer.chunkProvider.getOrCreateChunk(x, z));
 
         chunkLoadPostProcess(chunk, x, z);
 
