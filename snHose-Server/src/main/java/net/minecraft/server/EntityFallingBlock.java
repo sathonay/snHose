@@ -1,6 +1,7 @@
 package net.minecraft.server;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Iterator;
 
 import org.bukkit.craftbukkit.event.CraftEventFactory; // CraftBukkit
@@ -176,7 +177,7 @@ public class EntityFallingBlock extends Entity {
             int i = MathHelper.f(f - 1.0F);
 
             if (i > 0) {
-                ArrayList arraylist = new ArrayList(this.world.getEntities(this, this.boundingBox));
+                List arraylist = new ArrayList(this.world.getEntities(this, this.boundingBox));
                 boolean flag = this.id == Blocks.ANVIL;
                 DamageSource damagesource = flag ? DamageSource.ANVIL : DamageSource.FALLING_BLOCK;
                 Iterator iterator = arraylist.iterator();
@@ -226,12 +227,7 @@ public class EntityFallingBlock extends Entity {
     }
 
     protected void a(NBTTagCompound nbttagcompound) {
-        if (nbttagcompound.hasKeyOfType("TileID", 99)) {
-            this.id = Block.getById(nbttagcompound.getInt("TileID"));
-        } else {
-            this.id = Block.getById(nbttagcompound.getByte("Tile") & 255);
-        }
-
+        this.id = (nbttagcompound.hasKeyOfType("TileID", 99) ? Block.getById(nbttagcompound.getInt("TileID")) : Block.getById(nbttagcompound.getByte("Tile") & 255));
         this.data = nbttagcompound.getByte("Data") & 255;
         this.ticksLived = nbttagcompound.getByte("Time") & 255;
         if (nbttagcompound.hasKeyOfType("HurtEntities", 99)) {
