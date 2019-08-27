@@ -1,7 +1,5 @@
 package net.minecraft.server;
 
-import net.minecraft.server.MathHelper;
-
 public class ControllerMove {
 
     private EntityInsentient a;
