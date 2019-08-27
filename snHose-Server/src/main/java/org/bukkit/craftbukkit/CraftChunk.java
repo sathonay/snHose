@@ -302,15 +302,9 @@ public class CraftChunk implements Chunk {
         float[] temps = new float[biomes.length];
 
         for (int i = 0; i < biomes.length; i++) {
-            float temp = biomes[i].temperature; // Vanilla of olde: ((int) biomes[i].temperature * 65536.0F) / 65536.0F
-
-            if (temp > 1F) {
-                temp = 1F;
-            }
-
+            float temp = Math.min(biomes[i].temperature, 1F); // Vanilla of olde: ((int) biomes[i].temperature * 65536.0F) / 65536.0F
             temps[i] = temp;
         }
-
         return temps;
     }
 
