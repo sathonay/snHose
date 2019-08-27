@@ -84,7 +84,7 @@ public abstract class World implements IBlockAccess {
     public EnumDifficulty difficulty;
     public Random random = new Random();
     public WorldProvider worldProvider; // CraftBukkit - remove final
-    protected List u = new ArrayList();
+    protected List<IWorldAccess> u = new ArrayList<>();
     public IChunkProvider chunkProvider; // CraftBukkit - public
     protected final IDataManager dataManager;
     public WorldData worldData; // CraftBukkit - public
@@ -960,32 +960,17 @@ public abstract class World implements IBlockAccess {
                     byte b0;
 
                     if (d3 < d4 && d3 < d5) {
-                        if (i > l) {
-                            b0 = 4;
-                        } else {
-                            b0 = 5;
-                        }
-
+                        b0 = (i > l ? 4 : 5);
                         vec3d.a = d0;
                         vec3d.b += d7 * d3;
                         vec3d.c += d8 * d3;
                     } else if (d4 < d5) {
-                        if (j > i1) {
-                            b0 = 0;
-                        } else {
-                            b0 = 1;
-                        }
-
+                        b0 = (j > i1 ? 0 : 1);
                         vec3d.a += d6 * d4;
                         vec3d.b = d1;
                         vec3d.c += d8 * d4;
                     } else {
-                        if (k > j1) {
-                            b0 = 2;
-                        } else {
-                            b0 = 3;
-                        }
-
+                        b0 = (k > j1 ? 2 : 3);
                         vec3d.a += d6 * d5;
                         vec3d.b += d7 * d5;
                         vec3d.c = d2;
@@ -1038,51 +1023,51 @@ public abstract class World implements IBlockAccess {
 
     public void makeSound(Entity entity, String s, float f, float f1) {
         if (entity instanceof EntityHuman) {
-            for (int i = 0; i < this.u.size(); ++i) {
-                ((IWorldAccess) this.u.get(i)).a((EntityHuman)entity, s, entity.locX, entity.locY, entity.locZ, f, f1);
+            for (IWorldAccess iworld : this.u) {
+                iworld.a((EntityHuman)entity, s, entity.locX, entity.locY, entity.locZ, f, f1);
             }
         } else {
-            for (int i = 0; i < this.u.size(); ++i) {
-                ((IWorldAccess) this.u.get(i)).a(s, entity.locX, entity.locY - entity.height, entity.locZ, f, f1);
+            for (IWorldAccess iworld : this.u) {
+                iworld.a(s, entity.locX, entity.locY - entity.height, entity.locZ, f, f1);
             }
         }
     }
     
     public void makeSound(EntityHuman human, Entity entity, String s, float f, float f1) {
-        for (int i = 0; i < this.u.size(); ++i) {
-            ((IWorldAccess) this.u.get(i)).a(human, s, entity.locX, entity.locY, entity.locZ, f, f1);
+        for (IWorldAccess iworld : this.u) {
+            iworld.a(human, s, entity.locX, entity.locY, entity.locZ, f, f1);
         }
     }
 
     public void a(EntityHuman entityhuman, String s, float f, float f1) {
-        for (int i = 0; i < this.u.size(); ++i) {
-            ((IWorldAccess) this.u.get(i)).a(entityhuman, s, entityhuman.locX, entityhuman.locY - (double) entityhuman.height, entityhuman.locZ, f, f1);
+        for (IWorldAccess iworld : this.u) {
+            iworld.a(entityhuman, s, entityhuman.locX, entityhuman.locY - (double) entityhuman.height, entityhuman.locZ, f, f1);
         }
     }
 
     public void makeSound(EntityHuman entityhuman, double d0, double d1, double d2, String s, float f, float f1) {
-        for (int i = 0; i < this.u.size(); ++i) {
-            ((IWorldAccess) this.u.get(i)).a(entityhuman, s, d0, d1, d2, f, f1);
+        for (IWorldAccess iworld : this.u) {
+            iworld.a(entityhuman, s, d0, d1, d2, f, f1);
         }
     }
 
     public void makeSound(double d0, double d1, double d2, String s, float f, float f1) {
-        for (int i = 0; i < this.u.size(); ++i) {
-            ((IWorldAccess) this.u.get(i)).a(s, d0, d1, d2, f, f1);
+        for (IWorldAccess iworld : this.u) {
+            iworld.a(s, d0, d1, d2, f, f1);
         }
     }
 
     public void a(double d0, double d1, double d2, String s, float f, float f1, boolean flag) {}
 
     public void a(String s, int i, int j, int k) {
-        for (int l = 0; l < this.u.size(); ++l) {
-            ((IWorldAccess) this.u.get(l)).a(s, i, j, k);
+        for (IWorldAccess iworld : this.u) {
+            iworld.a(s, i, j, k);
         }
     }
 
     public void addParticle(String s, double d0, double d1, double d2, double d3, double d4, double d5) {
-        for (int i = 0; i < this.u.size(); ++i) {
-            ((IWorldAccess) this.u.get(i)).a(s, d0, d1, d2, d3, d4, d5);
+        for (IWorldAccess iworld : this.u) {
+            iworld.a(s, d0, d1, d2, d3, d4, d5);
         }
     }
 
@@ -1173,16 +1158,16 @@ public abstract class World implements IBlockAccess {
     }
 
     protected void a(Entity entity) {
-        for (int i = 0; i < this.u.size(); ++i) {
-            ((IWorldAccess) this.u.get(i)).a(entity);
+        for (IWorldAccess iworld : this.u) {
+            iworld.a(entity);
         }
 
         entity.valid = true; // CraftBukkit
     }
 
     protected void b(Entity entity) {
-        for (int i = 0; i < this.u.size(); ++i) {
-            ((IWorldAccess) this.u.get(i)).b(entity);
+        for (IWorldAccess iworld : this.u) {
+            iworld.b(entity);
         }
 
         entity.valid = false; // CraftBukkit
