@@ -253,9 +253,8 @@ public abstract class EntityLiving extends Entity {
 
         if (!this.world.isStatic && (this.lastDamageByPlayerTime > 0 || this.alwaysGivesExp()) && this.aG() && this.world.getGameRules().getBoolean("doMobLoot")) {
             return exp;
-        } else {
-            return 0;
         }
+        return 0;
     }
     // CraftBukkit end
 
@@ -335,12 +334,7 @@ public abstract class EntityLiving extends Entity {
     }
 
     public void l(Entity entity) {
-        if (entity instanceof EntityLiving) {
-            this.bn = (EntityLiving) entity;
-        } else {
-            this.bn = null;
-        }
-
+        this.bn = (entity instanceof EntityLiving ? (EntityLiving) entity : null);
         this.bo = this.ticksLived;
     }
 
@@ -723,10 +717,10 @@ public abstract class EntityLiving extends Entity {
 
                     if (entity != null) {
                         double d0 = entity.locX - this.locX;
+                        double d1 = entity.locZ - this.locZ;
 
-                        double d1;
-
-                        for (d1 = entity.locZ - this.locZ; d0 * d0 + d1 * d1 < 1.0E-4D; d1 = (Math.random() - Math.random()) * 0.01D) {
+                        if (d0 * d0 + d1 * d1 < 1.0E-4D) {
+                            d1 = (Math.random() - Math.random()) * 0.01D;
                             d0 = (Math.random() - Math.random()) * 0.01D;
                         }
 
@@ -829,6 +823,7 @@ public abstract class EntityLiving extends Entity {
                 friction -= knockbackReduction;
                 d2 *= (1.0D - knockbackReduction);
             }
+            
             this.motX /= friction;
             this.motY /= friction;
             this.motZ /= friction;
