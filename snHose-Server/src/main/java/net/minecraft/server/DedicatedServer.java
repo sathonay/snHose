@@ -119,11 +119,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
             this.setMotd(this.propertyManager.getString("motd", "A Minecraft Server"));
             this.setForceGamemode(this.propertyManager.getBoolean("force-gamemode", false));
             this.setIdleTimeout(this.propertyManager.getInt("player-idle-timeout", 0));
-            if (this.propertyManager.getInt("difficulty", 1) < 0) {
-                this.propertyManager.setProperty("difficulty", Integer.valueOf(0));
-            } else if (this.propertyManager.getInt("difficulty", 1) > 3) {
-                this.propertyManager.setProperty("difficulty", Integer.valueOf(3));
-            }
+            this.propertyManager.setProperty("difficulty", Integer.valueOf(MathHelper.limit(this.propertyManager.getInt("difficulty", 1), 0, 3)));
 
             this.generateStructures = this.propertyManager.getBoolean("generate-structures", true);
             int gamemode = this.propertyManager.getInt("gamemode", EnumGamemode.SURVIVAL.getId()); // CraftBukkit - Unique name to avoid stomping on logger
