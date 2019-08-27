@@ -53,6 +53,7 @@ import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.messaging.StandardMessenger;
 import org.bukkit.scoreboard.Scoreboard;
+import org.spigotmc.ValidateUtils;
 
 @DelegateDeserialization(CraftOfflinePlayer.class)
 public class CraftPlayer extends CraftHumanEntity implements Player {
@@ -105,9 +106,8 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         SocketAddress addr = getHandle().playerConnection.networkManager.getSocketAddress();
         if (addr instanceof InetSocketAddress) {
             return (InetSocketAddress) addr;
-        } else {
-            return null;
         }
+        return null;
     }
 
     @Override
@@ -181,13 +181,11 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
             return;
         }
 
-        if (name.length() > 16) {
-            name = name.substring(0, 16);
-        }
+        name = ValidateUtils.limit(name, 16);
 
         // Collisions will make for invisible people
-        for (int i = 0; i < server.getHandle().players.size(); ++i) {
-            if (((EntityPlayer) server.getHandle().players.get(i)).listName.equals(name)) {
+        for (EntityPlayer entityPlayer : server.getHandle().players) {
+            if (entityPlayer.listName.equals(name)) {
                 throw new IllegalArgumentException(name + " is already assigned as a player list name for someone");
             }
         }
@@ -205,16 +203,13 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         for (EntityPlayer entityplayer : server.getHandle().players) {
             if (entityplayer.playerConnection == null) continue;
 
-            if (entityplayer.getBukkitEntity().canSee(this)) {
-                if (entityplayer.playerConnection.networkManager.getVersion() < 28) {
-                    entityplayer.playerConnection.sendPacket(oldpacket);
-                    entityplayer.playerConnection.sendPacket(packet);
-                } else {
-                    entityplayer.playerConnection.sendPacket(newPacket);
-                }
+            if (entityplayer.playerConnection.networkManager.getVersion() < 28) {
+                entityplayer.playerConnection.sendPacket(oldpacket);
+                entityplayer.playerConnection.sendPacket(packet);
+            } else {
+                entityplayer.playerConnection.sendPacket(newPacket);
             }
         }
-
         // Spigot end
     }
 
