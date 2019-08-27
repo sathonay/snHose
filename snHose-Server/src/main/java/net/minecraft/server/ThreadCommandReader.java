@@ -28,11 +28,7 @@ class ThreadCommandReader extends Thread {
         try {
             // CraftBukkit start - JLine disabling compatibility
             while (!this.server.isStopped() && this.server.isRunning()) {
-                if (useJline) {
-                    s = bufferedreader.readLine(">", null);
-                } else {
-                    s = bufferedreader.readLine();
-                }
+                s = (useJline ? bufferedreader.readLine(">", null) : bufferedreader.readLine());
                 if (s != null) {
                     this.server.issueCommand(s, this.server);
                 }
