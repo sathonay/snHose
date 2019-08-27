@@ -960,17 +960,17 @@ public abstract class World implements IBlockAccess {
                     byte b0;
 
                     if (d3 < d4 && d3 < d5) {
-                        b0 = (i > l ? 4 : 5);
+                        b0 = (byte) (i > l ? 4 : 5);
                         vec3d.a = d0;
                         vec3d.b += d7 * d3;
                         vec3d.c += d8 * d3;
                     } else if (d4 < d5) {
-                        b0 = (j > i1 ? 0 : 1);
+                        b0 = (byte) (j > i1 ? 0 : 1);
                         vec3d.a += d6 * d4;
                         vec3d.b = d1;
                         vec3d.c += d8 * d4;
                     } else {
-                        b0 = (k > j1 ? 2 : 3);
+                        b0 = (byte) (k > j1 ? 2 : 3);
                         vec3d.a += d6 * d5;
                         vec3d.b += d7 * d5;
                         vec3d.c = d2;
