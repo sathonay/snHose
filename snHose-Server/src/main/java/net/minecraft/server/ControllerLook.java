@@ -18,12 +18,7 @@ public class ControllerLook {
 
     public void a(Entity entity, float f, float f1) {
         this.e = entity.locX;
-        if (entity instanceof EntityLiving) {
-            this.f = entity.locY + (double) entity.getHeadHeight();
-        } else {
-            this.f = (entity.boundingBox.b + entity.boundingBox.e) / 2.0D;
-        }
-
+        this.f = (entity instanceof EntityLiving ? entity.locY + (double) entity.getHeadHeight() : (entity.boundingBox.b + entity.boundingBox.e) / 2.0D);
         this.g = entity.locZ;
         this.b = f;
         this.c = f1;
@@ -72,16 +67,7 @@ public class ControllerLook {
     }
 
     private float a(float f, float f1, float f2) {
-        float f3 = MathHelper.g(f1 - f);
-
-        if (f3 > f2) {
-            f3 = f2;
-        }
-
-        if (f3 < -f2) {
-            f3 = -f2;
-        }
-
+        float f3 = MathHelper.limit(MathHelper.g(f1 - f), -f2, f2);
         return f + f3;
     }
 }
