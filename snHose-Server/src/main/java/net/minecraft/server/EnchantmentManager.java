@@ -2,6 +2,7 @@ package net.minecraft.server;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -133,11 +134,8 @@ public class EnchantmentManager {
         b.a = 0;
         b.b = damagesource;
         a((EnchantmentModifier) b, aitemstack);
-        if (b.a > 25) {
-            b.a = 25;
-        }
 
-        return (b.a + 1 >> 1) + random.nextInt((b.a >> 1) + 1);
+        return Math.min(b.a, 25);
     }
 
     public static float a(EntityLiving entityliving, EntityLiving entityliving1) {
@@ -285,13 +283,9 @@ public class EnchantmentManager {
             j = 1 + random.nextInt((j >> 1) + 1) + random.nextInt((j >> 1) + 1);
             int k = j + i;
             float f = (random.nextFloat() + random.nextFloat() - 1.0F) * 0.15F;
-            int l = (int) ((float) k * (1.0F + f) + 0.5F);
+            int l = (int) Math.max((float) k * (1.0F + f) + 0.5F), 1);
 
-            if (l < 1) {
-                l = 1;
-            }
-
-            ArrayList arraylist = null;
+            List arraylist = null;
             Map map = b(l, itemstack);
 
             if (map != null && !map.isEmpty()) {
@@ -342,7 +336,7 @@ public class EnchantmentManager {
 
     public static Map b(int i, ItemStack itemstack) {
         Item item = itemstack.getItem();
-        HashMap hashmap = null;
+        Map hashmap = null;
         boolean flag = itemstack.getItem() == Items.BOOK;
         Enchantment[] aenchantment = Enchantment.byId;
         int j = aenchantment.length;
