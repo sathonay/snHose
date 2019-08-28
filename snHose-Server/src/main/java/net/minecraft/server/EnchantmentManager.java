@@ -283,7 +283,7 @@ public class EnchantmentManager {
             j = 1 + random.nextInt((j >> 1) + 1) + random.nextInt((j >> 1) + 1);
             int k = j + i;
             float f = (random.nextFloat() + random.nextFloat() - 1.0F) * 0.15F;
-            int l = (int) Math.max((float) k * (1.0F + f) + 0.5F), 1);
+            int l = (int) Math.max(( k * (1.0F + f) + 0.5F), 1);
 
             List arraylist = null;
             Map map = b(l, itemstack);
