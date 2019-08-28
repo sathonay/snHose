@@ -90,7 +90,7 @@ public abstract class Command {
 
         Player senderPlayer = sender instanceof Player ? (Player) sender : null;
 
-        ArrayList<String> matchedPlayers = new ArrayList<String>();
+        List<String> matchedPlayers = new ArrayList<String>();
         for (Player player : sender.getServer().getOnlinePlayers()) {
             String name = player.getName();
             if ((senderPlayer == null || senderPlayer.canSee(player)) && StringUtil.startsWithIgnoreCase(name, lastWord)) {
@@ -380,7 +380,7 @@ public abstract class Command {
         }
 
         for (Permissible user : users) {
-            if (user instanceof CommandSender) {
+            if (user instanceof CommandSender && user.hasPermission(Server.BROADCAST_CHANNEL_ADMINISTRATIVE)) {
                 CommandSender target = (CommandSender) user;
 
                 if (target instanceof ConsoleCommandSender) {
