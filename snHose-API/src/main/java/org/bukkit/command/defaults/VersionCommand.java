@@ -3,6 +3,7 @@ package org.bukkit.command.defaults;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.StringJoiner;
 
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
@@ -31,14 +32,10 @@ public class VersionCommand extends BukkitCommand {
         if (args.length == 0) {
             sender.sendMessage("This server is running " + Bukkit.getName() + " version " + Bukkit.getVersion() + " (Implementing API version " + Bukkit.getBukkitVersion() + ")");
         } else {
-            StringBuilder name = new StringBuilder();
+            StringJoiner name = new StringJoiner(" ");
 
             for (String arg : args) {
-                if (name.length() > 0) {
-                    name.append(' ');
-                }
-
-                name.append(arg);
+                name.add(arg);
             }
 
             String pluginName = name.toString();
@@ -78,11 +75,7 @@ public class VersionCommand extends BukkitCommand {
         }
 
         if (!desc.getAuthors().isEmpty()) {
-            if (desc.getAuthors().size() == 1) {
-                sender.sendMessage("Author: " + getAuthors(desc));
-            } else {
-                sender.sendMessage("Authors: " + getAuthors(desc));
-            }
+            sender.sendMessage("Author" + (desc.getAuthors().size() > 1 ? "s" : "") + ": " + getAuthors(desc));
         }
     }
 
