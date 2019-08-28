@@ -171,7 +171,7 @@ public class CraftOfflinePlayer implements OfflinePlayer, ConfigurationSerializa
     
     private WorldNBTStorage getStorageLazy() {
         if (this.storage == null) {
-            net.minecraft.server.WorldServer worldServer = server.console.getWorldServer(DimensionManager.OVERWORLD);
+            net.minecraft.server.WorldServer worldServer = server.console.getWorldServer(0);
             if (worldServer == null) {
                 throw new IllegalStateException("Cannot get world storage when there are no worlds loaded!");
             } else {
