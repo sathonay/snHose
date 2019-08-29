@@ -120,8 +120,8 @@ public class CraftEventFactory {
         Block blockClicked = craftWorld.getBlockAt(clickedX, clickedY, clickedZ);
 
         boolean canBuild = true;
-        for (int i = 0; i < blockStates.size(); i++) {
-            if (!canBuild(craftWorld, player, blockStates.get(i).getX(), blockStates.get(i).getZ())) {
+        for (BlockState bs : blockStates) {
+            if (!canBuild(craftWorld, player, bs.getX(), bs.getZ())) {
                 canBuild = false;
                 break;
             }
@@ -188,14 +188,8 @@ public class CraftEventFactory {
         Block blockClicked = craftWorld.getBlockAt(clickedX, clickedY, clickedZ);
         BlockFace blockFace = CraftBlock.notchToBlockFace(clickedFace);
 
-        PlayerEvent event = null;
-        if (isFilling) {
-            event = new PlayerBucketFillEvent(player, blockClicked, blockFace, bucket, itemInHand);
-            ((PlayerBucketFillEvent) event).setCancelled(!canBuild(craftWorld, player, clickedX, clickedZ));
-        } else {
-            event = new PlayerBucketEmptyEvent(player, blockClicked, blockFace, bucket, itemInHand);
-            ((PlayerBucketEmptyEvent) event).setCancelled(!canBuild(craftWorld, player, clickedX, clickedZ));
-        }
+        PlayerEvent event = (isFilling ? new PlayerBucketFillEvent(player, blockClicked, blockFace, bucket, itemInHand) : new PlayerBucketEmptyEvent(player, blockClicked, blockFace, bucket, itemInHand));
+        event.setCancelled(!canBuild(craftWorld, player, clickedX, clickedZ));
 
         craftServer.getPluginManager().callEvent(event);
 
