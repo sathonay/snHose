@@ -331,9 +331,11 @@ public class EntityTrackerEntry {
             if (d0 >= (double) (-this.b) && d0 <= (double) this.b && d1 >= (double) (-this.b) && d1 <= (double) this.b) {
                 if (!this.trackedPlayers.contains(entityplayer) && (this.d(entityplayer) || this.tracker.attachedToPlayer)) {
                     // CraftBukkit start - respect vanish API
-                    if (!entityplayer.getBukkitEntity().canSeeEntity(this.tracker.getBukkitEntity())) {
-                        // TODO: Hide already dropped item here 
-                        return;
+                    if (this.tracker instanceof EntityPlayer) {
+                        if (!entityplayer.getBukkitEntity().canSeeEntity(this.tracker.getBukkitEntity())) {
+                            // TODO: Hide already dropped item here 
+                            return;
+                        }
                     }
 
                     entityplayer.removeQueue.remove(Integer.valueOf(this.tracker.getId()));
