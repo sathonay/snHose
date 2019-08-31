@@ -188,7 +188,7 @@ public class CraftEventFactory {
         Block blockClicked = craftWorld.getBlockAt(clickedX, clickedY, clickedZ);
         BlockFace blockFace = CraftBlock.notchToBlockFace(clickedFace);
 
-        PlayerEvent event = (isFilling ? new PlayerBucketFillEvent(player, blockClicked, blockFace, bucket, itemInHand) : new PlayerBucketEmptyEvent(player, blockClicked, blockFace, bucket, itemInHand));
+        PlayerBucketEvent event = (isFilling ? new PlayerBucketFillEvent(player, blockClicked, blockFace, bucket, itemInHand) : new PlayerBucketEmptyEvent(player, blockClicked, blockFace, bucket, itemInHand));
         event.setCancelled(!canBuild(craftWorld, player, clickedX, clickedZ));
 
         craftServer.getPluginManager().callEvent(event);
