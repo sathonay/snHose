@@ -32,15 +32,14 @@ public abstract class BlockFluids extends Block {
     protected int e(IBlockAccess iblockaccess, int i, int j, int k) {
         if (iblockaccess.getType(i, j, k).getMaterial() != this.material) {
             return -1;
-        } else {
-            int l = iblockaccess.getData(i, j, k);
-
-            if (l >= 8) {
-                l = 0;
-            }
-
-            return l;
         }
+        int l = iblockaccess.getData(i, j, k);
+
+        if (l >= 8) {
+            l = 0;
+        }
+
+        return l;
     }
 
     public boolean d() {
@@ -225,8 +224,10 @@ public abstract class BlockFluids extends Block {
     protected void fizz(World world, int i, int j, int k) {
         world.makeSound((double) ((float) i + 0.5F), (double) ((float) j + 0.5F), (double) ((float) k + 0.5F), "random.fizz", 0.5F, 2.6F + (world.random.nextFloat() - world.random.nextFloat()) * 0.8F);
 
-        for (int l = 0; l < 8; ++l) {
+        int l = 0;
+        while (l < 8) {
             world.addParticle("largesmoke", (double) i + Math.random(), (double) j + 1.2D, (double) k + Math.random(), 0.0D, 0.0D, 0.0D);
+            l++;
         }
     }
 }
