@@ -66,9 +66,7 @@ public class BlockFlowing extends BlockFluids {
             }
 
             if (this.a >= 2 && this.material == Material.WATER) {
-                if (world.getType(i, j - 1, k).getMaterial().isBuildable()) {
-                    j1 = 0;
-                } else if (world.getType(i, j - 1, k).getMaterial() == this.material && world.getData(i, j - 1, k) == 0) {
+                if (world.getType(i, j - 1, k).getMaterial().isBuildable() || world.getType(i, j - 1, k).getMaterial() == this.material && world.getData(i, j - 1, k) == 0) {
                     j1 = 0;
                 }
             }
@@ -117,12 +115,7 @@ public class BlockFlowing extends BlockFluids {
                     this.fizz(world, i, j - 1, k);
                     return;
                 }
-
-                if (l >= 8) {
-                    this.flow(world, i, j - 1, k, l);
-                } else {
-                    this.flow(world, i, j - 1, k, l + 8);
-                }
+                this.flow(world, i, j - 1, k, l + (l >= 8 ? 0 : 8));
             }
             // CraftBukkit end
         } else if (l >= 0 && (l == 0 || this.p(world, i, j - 1, k))) {
@@ -242,11 +235,7 @@ public class BlockFlowing extends BlockFluids {
             }
 
             if (!this.p(world, i1, j, j1) && (world.getType(i1, j, j1).getMaterial() != this.material || world.getData(i1, j, j1) != 0)) {
-                if (this.p(world, i1, j - 1, j1)) {
-                    this.M[l] = this.c(world, i1, j, j1, 1, l);
-                } else {
-                    this.M[l] = 0;
-                }
+                this.M[l] = (this.p(world, i1, j - 1, j1) ? this.c(world, i1, j, j1, 1, l) : 0);
             }
         }
 
@@ -276,17 +265,16 @@ public class BlockFlowing extends BlockFluids {
 
         if (i1 < 0) {
             return l;
-        } else {
-            if (i1 == 0) {
-                ++this.a;
-            }
-
-            if (i1 >= 8) {
-                i1 = 0;
-            }
-
-            return l >= 0 && i1 >= l ? l : i1;
         }
+        if (i1 == 0) {
+            ++this.a;
+        }
+
+        if (i1 >= 8) {
+            i1 = 0;
+        }
+
+        return l >= 0 && i1 >= l ? l : i1;
     }
 
     private boolean q(World world, int i, int j, int k) {
