@@ -18,13 +18,9 @@ public class PacketPlayOutEntityVelocity extends Packet {
     public PacketPlayOutEntityVelocity(int i, double d0, double d1, double d2) {
         this.a = i;
         final double d3 = 3.9D;
-        final double d00 = MathHelper.limit(d0, -d3, d3);
-        final double d11 = MathHelper.limit(d1, -d3, d3);
-        final double d22 = MathHelper.limit(d2, -d3, d3);
-
-        this.b = (int) (d00 * 8000.0D);
-        this.c = (int) (d11 * 8000.0D);
-        this.d = (int) (d22 * 8000.0D);
+        this.b = (int) (MathHelper.limit(d0, -d3, d3) * 8000.0D);
+        this.c = (int) (MathHelper.limit(d1, -d3, d3) * 8000.0D);
+        this.d = (int) (MathHelper.limit(d2, -d3, d3) * 8000.0D);
     }
 
     public void a(PacketDataSerializer packetdataserializer) {
