@@ -1,9 +1,4 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by Fernflower decompiler)
-//
-
-package net.minecraft.server;
+ package net.minecraft.server;
 
 public class BlockFenceGate extends BlockDirectional {
     public BlockFenceGate() {
@@ -19,9 +14,8 @@ public class BlockFenceGate extends BlockDirectional {
         int var5 = var1.getData(var2, var3, var4);
         if (b(var5)) {
             return null;
-        } else {
-            return var5 != 2 && var5 != 0 ? AxisAlignedBB.a((double)((float)var2 + 0.375F), (double)var3, (double)var4, (double)((float)var2 + 0.625F), (double)((float)var3 + 1.5F), (double)(var4 + 1)) : AxisAlignedBB.a((double)var2, (double)var3, (double)((float)var4 + 0.375F), (double)(var2 + 1), (double)((float)var3 + 1.5F), (double)((float)var4 + 0.625F));
         }
+        return var5 != 2 && var5 != 0 ? AxisAlignedBB.a((double)((float)var2 + 0.375F), (double)var3, (double)var4, (double)((float)var2 + 0.625F), (double)((float)var3 + 1.5F), (double)(var4 + 1)) : AxisAlignedBB.a((double)var2, (double)var3, (double)((float)var4 + 0.375F), (double)(var2 + 1), (double)((float)var3 + 1.5F), (double)((float)var4 + 0.625F));
     }
 
     public void updateShape(IBlockAccess var1, int var2, int var3, int var4) {
