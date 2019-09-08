@@ -1,10 +1,9 @@
-package net.minecraft.server.v1_7_R4;
+package net.minecraft.server;
 
 import javax.swing.*;
 import java.util.*;
 
-public class PlayerListBox extends JList implements IUpdatePlayerListBox
-{
+public class PlayerListBox extends JList implements IUpdatePlayerListBox {
     private MinecraftServer a;
     private int b;
     
@@ -16,8 +15,8 @@ public class PlayerListBox extends JList implements IUpdatePlayerListBox
     public void a() {
         if (this.b++ % 20 == 0) {
             final Vector<String> listData = new Vector<String>();
-            for (int i = 0; i < this.a.getPlayerList().players.size(); ++i) {
-                listData.add(this.a.getPlayerList().players.get(i).getName());
+            for (EntityPlayer entityplayer : this.a.getPlayerList().players) {
+                listData.add(entityplayer.getName());
             }
             this.setListData(listData);
         }
