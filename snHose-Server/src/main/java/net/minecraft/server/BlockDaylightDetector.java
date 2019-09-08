@@ -32,12 +32,7 @@ public class BlockDaylightDetector extends BlockContainer {
             int l = world.getData(i, j, k);
             int i1 = world.b(EnumSkyBlock.SKY, i, j, k) - world.j;
             float f = world.d(1.0F);
-
-            if (f < 3.1415927F) {
-                f += (0.0F - f) * 0.2F;
-            } else {
-                f += (6.2831855F - f) * 0.2F;
-            }
+            f += ((f < Math.PI ? (0.0F - f) : (Math.PI * 2 - f)) * 0.2F);
 
             // PaperSpigot start - Configurable "inversion" for daylight detectors
             if (world.paperSpigotConfig.invertedDaylightDetectors) {
