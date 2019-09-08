@@ -35,13 +35,7 @@ public class EntityAIBodyControl
     }
     
     private float a(final float n, final float n2, final float n3) {
-        float g = MathHelper.g(n - n2);
-        if (g < -n3) {
-            g = -n3;
-        }
-        if (g >= n3) {
-            g = n3;
-        }
+        float g = MathHelper.limit(MathHelper.g(n - n2), -n3, n3);
         return n - g;
     }
 }
