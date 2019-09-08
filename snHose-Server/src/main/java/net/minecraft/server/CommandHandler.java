@@ -1,4 +1,4 @@
-package net.minecraft.server.v1_7_R4;
+package net.minecraft.server;
 
 import java.util.*;
 import org.apache.logging.log4j.*;
@@ -114,7 +114,7 @@ public class CommandHandler implements ICommandHandler
         final String[] split = s.split(" ", -1);
         final String s2 = split[0];
         if (split.length == 1) {
-            final ArrayList<String> list = new ArrayList<String>();
+            final List<String> list = new ArrayList<String>();
             for (final Map.Entry<String, V> entry : this.b.entrySet()) {
                 if (CommandAbstract.a(s2, entry.getKey()) && ((ICommand)entry.getValue()).canUse(commandListener)) {
                     list.add(entry.getKey());
@@ -133,7 +133,7 @@ public class CommandHandler implements ICommandHandler
     
     @Override
     public List a(final ICommandListener commandListener) {
-        final ArrayList<ICommand> list = new ArrayList<ICommand>();
+        final List<ICommand> list = new ArrayList<ICommand>();
         for (final ICommand command : this.c) {
             if (command.canUse(commandListener)) {
                 list.add(command);
