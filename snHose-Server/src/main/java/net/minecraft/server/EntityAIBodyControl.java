@@ -1,7 +1,6 @@
-package net.minecraft.server.v1_7_R4;
+package net.minecraft.server;
 
-public class EntityAIBodyControl
-{
+public class EntityAIBodyControl {
     private EntityLiving entity;
     private int b;
     private float c;
