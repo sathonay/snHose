@@ -1,0 +1,18 @@
+package net.minecraft.server.v1_7_R4;
+
+import java.util.concurrent.*;
+
+class CrashReportItemName implements Callable
+{
+    final /* synthetic */ ItemStack a;
+    final /* synthetic */ PlayerInventory b;
+    
+    CrashReportItemName(final PlayerInventory b, final ItemStack a) {
+        this.b = b;
+        this.a = a;
+    }
+    
+    public String a() {
+        return this.a.getName();
+    }
+}

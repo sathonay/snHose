@@ -1,0 +1,13 @@
+package net.minecraft.server.v1_7_R4;
+
+public class ChunkCoordinatesPortal extends ChunkCoordinates
+{
+    public long d;
+    final /* synthetic */ PortalTravelAgent e;
+    
+    public ChunkCoordinatesPortal(final PortalTravelAgent e, final int n, final int n2, final int n3, final long d) {
+        this.e = e;
+        super(n, n2, n3);
+        this.d = d;
+    }
+}
