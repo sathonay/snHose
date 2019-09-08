@@ -1,4 +1,4 @@
-package net.minecraft.server.v1_7_R4;
+package net.minecraft.server;
 
 import net.minecraft.util.com.google.common.collect.*;
 import java.util.*;
@@ -51,7 +51,7 @@ public class AttributeMapServer extends AttributeMapBase
     }
     
     public Collection c() {
-        final HashSet<AttributeInstance> hashSet = Sets.newHashSet();
+        final Set<AttributeInstance> hashSet = Sets.newHashSet();
         for (final AttributeInstance attributeInstance : this.a()) {
             if (attributeInstance.getAttribute().c()) {
                 hashSet.add(attributeInstance);
