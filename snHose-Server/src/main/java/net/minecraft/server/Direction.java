@@ -1,4 +1,4 @@
-package net.minecraft.server.v1_7_R4;
+package net.minecraft.server;
 
 public class Direction
 {
@@ -19,12 +19,10 @@ public class Direction
             }
             return 3;
         }
-        else {
-            if (n2 > 0.0) {
-                return 2;
-            }
-            return 0;
+        if (n2 > 0.0) {
+            return 2;
         }
+        return 0;
     }
     
     static {
