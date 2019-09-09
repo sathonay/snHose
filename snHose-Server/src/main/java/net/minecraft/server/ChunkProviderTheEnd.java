@@ -1,4 +1,4 @@
-package net.minecraft.server.v1_7_R4;
+package net.minecraft.server;
 
 import java.util.*;
 
@@ -103,12 +103,7 @@ public class ChunkProviderTheEnd implements IChunkProvider
                                 block = Blocks.WHITESTONE;
                             }
                             n4 = n3;
-                            if (k >= 0) {
-                                array[n5] = whitestone;
-                            }
-                            else {
-                                array[n5] = block;
-                            }
+                            array[n5] = (k >= 0 ? whitestone : block);
                         }
                         else if (n4 > 0) {
                             --n4;
@@ -156,31 +151,16 @@ public class ChunkProviderTheEnd implements IChunkProvider
         int n11 = 0;
         for (int i = 0; i < n4; ++i) {
             for (int j = 0; j < n6; ++j) {
-                double n12 = (this.f[n11] + 256.0) / 512.0;
-                if (n12 > 1.0) {
-                    n12 = 1.0;
-                }
+                double n12 = MathHelper.limit((this.f[n11] + 256.0) / 512.0, 0.0, 1.0);       
                 double n13 = this.g[n11] / 8000.0;
                 if (n13 < 0.0) {
                     n13 = -n13 * 0.3;
                 }
-                double n14 = n13 * 3.0 - 2.0;
+                double n14 = Math.min(n13 * 3.0 - 2.0, 1.0);
                 final float n15 = (i + n - 0) / 1.0f;
                 final float n16 = (j + n3 - 0) / 1.0f;
-                float n17 = 100.0f - MathHelper.c(n15 * n15 + n16 * n16) * 8.0f;
-                if (n17 > 80.0f) {
-                    n17 = 80.0f;
-                }
-                if (n17 < -100.0f) {
-                    n17 = -100.0f;
-                }
-                if (n14 > 1.0) {
-                    n14 = 1.0;
-                }
+                float n17 = MathHelper.limit(100.0f - MathHelper.c(n15 * n15 + n16 * n16) * 8.0f, -100.0f, 80.0f);
                 final double n18 = 0.0;
-                if (n12 < 0.0) {
-                    n12 = 0.0;
-                }
                 final double n19 = n12 + 0.5;
                 final double n20 = n18 * n5 / 16.0;
                 ++n11;
@@ -203,13 +183,7 @@ public class ChunkProviderTheEnd implements IChunkProvider
                     double n26 = n25 - 8.0 + n17;
                     final int n27 = 2;
                     if (k > n5 / 2 - n27) {
-                        double n28 = (k - (n5 / 2 - n27)) / 64.0f;
-                        if (n28 < 0.0) {
-                            n28 = 0.0;
-                        }
-                        if (n28 > 1.0) {
-                            n28 = 1.0;
-                        }
+                        double n28 = MathHelper.limit((k - (n5 / 2 - n27)) / 64.0f, 0.0, 1.0);
                         n26 = n26 * (1.0 - n28) + -3000.0 * n28;
                     }
                     final int n29 = 8;
