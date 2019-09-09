@@ -1,4 +1,4 @@
-package net.minecraft.server.v1_7_R4;
+package net.minecraft.server;
 
 public class GenLayerSmooth extends GenLayer
 {
@@ -23,12 +23,7 @@ public class GenLayerSmooth extends GenLayer
                 int n12 = a[j + 1 + (i + 1) * n7];
                 if (n8 == n9 && n10 == n11) {
                     this.a(j + n, (long)(i + n2));
-                    if (this.a(2) == 0) {
-                        n12 = n8;
-                    }
-                    else {
-                        n12 = n10;
-                    }
+                    n12 = (this.a(2) == 0 ? n8 : n10);
                 }
                 else {
                     if (n8 == n9) {
