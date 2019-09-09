@@ -22,7 +22,7 @@ public class EntityItem extends Entity {
     public EntityItem(World world, double d0, double d1, double d2) {
         super(world);
         this.e = 5;
-        this.c = (float) (Math.random() * 3.141592653589793D * 2.0D);
+        this.c = (float) (Math.random() * Math.PI * 2.0D);
         this.a(0.25F, 0.25F);
         this.height = this.length / 2.0F;
         this.setPosition(d0, d1, d2);
