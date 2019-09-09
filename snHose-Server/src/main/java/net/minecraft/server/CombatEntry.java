@@ -1,4 +1,4 @@
-package net.minecraft.server.v1_7_R4;
+package net.minecraft.server;
 
 public class CombatEntry
 {
@@ -39,9 +39,6 @@ public class CombatEntry
     }
     
     public float i() {
-        if (this.a == DamageSource.OUT_OF_WORLD) {
-            return Float.MAX_VALUE;
-        }
-        return this.f;
+        return (this.a == DamageSource.OUT_OF_WORLD ? Float.MAX_VALUE : this.f);
     }
 }
