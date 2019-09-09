@@ -1,9 +1,8 @@
-package net.minecraft.server.v1_7_R4;
+package net.minecraft.server;
 
 import java.util.*;
 
-public class CombatTracker
-{
+public class CombatTracker {
     private final List a;
     private final EntityLiving b;
     private int c;
@@ -66,12 +65,7 @@ public class CombatTracker
             else if (h2 != null && (h == null || !h2.equals(h))) {
                 final Entity entity2 = i.a().getEntity();
                 final ItemStack itemStack = (entity2 instanceof EntityLiving) ? ((EntityLiving)entity2).be() : null;
-                if (itemStack != null && itemStack.hasName()) {
-                    localizedDeathMessage = new ChatMessage("death.fell.assist.item", new Object[] { this.b.getScoreboardDisplayName(), h2, itemStack.E() });
-                }
-                else {
-                    localizedDeathMessage = new ChatMessage("death.fell.assist", new Object[] { this.b.getScoreboardDisplayName(), h2 });
-                }
+                localizedDeathMessage = (itemStack != null && itemStack.hasName() ? new ChatMessage("death.fell.assist.item", new Object[] { this.b.getScoreboardDisplayName(), h2, itemStack.E() }) : new ChatMessage("death.fell.assist", new Object[] { this.b.getScoreboardDisplayName(), h2 }));
             }
             else if (h != null) {
                 final ItemStack itemStack2 = (entity instanceof EntityLiving) ? ((EntityLiving)entity).be() : null;
@@ -122,12 +116,7 @@ public class CombatTracker
             final CombatEntry combatEntry3 = this.a.get(j);
             final CombatEntry combatEntry4 = (j > 0) ? this.a.get(j - 1) : null;
             if ((combatEntry3.a() == DamageSource.FALL || combatEntry3.a() == DamageSource.OUT_OF_WORLD) && combatEntry3.i() > 0.0f && (combatEntry == null || combatEntry3.i() > i)) {
-                if (j > 0) {
-                    combatEntry = combatEntry4;
-                }
-                else {
-                    combatEntry = combatEntry3;
-                }
+                combatEntry = (j > 0 ? combatEntry4 : combatEntry3);
                 i = combatEntry3.i();
             }
             if (combatEntry3.g() != null && (combatEntry2 == null || combatEntry3.c() > n)) {
