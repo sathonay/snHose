@@ -1,4 +1,4 @@
-package net.minecraft.server.v1_7_R4;
+package net.minecraft.server;
 
 public class EntityEnderSignal extends Entity
 {
@@ -81,12 +81,7 @@ public class EntityEnderSignal extends Entity
             }
             this.motX = Math.cos(n4) * n5;
             this.motZ = Math.sin(n4) * n5;
-            if (this.locY < this.b) {
-                this.motY += (1.0 - this.motY) * 0.014999999664723873;
-            }
-            else {
-                this.motY += (-1.0 - this.motY) * 0.014999999664723873;
-            }
+            this.motY += ((this.locY < this.b ? 1.0 : -1.0) - this.motY) * 0.014999999664723873;
         }
         final float n6 = 0.25f;
         if (this.M()) {
