@@ -1,17 +1,17 @@
-package net.minecraft.server.v1_7_R4;
+package net.minecraft.server;
 
 import java.util.*;
 
 public class FileIOThread implements Runnable
 {
     public static final FileIOThread a;
-    private List b;
+    private List<IAsyncChunkSaver> b;
     private volatile long c;
     private volatile long d;
     private volatile boolean e;
     
     private FileIOThread() {
-        this.b = Collections.synchronizedList(new ArrayList<Object>());
+        this.b = Collections.synchronizedList(Lists.newArrayList());
         final Thread thread = new Thread(this, "File IO Thread");
         thread.setPriority(1);
         thread.start();
@@ -57,10 +57,14 @@ public class FileIOThread implements Runnable
     
     public void a() {
         this.e = true;
-        while (this.c != this.d) {
+        while (!this.getThreadedIOQueue().isEmpty()) {
             Thread.sleep(10L);
         }
         this.e = false;
+    }
+
+    private List<IAsyncChunkSaver> getThreadedIOQueue() { 
+        return b; 
     }
     
     static {
