@@ -59,22 +59,10 @@ public class BlockFence extends Block
         final boolean e2 = this.e(blockAccess, n, n2, n3 + 1);
         final boolean e3 = this.e(blockAccess, n - 1, n2, n3);
         final boolean e4 = this.e(blockAccess, n + 1, n2, n3);
-        float f = 0.375f;
-        float f2 = 0.625f;
-        float f3 = 0.375f;
-        float f4 = 0.625f;
-        if (e) {
-            f3 = 0.0f;
-        }
-        if (e2) {
-            f4 = 1.0f;
-        }
-        if (e3) {
-            f = 0.0f;
-        }
-        if (e4) {
-            f2 = 1.0f;
-        }
+        final float f = (!e3 ? 0.375f : 0.0f);
+        final float f2 = (!e4 ? 0.625f : 1.0f);
+        final float f3 = (!e ? 0.375f : 0.0f);
+        final float f4 = (!e2 ? 0.625f : 1.0f);
         this.a(f, 0.0f, f3, f2, 1.0f, f4);
     }
     
