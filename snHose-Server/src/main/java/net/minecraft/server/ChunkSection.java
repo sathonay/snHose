@@ -80,12 +80,7 @@ public class ChunkSection {
         // CraftBukkit start - Compact storage
         if (this.blockIds == null) {
             int id = this.compactId;
-            if (this.extBlockIds == null) {
-                id |= this.compactExtId << 8;
-            } else {
-                id |= this.extBlockIds.a(i, j, k) << 8;
-            }
-
+            id |= (this.extBlockIds == null ? this.compactExtId : this.extBlockIds.a(i, j, k)) << 8;
             return Block.getById(id);
         }
         // CraftBukkit end
