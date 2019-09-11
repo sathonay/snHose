@@ -122,12 +122,7 @@ public class ChunkProviderServer implements IChunkProvider {
     public Chunk getChunkAt(int i, int j, Runnable runnable) {
         this.unloadQueue.remove(i, j);
         Chunk chunk = this.chunks.get(LongHash.toLong(i, j));
-        ChunkRegionLoader loader = null;
-
-        if (this.f instanceof ChunkRegionLoader) {
-            loader = (ChunkRegionLoader) this.f;
-        }
-
+        ChunkRegionLoader loader = (this.f instanceof ChunkRegionLoader ? (ChunkRegionLoader) this.f : null);
         // We can only use the queue for already generated chunks
         if (chunk == null && loader != null && loader.chunkExists(this.world, i, j)) {
             if (runnable != null) {
