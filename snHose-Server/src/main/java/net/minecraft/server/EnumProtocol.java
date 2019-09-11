@@ -1,4 +1,4 @@
-package net.minecraft.server.v1_7_R4;
+package net.minecraft.server;
 
 import net.minecraft.util.gnu.trove.map.*;
 import org.apache.logging.log4j.*;

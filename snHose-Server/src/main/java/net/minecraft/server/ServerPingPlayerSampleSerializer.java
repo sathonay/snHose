@@ -1,4 +1,4 @@
-package net.minecraft.server.v1_7_R4;
+package net.minecraft.server;
 
 import java.lang.reflect.*;
 import net.minecraft.util.com.mojang.authlib.*;

@@ -1,4 +1,4 @@
-package net.minecraft.server.v1_7_R4;
+package net.minecraft.server;
 
 import java.util.regex.*;
 import net.minecraft.util.com.google.common.collect.*;

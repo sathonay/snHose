@@ -1,4 +1,4 @@
-package net.minecraft.server.v1_7_R4;
+package net.minecraft.server;
 
 public class BlockLog2 extends BlockLogAbstract
 {

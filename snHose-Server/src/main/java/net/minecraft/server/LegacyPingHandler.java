@@ -1,4 +1,4 @@
-package net.minecraft.server.v1_7_R4;
+package net.minecraft.server;
 
 import java.net.*;
 import net.minecraft.util.com.google.common.base.*;
@@ -30,7 +30,7 @@ public class LegacyPingHandler extends ChannelInboundHandlerAdapter
             switch (byteBuf.readableBytes()) {
                 case 0: {
                     LegacyPingHandler.a.debug("Ping: (<1.3.x) from {}:{}", inetSocketAddress.getAddress(), inetSocketAddress.getPort());
-                    this.a(channelHandlerContext, this.a(String.format("%s§%d§%d", d.getMotd(), d.C(), d.D())));
+                    this.a(channelHandlerContext, this.a(String.format("%sï¿½%dï¿½%d", d.getMotd(), d.C(), d.D())));
                     break;
                 }
                 case 1: {
@@ -38,7 +38,7 @@ public class LegacyPingHandler extends ChannelInboundHandlerAdapter
                         return;
                     }
                     LegacyPingHandler.a.debug("Ping: (1.4-1.5.x) from {}:{}", inetSocketAddress.getAddress(), inetSocketAddress.getPort());
-                    this.a(channelHandlerContext, this.a(String.format("§1\u0000%d\u0000%s\u0000%s\u0000%d\u0000%d", 127, d.getVersion(), d.getMotd(), d.C(), d.D())));
+                    this.a(channelHandlerContext, this.a(String.format("ï¿½1\u0000%d\u0000%s\u0000%s\u0000%d\u0000%d", 127, d.getVersion(), d.getMotd(), d.C(), d.D())));
                     break;
                 }
                 default: {
@@ -46,7 +46,7 @@ public class LegacyPingHandler extends ChannelInboundHandlerAdapter
                         return;
                     }
                     LegacyPingHandler.a.debug("Ping: (1.6) from {}:{}", inetSocketAddress.getAddress(), inetSocketAddress.getPort());
-                    final ByteBuf a = this.a(String.format("§1\u0000%d\u0000%s\u0000%s\u0000%d\u0000%d", 127, d.getVersion(), d.getMotd(), d.C(), d.D()));
+                    final ByteBuf a = this.a(String.format("ï¿½1\u0000%d\u0000%s\u0000%s\u0000%d\u0000%d", 127, d.getVersion(), d.getMotd(), d.C(), d.D()));
                     try {
                         this.a(channelHandlerContext, a);
                     }

@@ -1,4 +1,4 @@
-package net.minecraft.server.v1_7_R4;
+package net.minecraft.server;
 
 class MobSpawner extends MobSpawnerAbstract
 {

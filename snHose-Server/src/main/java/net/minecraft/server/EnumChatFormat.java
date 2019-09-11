@@ -1,4 +1,4 @@
-package net.minecraft.server.v1_7_R4;
+package net.minecraft.server;
 
 import java.util.regex.*;
 import java.util.*;
@@ -42,7 +42,7 @@ public enum EnumChatFormat
     private EnumChatFormat(final String s, final int n, final char z, final boolean a) {
         this.z = z;
         this.A = a;
-        this.B = "§" + z;
+        this.B = "ï¿½" + z;
     }
     
     public char getChar() {
@@ -88,7 +88,7 @@ public enum EnumChatFormat
     static {
         w = new HashMap();
         x = new HashMap();
-        y = Pattern.compile("(?i)" + String.valueOf('§') + "[0-9A-FK-OR]");
+        y = Pattern.compile("(?i)" + String.valueOf('ï¿½') + "[0-9A-FK-OR]");
         for (final EnumChatFormat enumChatFormat : values()) {
             EnumChatFormat.w.put(enumChatFormat.getChar(), enumChatFormat);
             EnumChatFormat.x.put(enumChatFormat.d(), enumChatFormat);

@@ -1,11 +1,11 @@
-package net.minecraft.server.v1_7_R4;
+package net.minecraft.server;
 
 public class SharedConstants
 {
     public static final char[] allowedCharacters;
     
     public static boolean isAllowedChatCharacter(final char c) {
-        return c != '§' && c >= ' ' && c != '\u007f';
+        return c != 'ï¿½' && c >= ' ' && c != '\u007f';
     }
     
     public static String a(final String s) {
