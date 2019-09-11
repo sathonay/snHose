@@ -944,7 +944,7 @@ public abstract class EntityHuman extends EntityLiving implements ICommandListen
                     final boolean flag2 = entity.damageEntity(DamageSource.playerAttack(this), f);
                     if (flag2) {
                         if (i > 0) {
-                            entity.g((-Math.sin(this.yaw * Math.PI / 180.0F) * (float) i * this.world.getServer().getKnockback().getSprintForce()), (this.world.getServer().getKnockback().getSprintHeight() / this.world.getServer().getKnockback().getFriction()) /* Try to adjust with friction */, (Math.cos(this.yaw * Math.PI / 180.0F) * i * this.world.getServer().getKnockback().getSprintHeight()));
+                            entity.g((-Math.sin(this.yaw * Math.PI / 180.0F) * (float) i * this.world.getServer().getKnockback().getSprintForce()), this.world.getServer().getKnockback().getSprintHeight(), (Math.cos(this.yaw * Math.PI / 180.0F) * i * this.world.getServer().getKnockback().getSprintHeight()));
                             this.motX *= 0.6D;
                             // NEVER PUT "this.motY *= 0.6D" only skid do that
                             this.motZ *= 0.6D;
