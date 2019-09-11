@@ -3,7 +3,7 @@ package net.minecraft.server;
 import java.util.*;
 
 public class CombatTracker {
-    private final List a;
+    private final List<CombatEntry> a;
     private final EntityLiving b;
     private int c;
     private int d;
@@ -13,7 +13,7 @@ public class CombatTracker {
     private String h;
     
     public CombatTracker(final EntityLiving b) {
-        this.a = new ArrayList();
+        this.a = new ArrayList<>();
         this.b = b;
     }
     
