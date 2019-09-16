@@ -155,11 +155,7 @@ public class ChunkProviderHell implements IChunkProvider {
                                     }
 
                                     j1 = i1;
-                                    if (k1 >= b0 - 1) {
-                                        ablock[l1] = block;
-                                    } else {
-                                        ablock[l1] = block1;
-                                    }
+                                    ablock[l1] = (k1 >= b0 - 1 ? block : block1);
                                 } else if (j1 > 0) {
                                     --j1;
                                     ablock[l1] = block1;
@@ -237,12 +233,7 @@ public class ChunkProviderHell implements IChunkProvider {
 
         for (i2 = 0; i2 < l; ++i2) {
             for (int j2 = 0; j2 < j1; ++j2) {
-                double d3 = (this.g[l1] + 256.0D) / 512.0D;
-
-                if (d3 > 1.0D) {
-                    d3 = 1.0D;
-                }
-
+                double d3 = Math.min((this.g[l1] + 256.0D) / 512.0D, 1.0D);
                 double d4 = 0.0D;
                 double d5 = this.h[l1] / 8000.0D;
 
@@ -296,15 +287,7 @@ public class ChunkProviderHell implements IChunkProvider {
                     }
 
                     if ((double) k2 < d4) {
-                        d11 = (d4 - (double) k2) / 4.0D;
-                        if (d11 < 0.0D) {
-                            d11 = 0.0D;
-                        }
-
-                        if (d11 > 1.0D) {
-                            d11 = 1.0D;
-                        }
-
+                        d11 = MathHelper.limit((d4 - (double) k2) / 4.0D, 0.0D, 1.0D);
                         d6 = d6 * (1.0D - d11) + -10.0D * d11;
                     }
 
