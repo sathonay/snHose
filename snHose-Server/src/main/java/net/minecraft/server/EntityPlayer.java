@@ -219,9 +219,9 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
         }
 
         if (!this.chunkCoordIntPairQueue.isEmpty()) {
-            ArrayList arraylist = new ArrayList();
+            List arraylist = new ArrayList();
             Iterator iterator1 = this.chunkCoordIntPairQueue.iterator();
-            ArrayList arraylist1 = new ArrayList();
+            List arraylist1 = new ArrayList();
 
             Chunk chunk;
 
@@ -339,7 +339,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
 
             achievementset.add(s);
             if (this.getStatisticManager().b(AchievementList.L) && achievementset.size() == BiomeBase.n.size()) {
-                HashSet hashset = Sets.newHashSet(BiomeBase.n);
+                Set hashset = Sets.newHashSet(BiomeBase.n);
                 Iterator iterator = achievementset.iterator();
 
                 while (iterator.hasNext()) {
@@ -996,17 +996,16 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
     public boolean a(int i, String s) {
         if ("seed".equals(s) && !this.server.X()) {
             return true;
-        } else if (!"tell".equals(s) && !"help".equals(s) && !"me".equals(s)) {
+        }
+        if (!"tell".equals(s) && !"help".equals(s) && !"me".equals(s)) {
             if (this.server.getPlayerList().isOp(this.getProfile())) {
                 OpListEntry oplistentry = (OpListEntry) this.server.getPlayerList().getOPs().get(this.getProfile());
 
                 return oplistentry != null ? oplistentry.a() >= i : this.server.l() >= i;
-            } else {
-                return false;
             }
-        } else {
-            return true;
+            return false;
         }
+        return true;
     }
 
     public String s() {
@@ -1085,10 +1084,9 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
         if (this.relativeTime) {
             // Adds timeOffset to the current server time.
             return this.world.getDayTime() + this.timeOffset;
-        } else {
-            // Adds timeOffset to the beginning of this day.
-            return this.world.getDayTime() - (this.world.getDayTime() % 24000) + this.timeOffset;
         }
+        // Adds timeOffset to the beginning of this day.
+        return this.world.getDayTime() - (this.world.getDayTime() % 24000) + this.timeOffset;
     }
 
     public WeatherType weather = null;
