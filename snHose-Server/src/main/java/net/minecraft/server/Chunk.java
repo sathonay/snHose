@@ -366,11 +366,7 @@ public class Chunk {
 
     private void h(int i, int j, int k) {
         int l = this.heightMap[k << 4 | i] & 255;
-        int i1 = l;
-
-        if (j > l) {
-            i1 = j;
-        }
+        int i1 = (j > l ? j : l);
 
         while (i1 > 0 && this.b(i, i1 - 1, k) == 0) {
             --i1;
@@ -695,11 +691,7 @@ public class Chunk {
             // CraftBukkit end
         }
 
-        int k = MathHelper.floor(entity.locY / 16.0D);
-
-        if (k < 0) {
-            k = 0;
-        }
+        int k = Math.max(MathHelper.floor(entity.locY / 16.0D), 0);
 
         if (k >= this.entitySlices.length) {
             k = this.entitySlices.length - 1;
@@ -782,9 +774,8 @@ public class Chunk {
         if (tileentity != null && tileentity.r()) {
             this.tileEntities.remove(chunkposition);
             return null;
-        } else {
-            return tileentity;
         }
+        return tileentity;
     }
 
     public void a(TileEntity tileentity) {
