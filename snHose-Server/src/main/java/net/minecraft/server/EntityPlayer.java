@@ -198,7 +198,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
                     continue;
                 }
                 this.noDamageTicks.remove(key);
-            }
+            });
         }
         // snHose end
 
