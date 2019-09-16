@@ -797,11 +797,8 @@ public abstract class Entity {
     }
 
     protected void a(int i, int j, int k, Block block) {
-        StepSound stepsound = block.stepSound;
+        final StepSound stepsound = (this.world.getType(i, j + 1, k) != Blocks.SNOW ? block.stepSound : Blocks.SNOW.stepSound);
 
-        if (this.world.getType(i, j + 1, k) == Blocks.SNOW) {
-            stepsound = Blocks.SNOW.stepSound;
-        } 
         if (!block.getMaterial().isLiquid()) {
             this.makeSound(stepsound.getStepSound(), stepsound.getVolume1() * 0.15F, stepsound.getVolume2());
         }
