@@ -111,7 +111,7 @@ public abstract class Entity {
     public int maxFireTicks;
     public int fireTicks; // CraftBukkit - private -> public
     public boolean inWater; // Spigot - protected -> public
-    public int noDamageTicks;
+    public Map<DamageSource, Integer> noDamageTicks = new HashMap<>();
     private boolean justCreated;
     protected boolean fireProof;
     protected DataWatcher datawatcher;
