@@ -189,9 +189,18 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
 
         this.playerInteractManager.a();
         --this.invulnerableTicks;
-        if (this.noDamageTicks > 0) {
-            --this.noDamageTicks;
+        // snHose start - Multiple damageTicks 
+        if (!this.noDamageTicks.isEmpty()) {
+            this.noDamageTicks.forEach((key, value) -> {
+                if (!this.noDamageTicks.containsKey(key)) continue;
+                if (value > 0) {
+                    this.noDamageTicks.replace(key, value—-);
+                    continue;
+                }
+                this.noDamageTicks.remove(key);
+            }
         }
+        // snHose end
 
         // PaperSpigot start - Configurable container update tick rate
         if (--containerUpdateDelay <= 0) {
