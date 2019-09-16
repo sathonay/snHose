@@ -654,7 +654,7 @@ public abstract class EntityLiving extends Entity {
                 this.aF = 1.5F;
                 boolean flag = true;
 
-                if (this.noDamageTicks > 0) {
+                if (!this.noDamageTicks.containsKey(damageSource) || this.noDamageTicks.get(damagesource) > 0) {
                     if (f <= this.lastDamage) {
                         return false;
                     }
@@ -674,7 +674,7 @@ public abstract class EntityLiving extends Entity {
                     }
                     this.lastDamage = f;
                     this.aw = previousHealth;
-                    this.noDamageTicks = this.maxNoDamageTicks;
+                    this.noDamageTicks.put(damagesource, this.maxNoDamageTicks);
                     // CraftBukkit end
                     this.hurtTicks = this.ay = 10;
                 }
