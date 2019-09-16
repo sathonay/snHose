@@ -140,11 +140,8 @@ public class CraftLivingEntity extends CraftEntity implements LivingEntity {
     }
 
     private List<Block> getLineOfSight(HashSet<Byte> transparent, int maxDistance, int maxLength) {
-        if (maxDistance > 120) {
-            maxDistance = 120;
-        }
-        ArrayList<Block> blocks = new ArrayList<Block>();
-        Iterator<Block> itr = new BlockIterator(this, maxDistance);
+        List<Block> blocks = new ArrayList<Block>();
+        Iterator<Block> itr = new BlockIterator(this, Math.min(maxDistance, 120));
         while (itr.hasNext()) {
             Block block = itr.next();
             blocks.add(block);
@@ -242,11 +239,11 @@ public class CraftLivingEntity extends CraftEntity implements LivingEntity {
     }
 
     public int getNoDamageTicks() {
-        return getHandle().noDamageTicks;
+        return getHandle().noDamageTicks.get(DamageSource.GENERIC);
     }
 
     public void setNoDamageTicks(int ticks) {
-        getHandle().noDamageTicks = ticks;
+        getHandle().noDamageTicks.put(DamageSource.GENERIC, ticks);
     }
 
     @Override
