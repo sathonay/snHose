@@ -251,11 +251,7 @@ public abstract class EntityHuman extends EntityLiving implements ICommandListen
                 vec3d1.a(-this.pitch * 3.1415927F / 180.0F);
                 vec3d1.b(-this.yaw * 3.1415927F / 180.0F);
                 vec3d1 = vec3d1.add(this.locX, this.locY + (double) this.getHeadHeight(), this.locZ);
-                String s = "iconcrack_" + Item.getId(itemstack.getItem());
-
-                if (itemstack.usesData()) {
-                    s = s + "_" + itemstack.getData();
-                }
+                final String s = "iconcrack_" + Item.getId(itemstack.getItem()) + (itemstack.usesData() ? "_" + itemstack.getData() : "");
 
                 this.world.addParticle(s, vec3d1.a, vec3d1.b, vec3d1.c, vec3d.a, vec3d.b + 0.05D, vec3d.c);
             }
