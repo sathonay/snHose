@@ -476,13 +476,7 @@ public abstract class EntityLiving extends Entity {
         boolean flag = this.datawatcher.getByte(8) > 0;
 
         if (i > 0) {
-            boolean flag1 = false;
-
-            if (!this.isInvisible()) {
-                flag1 = this.random.nextBoolean();
-            } else {
-                flag1 = this.random.nextInt(15) == 0;
-            }
+            boolean flag1 = (!this.isInvisible() ? this.random.nextBoolean() : this.random.nextInt(15) == 0);
 
             if (flag) {
                 flag1 &= this.random.nextInt(5) == 0;
