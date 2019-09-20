@@ -144,12 +144,9 @@ public abstract class CommandAbstract implements ICommand
     }
     
     public static String b(final ICommandListener commandListener, final String[] array, final int n) {
-        final StringBuilder sb = new StringBuilder();
+        final StringJoiner sb = new StringJoiner(" ");
         for (int i = n; i < array.length; ++i) {
-            if (i > n) {
-                sb.append(" ");
-            }
-            sb.append(array[i]);
+            sb.add(array[i]);
         }
         return sb.toString();
     }
@@ -266,7 +263,7 @@ public abstract class CommandAbstract implements ICommand
     
     public static List a(final String[] array, final String... array2) {
         final String s = array[array.length - 1];
-        final ArrayList<String> list = new ArrayList<String>();
+        final List<String> list = new ArrayList<String>();
         for (final String s2 : array2) {
             if (a(s, s2)) {
                 list.add(s2);
@@ -277,7 +274,7 @@ public abstract class CommandAbstract implements ICommand
     
     public static List a(final String[] array, final Iterable iterable) {
         final String s = array[array.length - 1];
-        final ArrayList<String> list = new ArrayList<String>();
+        final List<String> list = new ArrayList<String>();
         for (final String s2 : iterable) {
             if (a(s, s2)) {
                 list.add(s2);
