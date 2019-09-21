@@ -2,7 +2,7 @@ package net.minecraft.server;
 
 import java.util.*;
 
-public class DistanceComparator implements Comparator
+public class DistanceComparator implements Comparator<Entity>
 {
     private final Entity a;
     
@@ -20,5 +20,11 @@ public class DistanceComparator implements Comparator
             return 1;
         }
         return 0;
+    }
+
+
+    @Override
+    public int compare(Entity o1, Entity o2) {
+        return this.a(o1, o2);
     }
 }
