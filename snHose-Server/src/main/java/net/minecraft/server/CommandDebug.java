@@ -87,7 +87,7 @@ public class CommandDebug extends CommandAbstract
             return;
         }
         for (int i = 1; i < b.size(); ++i) {
-            final ProfilerInfo profilerInfo = b.get(i);
+            final ProfilerInfo profilerInfo = (ProfilerInfo) b.get(i);
             sb.append(String.format("[%02d] ", n));
             for (int j = 0; j < n; ++j) {
                 sb.append(" ");
