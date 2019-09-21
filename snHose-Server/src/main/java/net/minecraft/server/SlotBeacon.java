@@ -5,8 +5,8 @@ class SlotBeacon extends Slot
     final /* synthetic */ ContainerBeacon a;
     
     public SlotBeacon(final ContainerBeacon a, final IInventory iinventory, final int i, final int j, final int k) {
-        this.a = a;
         super(iinventory, i, j, k);
+        this.a = a;
     }
     
     @Override
