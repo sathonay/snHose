@@ -17,27 +17,27 @@ public class ChatModifier
         return (this.b == null) ? this.n().a() : this.b;
     }
     
-    public boolean b() {
+    public Boolean b() {
         return (this.c == null) ? this.n().b() : this.c;
     }
     
-    public boolean c() {
+    public Boolean c() {
         return (this.d == null) ? this.n().c() : this.d;
     }
     
-    public boolean d() {
+    public Boolean d() {
         return (this.f == null) ? this.n().d() : this.f;
     }
     
-    public boolean e() {
+    public Boolean e() {
         return (this.e == null) ? this.n().e() : this.e;
     }
     
-    public boolean f() {
+    public Boolean f() {
         return (this.g == null) ? this.n().f() : this.g;
     }
     
-    public boolean g() {
+    public Boolean g() {
         return this.c == null && this.d == null && this.f == null && this.e == null && this.g == null && this.b == null && this.h == null && this.i == null;
     }
     
