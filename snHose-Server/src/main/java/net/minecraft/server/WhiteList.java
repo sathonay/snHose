@@ -36,7 +36,7 @@ public class WhiteList extends JsonList
     }
     
     public GameProfile a(final String s) {
-        for (final WhiteListEntry whiteListEntry : this.e().values()) {
+        for (final WhiteListEntry whiteListEntry : (Set<WhiteListEntry>)this.e().values()) {
             if (s.equalsIgnoreCase(((GameProfile)whiteListEntry.getKey()).getName())) {
                 return (GameProfile)whiteListEntry.getKey();
             }
