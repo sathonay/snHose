@@ -5,8 +5,8 @@ class SlotBrewing extends Slot
     final /* synthetic */ ContainerBrewingStand a;
     
     public SlotBrewing(final ContainerBrewingStand a, final IInventory iinventory, final int i, final int j, final int k) {
-        this.a = a;
         super(iinventory, i, j, k);
+        this.a = a;
     }
     
     @Override
