@@ -754,12 +754,12 @@ public abstract class EntityLiving extends Entity {
         for (int i = 0; i < 5; ++i) {
             Vec3D vec3d = Vec3D.a(((double) this.random.nextFloat() - 0.5D) * 0.1D, Math.random() * 0.1D + 0.1D, 0.0D);
 
-            vec3d.a(-this.pitch * 3.1415927F / 180.0F);
-            vec3d.b(-this.yaw * 3.1415927F / 180.0F);
+            vec3d.a(-this.pitch * (float) Math.PI / 180.0F);
+            vec3d.b(-this.yaw * (float) Math.PI / 180.0F);
             Vec3D vec3d1 = Vec3D.a(((double) this.random.nextFloat() - 0.5D) * 0.3D, (double) (-this.random.nextFloat()) * 0.6D - 0.3D, 0.6D);
 
-            vec3d1.a(-this.pitch * 3.1415927F / 180.0F);
-            vec3d1.b(-this.yaw * 3.1415927F / 180.0F);
+            vec3d1.a(-this.pitch * (float) Math.PI / 180.0F);
+            vec3d1.b(-this.yaw * (float) Math.PI / 180.0F);
             vec3d1 = vec3d1.add(this.locX, this.locY + (double) this.getHeadHeight(), this.locZ);
             this.world.addParticle("iconcrack_" + Item.getId(itemstack.getItem()), vec3d1.a, vec3d1.b, vec3d1.c, vec3d.a, vec3d.b + 0.05D, vec3d.c);
         }
@@ -780,14 +780,9 @@ public abstract class EntityLiving extends Entity {
         this.aT = true;
         this.aW().g();
         if (!this.world.isStatic) {
-            int i = 0;
-
-            if (entity instanceof EntityHuman) {
-                i = EnchantmentManager.getBonusMonsterLootEnchantmentLevel((EntityLiving) entity);
-            }
+            int i = (entity instanceof EntityHuman ? EnchantmentManager.getBonusMonsterLootEnchantmentLevel((EntityLiving) entity) : 0);
 
             if (this.aG() && this.world.getGameRules().getBoolean("doMobLoot")) {
-
                 this.dropDeathLoot(this.lastDamageByPlayerTime > 0, i);
                 this.dropEquipment(this.lastDamageByPlayerTime > 0, i);
                 if (this.lastDamageByPlayerTime > 0) {
@@ -831,7 +826,7 @@ public abstract class EntityLiving extends Entity {
             this.motZ /= friction;
 
             this.motX -= xo / magnitude *  d2;
-            this.motY = MathHelper.limit(this.motY + d2, 0.05, knockback.getMaxHeight());
+            this.motY = MathHelper.limit(this.motY + d2, 0.05 /* TODO: Check for a better value */, knockback.getMaxHeight());
             this.motZ -= zo / magnitude *  d2;
         }
     }
@@ -925,7 +920,6 @@ public abstract class EntityLiving extends Entity {
         if (damagesource.isStarvation()) {
             return f;
         } else {
-
             int i;
             int j;
             float f1;
@@ -1292,11 +1286,7 @@ public abstract class EntityLiving extends Entity {
             }
 
             if (this.world.isStatic && (!this.world.isLoaded((int) this.locX, 0, (int) this.locZ) || !this.world.getChunkAtWorldCoords((int) this.locX, (int) this.locZ).d)) {
-                if (this.locY > 0.0D) {
-                    this.motY = -0.1D;
-                } else {
-                    this.motY = 0.0D;
-                }
+                this.motY = (this.locY > 0.0D ? -0.1D : 0.0D);
             } else {
                 this.motY -= 0.08D;
             }
