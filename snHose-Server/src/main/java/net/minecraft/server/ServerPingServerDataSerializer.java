@@ -3,7 +3,7 @@ package net.minecraft.server;
 import java.lang.reflect.*;
 import net.minecraft.util.com.google.gson.*;
 
-public class ServerPingServerDataSerializer implements JsonDeserializer, JsonSerializer<ServerPingServerData>
+public class ServerPingServerDataSerializer implements JsonDeserializer<ServerPingServerData>, JsonSerializer<ServerPingServerData>
 {
     public ServerPingServerData a(final JsonElement jsonElement, final Type type, final JsonDeserializationContext jsonDeserializationContext) {
         final JsonObject l = ChatDeserializer.l(jsonElement, "version");
@@ -18,7 +18,7 @@ public class ServerPingServerDataSerializer implements JsonDeserializer, JsonSer
     }
 
     @Override
-    public Object deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+    public ServerPingServerData deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
         return this.a(jsonElement, type, jsonDeserializationContext);
     }
 
