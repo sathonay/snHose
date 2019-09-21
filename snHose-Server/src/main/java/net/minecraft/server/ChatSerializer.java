@@ -4,7 +4,7 @@ import java.lang.reflect.*;
 import java.util.*;
 import net.minecraft.util.com.google.gson.*;
 
-public class ChatSerializer
+public class ChatSerializer implements JsonDeserializer<IChatBaseComponent>, JsonSerializer<IChatBaseComponent>
 {
     private static final Gson a;
     
@@ -133,5 +133,15 @@ public class ChatSerializer
         gsonBuilder.registerTypeHierarchyAdapter(ChatModifier.class, new ChatModifierSerializer());
         gsonBuilder.registerTypeAdapterFactory(new ChatTypeAdapterFactory());
         a = gsonBuilder.create();
+    }
+
+    @Override
+    public IChatBaseComponent deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+        return this.a(jsonElement, type, jsonDeserializationContext);
+    }
+
+    @Override
+    public JsonElement serialize(IChatBaseComponent iChatBaseComponent, Type type, JsonSerializationContext jsonSerializationContext) {
+        return this.a(iChatBaseComponent, type, jsonSerializationContext);
     }
 }
