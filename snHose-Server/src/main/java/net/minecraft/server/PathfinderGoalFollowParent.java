@@ -19,7 +19,7 @@ public class PathfinderGoalFollowParent extends PathfinderGoal
         if (this.a.getAge() >= 0) {
             return false;
         }
-        final List a = this.a.world.a(this.a.getClass(), this.a.boundingBox.grow(8.0, 4.0, 8.0));
+        final List<EntityAnimal> a = this.a.world.a(this.a.getClass(), this.a.boundingBox.grow(8.0, 4.0, 8.0));
         EntityAnimal b = null;
         double n = Double.MAX_VALUE;
         for (final EntityAnimal entity : a) {
