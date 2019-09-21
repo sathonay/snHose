@@ -4,7 +4,7 @@ import java.lang.reflect.*;
 import java.util.*;
 import net.minecraft.util.com.google.gson.*;
 
-public class ChatSerializer implements JsonDeserializer, JsonSerializer
+public class ChatSerializer
 {
     private static final Gson a;
     
@@ -89,7 +89,7 @@ public class ChatSerializer implements JsonDeserializer, JsonSerializer
         }
         if (!chatBaseComponent.a().isEmpty()) {
             final JsonArray value = new JsonArray();
-            for (final IChatBaseComponent chatBaseComponent2 : chatBaseComponent.a()) {
+            for (final IChatBaseComponent chatBaseComponent2 : (List<IChatBaseComponent>)chatBaseComponent.a()) {
                 value.add(this.a(chatBaseComponent2, chatBaseComponent2.getClass(), jsonSerializationContext));
             }
             jsonObject.add("extra", value);
