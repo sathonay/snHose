@@ -6,9 +6,9 @@ class SlotArmor extends Slot
     final /* synthetic */ ContainerPlayer b;
     
     SlotArmor(final ContainerPlayer b, final IInventory iinventory, final int i, final int j, final int k, final int a) {
+        super(iinventory, i, j, k);
         this.b = b;
         this.a = a;
-        super(iinventory, i, j, k);
     }
     
     @Override
