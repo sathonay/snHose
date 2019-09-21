@@ -1,6 +1,6 @@
 package net.minecraft.server;
 
-public class ChunkCoordinates implements Comparable
+public class ChunkCoordinates implements Comparable<ChunkCoordinates>
 {
     public int x;
     public int y;
@@ -67,11 +67,4 @@ public class ChunkCoordinates implements Comparable
         return "Pos{x=" + this.x + ", y=" + this.y + ", z=" + this.z + '}';
     }
 
-    @Override
-    public int compareTo(Object o) {
-        if (!o.getClass().isInstance(this)){
-            throw new IllegalArgumentException("Invalid argument, must be an instance of " + this.getClass().getCanonicalName());
-        }
-        return compareTo(o.getClass().cast(this.getClass()));
-    }
 }
