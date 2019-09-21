@@ -60,7 +60,7 @@ public class CommandBanIp extends CommandAbstract
     
     protected void a(final ICommandListener commandListener, final String s, final String s2) {
         MinecraftServer.getServer().getPlayerList().getIPBans().add(new IpBanEntry(s, null, commandListener.getName(), null, s2));
-        final List b = MinecraftServer.getServer().getPlayerList().b(s);
+        final List<EntityPlayer> b = MinecraftServer.getServer().getPlayerList().b(s);
         final String[] array = new String[b.size()];
         int n = 0;
         for (final EntityPlayer entityPlayer : b) {
