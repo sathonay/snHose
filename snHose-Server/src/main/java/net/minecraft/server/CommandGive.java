@@ -37,18 +37,12 @@ public class CommandGive extends CommandAbstract
         final ItemStack itemstack = new ItemStack(f, a, a2);
         if (array.length >= 5) {
             final String c = CommandAbstract.a(commandListener, array, 4).c();
-            try {
-                final NBTBase parse = MojangsonParser.parse(c);
-                if (!(parse instanceof NBTTagCompound)) {
-                    CommandAbstract.a(commandListener, this, "commands.give.tagError", "Not a valid tag");
-                    return;
-                }
-                itemstack.setTag((NBTTagCompound)parse);
-            }
-            catch (MojangsonParseException ex) {
-                CommandAbstract.a(commandListener, this, "commands.give.tagError", ex.getMessage());
+            final NBTBase parse = MojangsonParser.parse(c);
+            if (!(parse instanceof NBTTagCompound)) {
+                CommandAbstract.a(commandListener, this, "commands.give.tagError", "Not a valid tag");
                 return;
             }
+            itemstack.setTag((NBTTagCompound)parse);
         }
         final EntityItem drop = d.drop(itemstack, false);
         drop.pickupDelay = 0;
