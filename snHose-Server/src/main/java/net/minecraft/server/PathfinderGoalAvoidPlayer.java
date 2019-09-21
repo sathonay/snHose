@@ -41,7 +41,7 @@ public class PathfinderGoalAvoidPlayer extends PathfinderGoal
             if (a.isEmpty()) {
                 return false;
             }
-            this.e = a.get(0);
+            this.e = (Entity) a.get(0);
         }
         final Vec3D b = RandomPositionGenerator.b(this.b, 16, 7, Vec3D.a(this.e.locX, this.e.locY, this.e.locZ));
         if (b == null) {
