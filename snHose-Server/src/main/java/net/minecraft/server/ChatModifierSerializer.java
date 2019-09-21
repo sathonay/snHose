@@ -3,7 +3,7 @@ package net.minecraft.server;
 import java.lang.reflect.*;
 import net.minecraft.util.com.google.gson.*;
 
-public class ChatModifierSerializer implements JsonDeserializer, JsonSerializer
+public class ChatModifierSerializer
 {
     public ChatModifier a(final JsonElement jsonElement, final Type type, final JsonDeserializationContext jsonDeserializationContext) {
         if (!jsonElement.isJsonObject()) {
@@ -15,22 +15,22 @@ public class ChatModifierSerializer implements JsonDeserializer, JsonSerializer
             return null;
         }
         if (asJsonObject.has("bold")) {
-            chatModifier.c = Boolean.valueOf(asJsonObject.get("bold").getAsBoolean());
+            chatModifier.setBold(Boolean.valueOf(asJsonObject.get("bold").getAsBoolean()));
         }
         if (asJsonObject.has("italic")) {
-            chatModifier.d = asJsonObject.get("italic").getAsBoolean();
+            chatModifier.setItalic(asJsonObject.get("italic").getAsBoolean());
         }
         if (asJsonObject.has("underlined")) {
-            chatModifier.e = asJsonObject.get("underlined").getAsBoolean();
+            chatModifier.setUnderline(asJsonObject.get("underlined").getAsBoolean());
         }
         if (asJsonObject.has("strikethrough")) {
-            chatModifier.f = asJsonObject.get("strikethrough").getAsBoolean();
+            chatModifier.setStrikethrough(asJsonObject.get("strikethrough").getAsBoolean());
         }
         if (asJsonObject.has("obfuscated")) {
-            chatModifier.g = asJsonObject.get("obfuscated").getAsBoolean();
+            chatModifier.setRandom(asJsonObject.get("obfuscated").getAsBoolean());
         }
         if (asJsonObject.has("color")) {
-            chatModifier.b = (EnumChatFormat)jsonDeserializationContext.deserialize(asJsonObject.get("color"), EnumChatFormat.class);
+            chatModifier.setColor(jsonDeserializationContext.deserialize(asJsonObject.get("color"), EnumChatFormat.class));
         }
         if (asJsonObject.has("clickEvent")) {
             final JsonObject asJsonObject2 = asJsonObject.getAsJsonObject("clickEvent");
@@ -40,7 +40,7 @@ public class ChatModifierSerializer implements JsonDeserializer, JsonSerializer
                 final JsonPrimitive asJsonPrimitive2 = asJsonObject2.getAsJsonPrimitive("value");
                 final String s = (asJsonPrimitive2 == null) ? null : asJsonPrimitive2.getAsString();
                 if (enumClickAction != null && s != null && enumClickAction.a()) {
-                    chatModifier.h = new ChatClickable(enumClickAction, s);
+                    chatModifier.setChatClickable(new ChatClickable(enumClickAction, s));
                 }
             }
         }
@@ -51,7 +51,7 @@ public class ChatModifierSerializer implements JsonDeserializer, JsonSerializer
                 final EnumHoverAction enumHoverAction = (asJsonPrimitive3 == null) ? null : EnumHoverAction.a(asJsonPrimitive3.getAsString());
                 final IChatBaseComponent chatBaseComponent = jsonDeserializationContext.deserialize(asJsonObject3.get("value"), IChatBaseComponent.class);
                 if (enumHoverAction != null && chatBaseComponent != null && enumHoverAction.a()) {
-                    chatModifier.i = new ChatHoverable(enumHoverAction, chatBaseComponent);
+                    chatModifier.a(new ChatHoverable(enumHoverAction, chatBaseComponent));
                 }
             }
         }
@@ -63,34 +63,35 @@ public class ChatModifierSerializer implements JsonDeserializer, JsonSerializer
             return null;
         }
         final JsonObject jsonObject = new JsonObject();
-        if (chatModifier.c != null) {
-            jsonObject.addProperty("bold", chatModifier.c);
+        if (chatModifier.c() != null) {
+            jsonObject.addProperty("bold", chatModifier.c());
         }
-        if (chatModifier.d != null) {
-            jsonObject.addProperty("italic", chatModifier.d);
+        if (chatModifier.d() != null) {
+            jsonObject.addProperty("italic", chatModifier.d());
         }
-        if (chatModifier.e != null) {
-            jsonObject.addProperty("underlined", chatModifier.e);
+        if (chatModifier.e() != null) {
+            jsonObject.addProperty("underlined", chatModifier.e());
         }
-        if (chatModifier.f != null) {
-            jsonObject.addProperty("strikethrough", chatModifier.f);
+        if (chatModifier.f() != null) {
+            jsonObject.addProperty("strikethrough", chatModifier.f());
         }
-        if (chatModifier.g != null) {
-            jsonObject.addProperty("obfuscated", chatModifier.g);
+        if (chatModifier.g() != null) {
+            jsonObject.addProperty("obfuscated", chatModifier.g());
         }
-        if (chatModifier.b != null) {
-            jsonObject.add("color", jsonSerializationContext.serialize(chatModifier.b));
+        if (chatModifier.b() != null) {
+            jsonObject.add("color", jsonSerializationContext.serialize(chatModifier.b()));
         }
-        if (chatModifier.h != null) {
+        if (chatModifier.h() != null) {
             final JsonObject value = new JsonObject();
-            value.addProperty("action", chatModifier.h.a().b());
-            value.addProperty("value", chatModifier.h.b());
+            value.addProperty("action", chatModifier.h().a().b());
+            value.addProperty("value", chatModifier.h().b());
             jsonObject.add("clickEvent", value);
         }
-        if (chatModifier.i != null) {
+        ChatHoverable hoverable = chatModifier.i();
+        if (hoverable != null) {
             final JsonObject value2 = new JsonObject();
-            value2.addProperty("action", chatModifier.i.a().b());
-            value2.add("value", jsonSerializationContext.serialize(chatModifier.i.b()));
+            value2.addProperty("action", hoverable.a().b());
+            value2.add("value", jsonSerializationContext.serialize(hoverable.b()));
             jsonObject.add("hoverEvent", value2);
         }
         return jsonObject;
