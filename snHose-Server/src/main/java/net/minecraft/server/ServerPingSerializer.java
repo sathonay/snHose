@@ -3,7 +3,7 @@ package net.minecraft.server;
 import java.lang.reflect.*;
 import net.minecraft.util.com.google.gson.*;
 
-public class ServerPingSerializer implements JsonDeserializer, JsonSerializer
+public class ServerPingSerializer implements JsonDeserializer, JsonSerializer<ServerPing>
 {
     public ServerPing a(final JsonElement jsonElement, final Type type, final JsonDeserializationContext jsonDeserializationContext) {
         final JsonObject l = ChatDeserializer.l(jsonElement, "status");
@@ -38,5 +38,15 @@ public class ServerPingSerializer implements JsonDeserializer, JsonSerializer
             jsonObject.addProperty("favicon", serverPing.d());
         }
         return jsonObject;
+    }
+
+    @Override
+    public Object deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+        return this.a(jsonElement, type, jsonDeserializationContext);
+    }
+
+    @Override
+    public JsonElement serialize(ServerPing serverPing, Type type, JsonSerializationContext jsonSerializationContext) {
+        return this.a(serverPing, type, jsonSerializationContext);
     }
 }
