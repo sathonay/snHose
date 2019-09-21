@@ -275,7 +275,7 @@ public abstract class CommandAbstract implements ICommand
     public static List a(final String[] array, final Iterable iterable) {
         final String s = array[array.length - 1];
         final List<String> list = new ArrayList<String>();
-        for (final String s2 : iterable) {
+        for (final String s2 : (Iterable<String>) iterable) {
             if (a(s, s2)) {
                 list.add(s2);
             }
