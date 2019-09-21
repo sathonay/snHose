@@ -2,6 +2,8 @@ package net.minecraft.server;
 
 class WorldGenStrongholdPieceWeight3
 {
+    public static final int[] a;
+
     static {
         a = new int[WorldGenStrongholdDoorType.values().length];
         try {
