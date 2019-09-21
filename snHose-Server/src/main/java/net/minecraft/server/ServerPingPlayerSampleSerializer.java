@@ -5,7 +5,7 @@ import net.minecraft.util.com.mojang.authlib.*;
 import java.util.*;
 import net.minecraft.util.com.google.gson.*;
 
-public class ServerPingPlayerSampleSerializer implements JsonDeserializer, JsonSerializer<ServerPingPlayerSample>
+public class ServerPingPlayerSampleSerializer implements JsonDeserializer<ServerPingPlayerSample>, JsonSerializer<ServerPingPlayerSample>
 {
     public ServerPingPlayerSample a(final JsonElement jsonElement, final Type type, final JsonDeserializationContext jsonDeserializationContext) {
         final JsonObject l = ChatDeserializer.l(jsonElement, "players");
@@ -43,7 +43,7 @@ public class ServerPingPlayerSampleSerializer implements JsonDeserializer, JsonS
     }
 
     @Override
-    public Object deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+    public ServerPingPlayerSample deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
         return this.a(jsonElement, type, jsonDeserializationContext);
     }
 
