@@ -9,12 +9,12 @@ class SlotAnvilResult extends Slot
     final /* synthetic */ ContainerAnvil e;
     
     SlotAnvilResult(final ContainerAnvil e, final IInventory iinventory, final int i, final int j, final int k, final World a, final int b, final int c, final int d) {
+        super(iinventory, i, j, k);
         this.e = e;
         this.a = a;
         this.b = b;
         this.c = c;
         this.d = d;
-        super(iinventory, i, j, k);
     }
     
     @Override
