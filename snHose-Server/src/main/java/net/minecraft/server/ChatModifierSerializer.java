@@ -3,7 +3,7 @@ package net.minecraft.server;
 import java.lang.reflect.*;
 import net.minecraft.util.com.google.gson.*;
 
-public class ChatModifierSerializer
+public class ChatModifierSerializer implements JsonDeserializer<ChatModifier>, JsonSerializer<ChatModifier>
 {
     public ChatModifier a(final JsonElement jsonElement, final Type type, final JsonDeserializationContext jsonDeserializationContext) {
         if (!jsonElement.isJsonObject()) {
@@ -95,5 +95,15 @@ public class ChatModifierSerializer
             jsonObject.add("hoverEvent", value2);
         }
         return jsonObject;
+    }
+
+    @Override
+    public ChatModifier deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+        return this.a(jsonElement, type, jsonDeserializationContext);
+    }
+
+    @Override
+    public JsonElement serialize(ChatModifier chatModifier, Type type, JsonSerializationContext jsonSerializationContext) {
+        return this.a(chatModifier, type, jsonSerializationContext);
     }
 }
