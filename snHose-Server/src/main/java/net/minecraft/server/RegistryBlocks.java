@@ -11,10 +11,10 @@ public class RegistryBlocks extends RegistryMaterials
     
     @Override
     public void a(final int n, final String s, final Object e) {
+        super.a(n, s, e);
         if (this.d.equals(s)) {
             this.e = e;
         }
-        super.a(n, s, e);
     }
     
     @Override
