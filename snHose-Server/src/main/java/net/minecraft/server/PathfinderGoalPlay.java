@@ -23,7 +23,7 @@ public class PathfinderGoalPlay extends PathfinderGoal
         if (this.a.aI().nextInt(400) != 0) {
             return false;
         }
-        final List a = this.a.world.a(EntityVillager.class, this.a.boundingBox.grow(6.0, 3.0, 6.0));
+        final List<EntityVillager> a = this.a.world.a(EntityVillager.class, this.a.boundingBox.grow(6.0, 3.0, 6.0));
         double n = Double.MAX_VALUE;
         for (final EntityVillager b : a) {
             if (b == this.a) {
