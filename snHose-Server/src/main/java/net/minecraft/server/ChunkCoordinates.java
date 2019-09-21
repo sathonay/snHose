@@ -66,4 +66,12 @@ public class ChunkCoordinates implements Comparable
     public String toString() {
         return "Pos{x=" + this.x + ", y=" + this.y + ", z=" + this.z + '}';
     }
+
+    @Override
+    public int compareTo(Object o) {
+        if (!o.getClass().isInstance(this)){
+            throw new IllegalArgumentException("Invalid argument, must be an instance of " + this.getClass().getCanonicalName());
+        }
+        return compareTo(o.getClass().cast(this.getClass()));
+    }
 }
