@@ -214,14 +214,13 @@ public abstract class EntityLiving extends Entity {
 
         if (!this.noDamageTicks.isEmpty() && !(this instanceof EntityPlayer)) {
 	    this.noDamageTicks.forEach((key, value) -> {
-	        if (!this.noDamageTicks.containsKey(key)) continue;
+	        if (!this.noDamageTicks.containsKey(key)) return;
 	            if (value > 0) {
-	                this.noDamageTicks.replace(key, value—-);
-	                continue;
+	                this.noDamageTicks.replace(key, --value);
+                    return;
 	            }
 	            this.noDamageTicks.remove(key);
-	        }
-            });
+	        });
         }
 
         if (this.getHealth() <= 0.0F) {
