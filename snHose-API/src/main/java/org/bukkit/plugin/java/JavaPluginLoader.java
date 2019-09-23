@@ -332,6 +332,8 @@ public final class JavaPluginLoader implements PluginLoader {
                 jPlugin.setEnabled(true);
             } catch (Throwable ex) {
                 server.getLogger().log(Level.SEVERE, "Error occurred while enabling " + plugin.getDescription().getFullName() + " (Is it up to date?)", ex);
+                disablePlugin(jPlugin);
+                return;
             }
 
             // Perhaps abort here, rather than continue going, but as it stands,
