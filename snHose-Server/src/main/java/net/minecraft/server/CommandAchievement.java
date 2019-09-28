@@ -45,12 +45,12 @@ public class CommandAchievement extends CommandAbstract
                 else {
                     if (statistic instanceof Achievement) {
                         Achievement c = (Achievement)statistic;
-                        final ArrayList<Object> arrayList = Lists.newArrayList();
+                        final ArrayList<Achievement> arrayList = Lists.newArrayList();
                         while (c.c != null && !entityPlayer.getStatisticManager().hasAchievement(c.c)) {
                             arrayList.add(c.c);
                             c = c.c;
                         }
-                        final Iterator<Achievement> iterator2 = Lists.reverse((List<Achievement>)arrayList).iterator();
+                        final Iterator<Achievement> iterator2 = Lists.reverse(arrayList).iterator();
                         while (iterator2.hasNext()) {
                             entityPlayer.a(iterator2.next());
                         }
