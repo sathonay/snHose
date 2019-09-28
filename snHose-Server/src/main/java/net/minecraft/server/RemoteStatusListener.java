@@ -18,7 +18,7 @@ public class RemoteStatusListener extends RemoteConnectionThread
     private Map q;
     private String hostname;
     private String motd;
-    private Map challenges;
+    private Map<SocketAddress, RemoteStatusChallenge> challenges;
     private long u;
     private RemoteStatusReply cachedReply;
     private long cacheTime;
@@ -60,7 +60,11 @@ public class RemoteStatusListener extends RemoteConnectionThread
     }
     
     private void send(final byte[] array, final DatagramPacket datagramPacket) {
-        this.socket.send(new DatagramPacket(array, array.length, datagramPacket.getSocketAddress()));
+        try {
+            this.socket.send(new DatagramPacket(array, array.length, datagramPacket.getSocketAddress()));
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
     
     private boolean parsePacket(final DatagramPacket datagramPacket) {
@@ -187,7 +191,7 @@ public class RemoteStatusListener extends RemoteConnectionThread
             return;
         }
         this.clearedTime = ar;
-        final Iterator<Map.Entry<K, RemoteStatusChallenge>> iterator = this.challenges.entrySet().iterator();
+        final Iterator<Map.Entry<SocketAddress, RemoteStatusChallenge>> iterator = this.challenges.entrySet().iterator();
         while (iterator.hasNext()) {
             if (iterator.next().getValue().isExpired(ar)) {
                 iterator.remove();
