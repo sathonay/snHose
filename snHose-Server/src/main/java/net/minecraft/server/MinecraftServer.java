@@ -217,7 +217,7 @@ public abstract class MinecraftServer implements ICommandListener, Runnable, IMo
 
             if (j == 0) {
                 IDataManager idatamanager = new ServerNBTManager(server.getWorldContainer(), s1, true);
-                world =  new WorldServer(this, idatamanager, s1, dimension, worldsettings, this.methodProfiler, Environment.getEnvironment(dimension), gen));
+                world =  new WorldServer(this, idatamanager, s1, dimension, worldsettings, this.methodProfiler, Environment.getEnvironment(dimension), gen);
                 this.server.scoreboardManager = new org.bukkit.craftbukkit.scoreboard.CraftScoreboardManager(this, world.getScoreboard());
             } else {
                 String dim = "DIM" + dimension;
