@@ -1320,7 +1320,7 @@ public abstract class Entity {
     }
 
     public boolean isAlive() {
-        return !this.dead && this.getHealth() > 0.0D;
+        return !this.dead;
     }
 
     public boolean inBlock() {
