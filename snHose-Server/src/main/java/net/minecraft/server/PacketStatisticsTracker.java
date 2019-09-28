@@ -5,12 +5,12 @@ import org.apache.logging.log4j.*;
 
 class PacketStatisticsTracker
 {
-    private AtomicReference[] a;
+    private AtomicReference<PackStatisticData>[] a;
     
     public PacketStatisticsTracker() {
         this.a = new AtomicReference[100];
         for (int i = 0; i < 100; ++i) {
-            this.a[i] = new AtomicReference((V)new PackStatisticData(0L, 0, 0.0, null));
+            this.a[i] = new AtomicReference(new PackStatisticData(0L, 0, 0.0));
         }
     }
     
@@ -49,10 +49,10 @@ class PacketStatisticsTracker
     
     public PacketStatistics c() {
         int n = -1;
-        PackStatisticData packStatisticData = new PackStatisticData(-1L, -1, 0.0, null);
+        PackStatisticData packStatisticData = new PackStatisticData(-1L, -1, 0.0);
         for (int i = 0; i < 100; ++i) {
             final PackStatisticData packStatisticData2 = this.a[i].get();
-            if (packStatisticData2.a > packStatisticData.a) {
+            if (packStatisticData2.a() > packStatisticData.a()) {
                 n = i;
                 packStatisticData = packStatisticData2;
             }
@@ -62,10 +62,10 @@ class PacketStatisticsTracker
     
     public PacketStatistics d() {
         int n = -1;
-        PackStatisticData packStatisticData = new PackStatisticData(-1L, -1, 0.0, null);
+        PackStatisticData packStatisticData = new PackStatisticData(-1L, -1, 0.0);
         for (int i = 0; i < 100; ++i) {
             final PackStatisticData packStatisticData2 = this.a[i].get();
-            if (packStatisticData2.b > packStatisticData.b) {
+            if (packStatisticData2.b() > packStatisticData.b()) {
                 n = i;
                 packStatisticData = packStatisticData2;
             }

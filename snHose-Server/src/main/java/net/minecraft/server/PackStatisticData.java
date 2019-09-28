@@ -6,12 +6,12 @@ class PackStatisticData
     private final int b;
     private final double c;
     
-    private PackStatisticData(final long a, final int b, final double c) {
+    protected PackStatisticData(final long a, final int b, final double c) {
         this.a = a;
         this.b = b;
         this.c = c;
     }
-    
+
     public PackStatisticData a(final long n) {
         return new PackStatisticData(n + this.a, this.b + 1, (n + this.a) / (this.b + 1));
     }
