@@ -1707,7 +1707,7 @@ public class PlayerConnection implements PacketPlayInListener {
         }
     }
 
-    private int[3] pingRatio = new int[3];
+    private int[] pingRatio = new int[3];
     private int doPingRatio(int i) {
         this.pingRatio[0] = i;
         this.pingRatio[1] = pingRatio[0];
