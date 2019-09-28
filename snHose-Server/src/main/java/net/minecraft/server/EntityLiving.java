@@ -612,12 +612,7 @@ public abstract class EntityLiving extends Entity {
     }
 
     public final float getHealth() {
-        // CraftBukkit start - Use unscaled health
-        if (this instanceof EntityPlayer) {
-            return (float) ((EntityPlayer) this).getBukkitEntity().getHealth();
-        }
-        // CraftBukkit end
-        return this.datawatcher.getFloat(6);
+        return (this instanceof EntityPlayer ? (float) ((EntityPlayer) this).getBukkitEntity().getHealth() : this.datawatcher.getFloat(6));
     }
 
     public void setHealth(float f) {
@@ -661,7 +656,7 @@ public abstract class EntityLiving extends Entity {
                 this.aF = 1.5F;
                 boolean flag = true;
 
-                if (!this.noDamageTicks.containsKey(damageSource) || this.noDamageTicks.get(damagesource) > 0) {
+                if (!this.noDamageTicks.containsKey(damagesource) || this.noDamageTicks.get(damagesource) > 0) {
                     if (f <= this.lastDamage) {
                         return false;
                     }
