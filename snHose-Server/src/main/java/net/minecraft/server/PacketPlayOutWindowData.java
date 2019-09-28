@@ -32,4 +32,8 @@ public class PacketPlayOutWindowData extends Packet
         packetDataSerializer.writeShort(this.b);
         packetDataSerializer.writeShort(this.c);
     }
+
+    public void handle(PacketListener packetlistener) {
+        this.a((PacketPlayOutListener) packetlistener);
+    }
 }
