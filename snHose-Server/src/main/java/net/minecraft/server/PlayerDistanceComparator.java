@@ -2,8 +2,7 @@ package net.minecraft.server;
 
 import java.util.*;
 
-public class PlayerDistanceComparator implements Comparator
-{
+public class PlayerDistanceComparator implements Comparator<EntityPlayer> {
     private final ChunkCoordinates a;
     
     public PlayerDistanceComparator(final ChunkCoordinates a) {
@@ -20,5 +19,10 @@ public class PlayerDistanceComparator implements Comparator
             return 1;
         }
         return 0;
+    }
+
+    @Override
+    public int compare(EntityPlayer o1, EntityPlayer o2) {
+        return a(o1, o2);
     }
 }
