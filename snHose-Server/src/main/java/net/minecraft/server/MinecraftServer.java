@@ -972,7 +972,7 @@ public abstract class MinecraftServer implements ICommandListener, Runnable, IMo
     }
 
     public String getVersion() {
-        return "1.7.10";
+        return "1.7.x/1.8.x";
     }
 
     public int C() {
@@ -1127,7 +1127,7 @@ public abstract class MinecraftServer implements ICommandListener, Runnable, IMo
     }
 
     public void sendMessage(IChatBaseComponent ichatbasecomponent) {
-        i.info(ichatbasecomponent.c());
+        this.console.sendMessage(ichatbasecomponent.c());
     }
 
     public boolean a(int i, String s) {
@@ -1220,8 +1220,7 @@ public abstract class MinecraftServer implements ICommandListener, Runnable, IMo
         this.getConvertable().d();
 
         // CraftBukkit start
-        for (int i = 0; i < this.worlds.size(); ++i) {
-            WorldServer worldserver = this.worlds.get(i);
+        for (World worldserver : this.worlds) {
             // CraftBukkit end
 
             if (worldserver != null) {
@@ -1360,8 +1359,8 @@ public abstract class MinecraftServer implements ICommandListener, Runnable, IMo
 
     public void a(EnumGamemode enumgamemode) {
         // CraftBukkit start - use worlds list for iteration
-        for (int i = 0; i < this.worlds.size(); ++i) {
-            getServer().worlds.get(i).getWorldData().setGameType(enumgamemode);
+        for (World world : this.worlds) {
+            world.getWorldData().setGameType(enumgamemode);
             // CraftBukkit end
         }
     }
