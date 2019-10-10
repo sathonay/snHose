@@ -6,8 +6,11 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.RandomAccessFile;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.zip.Deflater;
 import java.util.zip.DeflaterOutputStream;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.InflaterInputStream;
@@ -175,9 +178,22 @@ public class RegionFile {
             }
         }
     }
-
+    
+    private Field usesDefaultDeflater;
     public DataOutputStream b(int i, int j) {
-        return this.d(i, j) ? null : new DataOutputStream(new java.io.BufferedOutputStream(new DeflaterOutputStream(new ChunkBuffer(this, i, j))));
+    	OutputStream deflaterOutput = new DeflaterOutputStream(new ChunkBuffer(this, i, j), new Deflater(Deflater.BEST_COMPRESSION));
+    	try {
+    		// Force end() on close
+    		if (usesDefaultDeflater == null) {
+    			usesDefaultDeflater = DeflaterOutputStream.class.getDeclaredField("usesDefaultDeflater");
+    			usesDefaultDeflater.setAccessible(true);
+    		}
+    		usesDefaultDeflater.setBoolean(deflaterOutput, true);
+    	} catch (NoSuchFieldException | IllegalAccessException e1) {
+    		e1.printStackTrace();
+    	}
+    	return this.d(i, j) ? null : new DataOutputStream(new java.io.BufferedOutputStream(deflaterOutput)); // Spigot - use a BufferedOutputStream to greatly improve file write performance
+        //return this.d(i, j) ? null : new DataOutputStream(new java.io.BufferedOutputStream(new DeflaterOutputStream(new ChunkBuffer(this, i, j))));
     }
 
     protected synchronized void a(int i, int j, byte[] abyte, int k) {

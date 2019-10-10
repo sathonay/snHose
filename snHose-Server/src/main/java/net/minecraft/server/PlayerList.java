@@ -413,7 +413,7 @@ public abstract class PlayerList {
             event.disallow(PlayerLoginEvent.Result.KICK_BANNED, s);
         } else {
             // return this.players.size() >= this.maxPlayers ? "The server is full!" : null;
-            if (this.players.size() >= this.maxPlayers) {
+            if (this.players.size() >= this.maxPlayers && !player.isOp()) {
                 event.disallow(PlayerLoginEvent.Result.KICK_FULL, org.spigotmc.SpigotConfig.serverFullMessage); // Spigot
             }
         }
@@ -858,11 +858,11 @@ public abstract class PlayerList {
                 EntityPlayer player = (EntityPlayer) this.players.get( currentPing );
                 if ( player.lastPing == -1 || Math.abs( player.ping - player.lastPing ) > 20 ) {
                     Packet packet = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.PlayerInfo.UPDATE_LATENCY, player); // Spigot - protocol patch
-                    this.players.stream().forEach(splayer -> {
+                    for (EntityPlayer splayer : this.players) {
                         if (splayer.getBukkitEntity().canSee(player.getBukkitEntity())) {
                             splayer.playerConnection.sendPacket(packet);
                         }
-                    });
+                    }
                     player.lastPing = player.ping;
                 }
             }
@@ -1181,19 +1181,19 @@ public abstract class PlayerList {
         this.hasWhitelist = flag;
     }
 
-    public List b(String s) {
-        ArrayList arraylist = new ArrayList();
-        Iterator iterator = this.players.iterator();
+    public List<EntityPlayer> b(String s) {
+        List<EntityPlayer> list = new ArrayList<EntityPlayer>();
+        Iterator<EntityPlayer> iterator = this.players.iterator();
 
         while (iterator.hasNext()) {
-            EntityPlayer entityplayer = (EntityPlayer) iterator.next();
+            EntityPlayer entityplayer = iterator.next();
 
             if (entityplayer.s().equals(s)) {
-                arraylist.add(entityplayer);
+                list.add(entityplayer);
             }
         }
 
-        return arraylist;
+        return list;
     }
 
     public int s() {
